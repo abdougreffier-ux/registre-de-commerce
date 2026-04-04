@@ -1,0 +1,7 @@
+//MO038-039.TXT ANA00038 TO ANA00039
+demande_modif		TAR	6811	nouvelle taille enregistrement : 6811
+demande_modif	contact	RUB+		contact est une nouvelle clé
+champs_modif_demand		TAR	14035	nouvelle taille enregistrement : 14035
+champs_modif_demand	denom_social	RUB-		la clé denom_social est supprimée
+champs_modif_demand	adr	RUB-		la clé adr est supprimée
+champs_modif_demand	contact	RUB-		la clé contact est supprimée

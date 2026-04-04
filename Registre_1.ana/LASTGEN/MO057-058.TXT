@@ -1,0 +1,3 @@
+//MO057-058.TXT ANA00057 TO ANA00058
+demande_modif		TAR	10755	nouvelle taille enregistrement : 10755
+demande_modif	part_cde	RUB+		part_cde est une nouvelle clé

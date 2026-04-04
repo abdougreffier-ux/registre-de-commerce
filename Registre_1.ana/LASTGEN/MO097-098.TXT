@@ -1,0 +1,5 @@
+//MO097-098.TXT ANA00097 TO ANA00098
+REG_chrono		TAR	15564	nouvelle taille enregistrement : 15564
+REG_chrono	nom_pren	RUB+		nom_pren est une nouvelle clé
+REG_chrono	Reg_matrim	RUB+		Reg_matrim est une nouvelle clé
+REG_chrono	origin_f_comerce	RUB+		origin_f_comerce est une nouvelle clé

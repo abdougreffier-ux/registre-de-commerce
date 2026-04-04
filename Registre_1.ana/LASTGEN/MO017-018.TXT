@@ -1,0 +1,3 @@
+//MO017-018.TXT ANA00017 TO ANA00018
+Gerants_BE		TAR	4057	nouvelle taille enregistrement : 4057
+Gerants_BE	motif	RUB+		motif est une nouvelle clé

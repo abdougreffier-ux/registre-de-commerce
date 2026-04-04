@@ -1,0 +1,814 @@
+Registre_1.eu.emf
+Registre_1AR.eu.emf
+Registre_1FR.eu.emf
+Registre_1.wdd
+FEN_Principale.wdw
+ADMINISTRATION.PNG
+BASE_MAINT.PNG
+CALCULATRICE.PNG
+COPIE.PNG
+DOSSIER.PNG
+ELEGANT_ROLLOVER.PNG
+ELEGANT_SELECT.PNG
+FLS12010.PNG
+FLS13131.PNG
+FLS18111.PNG
+FLS18134B.PNG
+GENSTEEL_BTN_APP_MAIN.PNG
+GENSTEEL_BTN_STD.PNG
+GENSTEEL_PICT_PLANEFORWARD_16_5.PNG
+GENSTEEL_RIBBON_TAB.PNG
+GENSTEEL_SCROLL_H.GIF
+GENSTEEL_SCROLL_V.GIF
+GENSTEEL_TABLE_COLTITLE.PNG
+GROUPE.PNG
+LANGUE.PNG
+LCD01710.PNG
+NOTE.PNG
+NOTE1.PNG
+PAYS.PNG
+PERSONNE.PNG
+RECHERCHE.PNG
+USERS2.PNG
+VALIDE1.PNG
+VERIFIER DOSSIERS.PNG
+VST15221.PNG
+VST18132B.PNG
+VST18149M.PNG
+FEN_p.wdw
+GENSTEEL_RESIZE.GIF
+FEN_TABLE_DETAIL_org.wdw
+AJOUTER.PNG
+BTN_VISIONPLUS.GIF
+IC5.ICO
+ISTYLE_BTN_BRW.PNG
+ISTYLE_BTN_STD.PNG
+ISTYLE_COMBO.PNG
+ISTYLE_EDT.PNG
+ISTYLE_PICT_APPLY_16_5.GIF
+ISTYLE_PICT_CLOSE_16_5.GIF
+ISTYLE_PICT_TAB_ADD_16_5.PNG
+ISTYLE_PICT_TAB_CLOSE_16_5.PNG
+ISTYLE_PICT_VISIONPLUS_16_5.GIF
+ISTYLE_SCROLL_H.GIF
+ISTYLE_SCROLL_V.GIF
+ISTYLE_TAB_BOTTOM.GIF
+ISTYLE_TAB_LEFT.GIF
+ISTYLE_TAB_MDI_BTN-NEW.PNG
+ISTYLE_TAB_RIGHT.GIF
+ISTYLE_TAB_TOP.GIF
+ISTYLE_TAB_TOP_BG.PNG
+REQ_verif_exist_emp_adrmac.WDR
+REQ_modif_emp_scanner.WDR
+REQ_modif_app_scan.WDR
+REQ_list_an_chrono.WDR
+REQ_verif_exist_an.WDR
+REQ_single_an_chrono.WDR
+reg.wdg
+REQ_modif_nor_chrono.WDR
+REQ_ajout_an_chrono.WDR
+REQ_modif_nor_modif.WDR
+REQ_ajout_an_modif.WDR
+REQ_single_an_modif.WDR
+REQ_REQ_list_an_modif.WDR
+REQ_modif_nor_depot.WDR
+REQ_ajout_an_depot.WDR
+REQ_single_an_depot.WDR
+REQ_list_an_depot.WDR
+REQ_modif_nor_radia.WDR
+REQ_ajout_an_radia.WDR
+REQ_single_an_radia.WDR
+REQ_list_an_radia.WDR
+FEN_signataires.wdw
+ISTYLE_CBOX.GIF
+ISTYLE_PICT_ADD_16_5.GIF
+ISTYLE_PICT_DELETE_16_5.GIF
+ISTYLE_RADIO.GIF
+ISTYLE_RESIZE.GIF
+ISTYLE_ROLLOVER.PNG
+ISTYLE_SELECT.PNG
+ISTYLE_TABLE_COLPICT.GIF
+ISTYLE_TABLE_COLTITLE.GIF
+REQ_list_emp_TOUS1.WDR
+REQ_verif_exist_sign.WDR
+REQ_verif_exist_group.WDR
+REQ_verif_exist_group_signataire.WDR
+REQ_verif_position_sign.WDR
+REQ_nombre_signs.WDR
+REQ_signle_group.WDR
+REQ_supp_group_signe.WDR
+REQ_supp_group_signs_1.WDR
+REQ_supp_group_signs.WDR
+FEN_Fiche_Employe_p.wdw
+FEN_Fiche_Poste.wdw
+CELL_H2.GIF
+REQ_ajout_poste.WDR
+REQ_verif_exist_poste.WDR
+REQ_list_poste.WDR
+REQ_verif_exist_emp_p.WDR
+FEN_Fiche_Poste_emp.wdw
+FEN_depot.wdw
+FLS07330.PNG
+GENSTEEL_CBOX_TABLE.PNG
+GENSTEEL_EDT.PNG
+GENSTEEL_PICT_CLOSE_16_5.PNG
+GENSTEEL_PICT_CORRECT_16_5.PNG
+GENSTEEL_RADIO.PNG
+GENSTEEL_ROLLOVER.PNG
+GENSTEEL_SELECT.PNG
+GENSTEEL_TABLE_COLPICT.PNG
+JOINDRE.PNG
+SCANNER3.PNG
+FEN_Fiche_rbe_societe.wdw
+DOCUMENT1.PNG
+GENSTEEL_BTN_BRW.PNG
+GENSTEEL_COMBO.PNG
+GENSTEEL_PICT_BROWSE_16_5.PNG
+GENSTEEL_PICT_DELETE_16_5.PNG
+GENSTEEL_PICT_MODIFY_16_5.PNG
+GENSTEEL_PICT_NEW_16_5.PNG
+GENSTEEL_PICT_TAB_ADD_16_5.PNG
+GENSTEEL_PICT_TAB_CLOSE_16_5.PNG
+GENSTEEL_TABSLIDE_BOTTOM.PNG
+GENSTEEL_TABSLIDE_TOP.PNG
+GENSTEEL_TAB_BOTTOM.PNG
+GENSTEEL_TAB_LEFT.PNG
+GENSTEEL_TAB_MDI_BTN-NEW.PNG
+GENSTEEL_TAB_RIGHT.PNG
+GENSTEEL_TAB_TOP.PNG
+GENSTEEL_TAB_TOP_BG.PNG
+IMPORT.PNG
+REQ_list_form_juridiq.WDR
+FEN_Fiche_be.wdw
+REQ_list_fonct.WDR
+REQ_verif_exist_nord_be.WDR
+REQ_single_nord_be.WDR
+REQ_maj_nord_be.WDR
+FEN_Forme_Juridique.wdw
+GENSTEEL_PICT_DETAIL_16_5.PNG
+REQ_verif_exist_form.WDR
+REQ_modif_form.WDR
+REQ_supp_form_juridique.WDR
+FEN_Fiche_rbe_association.wdw
+FEN_Fiche_be_association.wdw
+FEN_Fiche_rbe_constructions_juridiques.wdw
+AJOUTER1.PNG
+SUPPRIMER1.PNG
+FEN_Fiche_be_construction_Juridiques.wdw
+FEN_Fiche_rbe_Fondations_et_Constructions_similaires.wdw
+FEN_Fiche_be_Fondations_et_Constructions_similaires.wdw
+ETAT_RA_pm_fr.wde
+REQ_single_RA_1.WDR
+REQ_verif_exist_nord_depot.WDR
+REQ_maj_nord_depot.WDR
+REQ_ajout_depot.WDR
+ETAT_depot_fr.wde
+ETAT_depot_ar.wde
+ETAT_depot1.wde.wde
+REQ_single_depot.WDR
+REQ_list_reg_depot_d1_d2.WDR
+FEN_vision_reg_depots.wdw
+GENSTEEL_PICT_PRINT_16_5.PNG
+VISUALISER.PNG
+REQ_list_docs_depot.WDR
+FEN_Modification_Fiche_Depôt.wdw
+REQ_single_depot_an.WDR
+REQ_list_num_depots.WDR
+REQ_verif_num_depot.WDR
+REQ_supp_docs_depot.WDR
+REQ_modif_depot.WDR
+FEN_Annulation_Fiche_Depôt.wdw
+GENSTEEL_PICT_CANCEL_16_5.PNG
+REQ_annulation_depot.WDR
+FEN_Forme_Juridique_REG_chrono.wdw
+FEN_Fiche_Registre_Chronologique.wdw
+WinDevMessageBox.WDW
+GENSTEEL_BG_MESSBOX.PNG
+GENSTEEL_RESIZE_POPUP.GIF
+GENSTEEL_WDMSGBOX-ERROR.PNG
+GENSTEEL_WDMSGBOX-INFO.PNG
+GENSTEEL_WDMSGBOX-QUESTION.PNG
+WinDevDialogBox.WDW
+FEN_Domaine_d_Activités.wdw
+REQ_verif_exist_domain.WDR
+REQ_modif_domain.WDR
+REQ_supp_domain.WDR
+REQ_list_domain.WDR
+REQ_verif_exist_nord_chrono.WDR
+REQ_verif_num_chrono_enrg.WDR
+REQ_ajout_reg_chrono.WDR
+REQ_grp_user.WDR
+ETAT_R_chrono1.wde
+ETAT_R_chrono.wde
+REQ_single_R_chrono.WDR
+REQ_signle_group_etat.WDR
+REQ_texte_modif_champ.WDR
+REQ_list_reg_chrono_d1_d2.WDR
+FEN_Visions_reg_chrono.wdw
+FEN_Registres_Chronologiques_en_Instance.wdw
+REQ_vali_reg_chrono.WDR
+REQ_verif_imm_chrono.WDR
+REQ_imm_reg_chrono.WDR
+FEN_Observation_Verification.wdw
+REQ_docs_rchrono.WDR
+REQ_maj_observ_chrono.WDR
+REQ_list_reg_chrono_d1_d2_acomp.WDR
+FEN_Registres_Chronologiques_A_completer.wdw
+FEN_Registres_Chronologiques_validés.wdw
+FEN_Observation_Verification_a_completer.wdw
+FEN_Fiche_Registre_Analytique_Personne_Physique.wdw
+FEN_Domaine_d_Activités_rap.wdw
+ETAT_RA_ph.wde
+ETAT_RA_ph_arb.wde
+ETAT_RA_ph_fr.wde
+REQ_list_brevets.WDR
+FEN_Brevets.wdw
+FEN_Registres_Chronologiques_validés_RA.wdw
+REQ_maj_num_ph.WDR
+REQ_verif_num_ra.WDR
+REQ_signle_group_etat_post.WDR
+REQ_verif_mac_grp.WDR
+REQ_modif_etat_group_tous.WDR
+REQ_modif_etat_group.WDR
+FEN_Vision_Registre_Analytiques.wdw
+REQ_list_RA_d1_d2.WDR
+REQ_maj_num_pm.WDR
+FEN_Fiche_Registre_Analytique_Personne_Morale.wdw
+REQ_list_form_jurdiq.WDR
+FEN_Forme_Juridique_REG_ANA.wdw
+FEN_Brevets_RA.wdw
+REQ_list_ass_RA.WDR
+FEN_Associes.wdw
+FEN_Associes_modif_RA.wdw
+FEN_Gerants.wdw
+REQ_list_fonct_gerant.WDR
+FEN_Gerants_modif.wdw
+FEN_Modification_Brevets.wdw
+FEN_Fiche_Registre_Analytique_succursale.wdw
+FEN_Gerants_succ.wdw
+FEN_Gerants_modif_succ_dmd.wdw
+ETAT_RA_pm_sc.wde
+ETAT_RA_pm_sc_fr.wde
+ETAT_RA_pm_sc_arab.wde
+REQ_typ_control.WDR
+FEN_Fiche_be_ass.wdw
+FEN_Fiche_be_ass_gbi.wdw
+FEN_Fiche_be_ass_cb.wdw
+FEN_Fiche_be_cb.wdw
+REQ_verif_ref_be.WDR
+FEN_Fiche_rbe_CJ.wdw
+GENSTEEL_BREAK_PICT.PNG
+FEN_Fen_Constituant.wdw
+FEN_Fen_Constituant_pm.wdw
+FEN_Fudiciaire_ph.wdw
+FEN_Fiduciaire_pm.wdw
+FEN_Fiche_be_ass_gbi_cj.wdw
+FEN_Fiche_be_ass_gbi_cj_modif.wdw
+FEN_Format.wdw
+KL.JPG
+FEN_import_cj2.wdw
+FEN_Format_cj_2.wdw
+FEN_Fiche_be_cj_cb.wdw
+FEN_Fiche_be_cj_cb_modif.wdw
+FEN_import_cj3.wdw
+FEN_Format_cj_3.wdw
+FEN_import_ass3.wdw
+FEN_import_as4.wdw
+FEN_import_ass5.wdw
+FEN_Fen_Constituant_ph_be.wdw
+FEN_Fen_Constituant_pm_be.wdw
+FEN_Structure.wdw
+FEN_Fiche_be_ass_gbi_cj_1.wdw
+ETAT_RA_pm.wde
+ETAT_RA_pm_arb_rd.wde
+FEN_Fiche_Registre_Analytique_Personne_Physique_modif.wdw
+ETAT_RA_pm_ard.wde
+REQ_list_gerant.WDR
+ETAT_gerant1.wde
+ETAT_gerant.wde
+REQ_list_docs_RA.WDR
+REQ_supp_brevets_ra.WDR
+REQ_supp_docs_ra.WDR
+FEN_Domaine_d_Activités_rap_modif.wdw
+FEN_Brevets_ph_modif.wdw
+FEN_Registre_Analytique_Personne_Physique_Succursale.wdw
+FEN_Fiche_Registre_Analytique_Personne_Morale_modif.wdw
+REQ_supp_ass_ra.WDR
+REQ_supp_gerant_ra.WDR
+FEN_Gerants_ph_succ.wdw
+FEN_Gerants_modif_succ_ph.wdw
+FEN_Fiche_Registre_Analytique_succursale_modiif.wdw
+FEN_Gerants_succ_modif.wdw
+REQ_single_RA_Sc.WDR
+FEN_Brevets_RA_modif.wdw
+FEN_Modification_Brevets_modif.wdw
+FEN_Associes_modification.wdw
+FEN_Associes_modif_RA_modif.wdw
+FEN_Modification_Gerants.wdw
+FEN_Gerants_modif_modif.wdw
+FEN_Brevets_ph_modif_modif.wdw
+FEN_Gerants_modif_succ_modif.wdw
+FEN_Registre_Analytique_Personne_Physique_Succursale_1.wdw
+FEN_Gerants_ph_succ_modif.wdw
+ETAT_gerant_sc1.wde
+ETAT_gerant_sc.wde
+ETAT_gerant_arb_sc1.wde
+ETAT_gerant_arb_sc.wde
+FEN_Registre_Analytique_Personne_Morale_Succursale.wdw
+FEN_Gerants_pm_succ.wdw
+FEN_Gerants_pm_succ_modif.wdw
+FEN_Demande_de_Modification_PM.wdw
+FEN_REGISTRE.wdw
+REQ_verif_exist_nord_dmd.WDR
+REQ_single_an_dmd.WDR
+REQ_modif_nor_dmd.WDR
+FEN_Fiche_be_modif.wdw
+FEN_Fiche_be_ass_modif.wdw
+REQ_single_be_soc.WDR
+ETAT_BE_RA_pm_fr.wde
+ETAT_be_soc.wde
+FEN_Fiche_be_ass_gbi_modif.wdw
+FEN_Fiche_be_ass_cb_modif.wdw
+ETAT_be_ass.wde
+FEN_Domaine_d_Activités_cj.wdw
+FEN_Fen_Constituant_ph_modif.wdw
+FEN_Fen_Constituant_pm_modif.wdw
+ETAT_be_cj.wde
+REQ_constituant_be.WDR
+REQ_ficuciaire_be.WDR
+ETAT_CONST.wde
+ETAT_FIDUC.wde
+REQ_list_be.WDR
+FEN_Vision_BE.wdw
+REQ_list_be_as_soc_cj.WDR
+FEN_Demande_de_Modification_PH.wdw
+FEN_Demande_de_Modification_SUCC.wdw
+ETAT_RA_ph_arb_cess.wde
+ETAT_RA_ph_fr_cess.wde
+ETAT_RA_ph_arb_modif.wde
+ETAT_RA_ph_fr_modif.wde
+ETAT_RA_pm_arb_cess.wde
+ETAT_RA_pm_arb_modif.wde
+ETAT_RA_pm_fr_cession.wde
+FEN_Demande_de_Cession_ph.wdw
+FEN_Demande_de_Cession_pm.wdw
+FEN_REGISTRE_CESSION.wdw
+REQ_LIST_declarations.WDR
+FEN_Fiche_be_cp.wdw
+FEN_Fiche_be_soc_cp_modif.wdw
+FEN_Fiche_documents_reg_be.wdw
+FEN_Table_documents_reg_be.wdw
+FEN_Vision_documents_reg_be.wdw
+FEN_MENU.wdw
+ETAT_Details_documents_reg_be.wde
+GENSTEEL_REPORT_LOGO.GIF
+ETAT_Liste_documents_reg_be.wde
+FEN_REGISTRE_Radiation.wdw
+FEN_Demande_de_Radiation.wdw
+REQ_liste_demand.WDR
+FEN_vision_demandes.wdw
+FEN_Demande_de_Modification_PM_valid.wdw
+REQ_lign_dmd.WDR
+REQ_verif_exist_nord_m_css.WDR
+REQ_single_an_m_css.WDR
+REQ_verif_exist_nord_radia.WDR
+REQ_modif_nor_m_css.WDR
+REQ_modif_ra_cod1.WDR
+REQ_modif_ra_cod2.WDR
+REQ_modif_ra_cod3.WDR
+REQ_modif_ra_cod4.WDR
+REQ_modif_ra_cod5.WDR
+REQ_modif_ra_cod6.WDR
+REQ_modif_ra_cod7.WDR
+REQ_modif_ra_cod8.WDR
+REQ_modif_ra_cod9.WDR
+REQ_modif_ra_cod10_1.WDR
+REQ_modif_ra_cod10_2_3.WDR
+REQ_modif_ra_cod11.WDR
+REQ_modif_ra_cod12.WDR
+REQ_modif_ra_cod13.WDR
+REQ_modif_ra_cod14.WDR
+REQ_modif_cod15.WDR
+REQ_modif_ra_cod15.WDR
+REQ_modif_etat_dmd.WDR
+FEN_imp_modification.wdw
+REQ_single_lign_modif.WDR
+ETAT_RA_sucr_fr_modif.wde
+ETAT_RA_ph_arb_rd.wde
+ETAT_RA_ph_fr_rad.wde
+ETAT_RA_sucr_fr_rd.wde
+ETAT_RA_sucur_arb_rd.wde
+ETAT_RA_sucur_arb_modif.wde
+ETAT_RA_pm_fr_rd.wde
+ETAT_RA_pm_fr_modif.wde
+FEN_vision_demandes_saisi.wdw
+REQ_list_champ_modif.WDR
+ETAT_champs_modif_arb_pm.wde
+ETAT_champs_modif_pm.wde
+FEN_Gerants_mdf.wdw
+FEN_Brevets_mdf.wdw
+FEN_Gerants_mdf_ph.wdw
+FEN_Brevets_mdf_ph.wdw
+FEN_Gerants_mdf_succ.wdw
+FEN_Brevets_mdf_succ.wdw
+FEN_Demande_de_Modification_PH_VALID.wdw
+ETAT_champs_modif_arb.wde
+ETAT_champs_modif_pm_sc.wde
+FEN_Demande_de_Modification_SUCC_VALID.wdw
+FEN_Demande_de_Cession_ph_valid.wdw
+REQ_list_ra_et_succ.WDR
+FEN_Demande_de_Cession_pm_valid.wdw
+REQ_nb_ass.WDR
+REQ_singla_ass.WDR
+REQ_maj_part_ass.WDR
+REQ_supp_ass_ra_single.WDR
+REQ_ajout_associe.WDR
+REQ_emp_scan.WDR
+REQ_supp_docs_ra_single.WDR
+REQ_supp_docs_ra_single1.WDR
+REQ_modif_pph_cession.WDR
+FEN_RECHERCHE_REG_Ana.wdw
+FEN_Fiche_Registre_Analytique_Personne_Morale_modif_rech.wdw
+FEN_Fiche_Registre_Analytique_Personne_Physique_modif_rech.wdw
+FEN_Fiche_Registre_Analytique_succursale_modiif_rech.wdw
+FEN_Demande_de_Radiation_validation.wdw
+REQ_maj_statut.WDR
+FEN_Fiche_nationalite.wdw
+FEN_Table_nationalite.wdw
+FEN_Vision_nationalite.wdw
+ETAT_Details_nationalite.wde
+ETAT_Liste_nationalite.wde
+FEN_Nalionalités.wdw
+REQ_verif_exist_nationalite.WDR
+REQ_modif_nationalite.WDR
+REQ_supp_nationalite.WDR
+FEN_Fonctions.wdw
+REQ_verif_exist_fonct.WDR
+REQ_modif_fonct.WDR
+REQ_supp_fonct.WDR
+FEN_Forme_Juridique_fonctions.wdw
+FEN_FJ_FONCTIONS.wdw
+REQ_verif_exist_fonct_fj.WDR
+REQ_verif_exist_ordre.WDR
+REQ_modif_ordre.WDR
+REQ_supp_fonct_fj.WDR
+FEN_Gerants_mdf_ph_valid.wdw
+FEN_Brevets_mdf_valid.wdw
+FEN_Brevets_mdf_ph_valid.wdw
+REQ_modif_ra_cod1_1.WDR
+REQ_maj_gerant_cess.WDR
+ETAT_champs_modif1.wde
+ETAT_champs_modif.wde
+REQ_list_modif_RA.WDR
+REQ_ann_demand.WDR
+REQ_ann_lign_demand.WDR
+REQ_maj_nb_ass.WDR
+FEN_Associes_modification_rech.wdw
+FEN_Associes_modif_RA_modif_rech.wdw
+REQ_verif_nni.WDR
+REQ_single_nni_datm.WDR
+FEN_reg_memo.wdw
+FEN_Liste_Modifications.wdw
+FEN_Gerants_modif_modif_rech.wdw
+FEN_Modification_Brevets_modif_rech.wdw
+REQ_list_doc_demand.WDR
+FEN_Fiche_demand_REG_Ana.wdw
+GENSTEEL_CBOX.PNG
+FEN_Table_demand_REG_Ana.wdw
+FEN_Vision_demand_REG_Ana.wdw
+ETAT_Details_demand_REG_Ana.wde
+ETAT_Liste_demand_REG_Ana.wde
+FEN_Vision_demd_Registre_Analytiques.wdw
+REQ_list_RA_d1_d2_dmd.WDR
+FEN_Vision_demd_Registre_Analytiques_saisi.wdw
+FEN_Demande_Personne_Morale.wdw
+FEN_Demande__Personne_Physique.wdw
+FEN_Demande_Succursale.wdw
+REQ_list_RA_d1_d2_dmd_1.WDR
+FEN_Validation_Personne_Morale.wdw
+RETOUR.PNG
+FEN_Validation_Personne_Physique.wdw
+FEN_Validation_succursale.wdw
+FEN_Associes_rbe.wdw
+AJOUT.PNG
+BOUTON MODIFIER.PNG
+SUPPRIMER.PNG
+FEN_Entite.wdw
+FEN_Entite_modif.wdw
+REQ_dern_decl_be.WDR
+FEN_Associes_modification_valid.wdw
+FEN_Associes_modif_RA_modif_valid.wdw
+FEN_Gerants_valid_PM.wdw
+FEN_Gerants_valid_pm_modif.wdw
+REQ_list_be_decla.WDR
+FEN_declarations_societe.wdw
+REQ_list_delarations1.WDR
+REQ_list_be_declara.WDR
+FEN_Fen.wdw
+FEN_Associes_rbe_1.wdw
+REQ_list_ass_RA_typ.WDR
+FEN_Entite_1.wdw
+FEN_Entite_modif_1.wdw
+FEN_Modification_Demande_Personne_Morale.wdw
+REQ_list_RA_d1_d2_dmd_2.WDR
+REQ_supp_gerantsBE.WDR
+REQ_retour_immatri.WDR
+FEN_Associes_rbe_valid.wdw
+FEN_Entite_valid.wdw
+FEN_Entite_modif_valid.wdw
+FEN_Associes_rbe_modif.wdw
+FEN_Demande__Personne_Physique_ex.wdw
+FEN_Brevets_ex.wdw
+FEN_Demande_Personne_Morale_ex.wdw
+FEN_Gerants_ex.wdw
+FEN_Gerants_modif_ex.wdw
+FEN_Brevets_RA_ex.wdw
+FEN_Modification_Brevets_ex.wdw
+FEN_Associes_ex.wdw
+FEN_Associes_modif_RA_ex.wdw
+FEN_Demande_Succursale_ex.wdw
+FEN_Gerants_succ_ex.wdw
+FEN_Gerants_modif_succ_ex.wdw
+FEN_Gerants_succ_modif_rech.wdw
+FEN_Gerants_modif_succ_rech.wdw
+FEN_Gerants_succ_modif_1.wdw
+FEN_Gerants_succ_valid.wdw
+FEN_Gerants_modif_succ_valid.wdw
+FEN_Gerants_succ_rech.wdw
+REQ_verif_sarl.WDR
+FEN_demande_Personne_Morale_modif.wdw
+FEN_Gerants_valid_PM_1.wdw
+FEN_Gerants_valid_pm_modif_1.wdw
+FEN_Associes_modification_valid_1.wdw
+FEN_Associes_modif_RA_modif_valid_1.wdw
+FEN_Brevets_RA_modif_1.wdw
+FEN_Modification_Brevets_modif_1.wdw
+FEN_Associes_rbe_2.wdw
+FEN_Entite_2.wdw
+FEN_Entite_modif_2.wdw
+FEN_demande__personne_physique_modif.wdw
+FEN_Brevets_ph_modif_1.wdw
+FEN_Brevets_ph_modif_modif_1.wdw
+FEN_demande_succursale_modif.wdw
+FEN_Gerants_succ_valid_1.wdw
+FEN_Gerants_modif_succ_valid_1.wdw
+ETAT_titre_recette.wde
+FEN_Associes_succ.wdw
+FEN_Entite_3.wdw
+FEN_Entite_modif_3.wdw
+FEN_Associes_succ_modif.wdw
+FEN_Entite_4.wdw
+REQ_verif_ref_depot.WDR
+FEN_Entite_modif_4.wdw
+FEN_Associes_succ_valid.wdw
+FEN_Entite_5.wdw
+FEN_Entite_modif_5.wdw
+FEN_Brevets_RA_ph.wdw
+FEN_Associes_chrono.wdw
+FEN_Associes_modif_RA_chrono.wdw
+FEN_Associes_rbe_chrono.wdw
+FEN_Entite_chrono.wdw
+FEN_Entite_modif_chrono.wdw
+FEN_Gerants_chrono.wdw
+FEN_Gerants_modif_chrono.wdw
+FEN_Fiche_Registre_Chronologique_modif.wdw
+REQ_list_ass_chrono.WDR
+REQ_list_gerants_chrono.WDR
+REQ_list_be_crono.WDR
+REQ_supp_be_chrono.WDR
+REQ_supp_gerant_chrono.WDR
+REQ_supp_ass_chrono.WDR
+REQ_supp_docs_chrono.WDR
+FEN_Associes_chrono_1.wdw
+FEN_Associes_modif_RA_chrono_1.wdw
+FEN_Associes_rbe_chrono_1.wdw
+FEN_Entite_chrono_1.wdw
+FEN_Entite_modif_chrono_1.wdw
+FEN_Gerants_chrono_1.wdw
+FEN_Gerants_modif_chrono_1.wdw
+REQ_list_ass_crono.WDR
+REQ_list_gerant_chrono.WDR
+REQ_list_rbe_crono.WDR
+ETAT_R_chrono_fr.wde
+ETAT_R_chrono_arab.wde
+FEN_Impression_rchrono.wdw
+REQ_nb_ass_crono.WDR
+REQ_list_fonct_FJ.WDR
+REQ_list_fonctions.WDR
+FEN_Impression_rchrono_1.wdw
+FEN_Visions_reg_chrono_1.wdw
+REQ_list_reg_chrono_d1_d2_1.WDR
+FEN_Fiche_Registre_Chronologique_modif_1.wdw
+FEN_Impression_rchrono_2.wdw
+FEN_Associes_rbe_chrono_modif.wdw
+FEN_Associes_rbe_chrono_succ.wdw
+FEN_Entite_chrono_succ.wdw
+FEN_Entite_modif_chrono_succ.wdw
+FEN_Associes_rbe_chrono_succ_modif.wdw
+FEN_Entite_chrono_succ_1.wdw
+FEN_Entite_modif_chrono_succ_1.wdw
+REQ_list_docs_chrono.WDR
+FEN_Gerants_modif_dmd_pf.wdw
+FEN_Gerants_dmd.wdw
+FEN_Gerants_dmd_1.wdw
+FEN_Gerants_modif_dmd_pf_1.wdw
+FEN_Gerants_dmd_2.wdw
+FEN_Gerants_modif_dmd_pf_2.wdw
+FEN_Associes_rbe_pm.wdw
+ETAT_gerant_arb3.wde
+ETAT_gerant_arb2.wde
+FEN_Demande_de_Modification_PH_modif.wdw
+FEN_Demande_de_Modification_PM_modif.wdw
+FEN_Demande_de_Modification_SUCC_modif.wdw
+FEN_Demande_de_Cession_ph_modif.wdw
+FEN_Demande_de_Cession_pm_modif.wdw
+REQ_supp_rub_dmd.WDR
+FEN_Modification_procedure.wdw
+FEN_Gerants_mdf_ph1.wdw
+FEN_Brevets_mdf1.wdw
+REQ_verif_num_ra1.WDR
+FEN_Associes_modif_RA_dmd.wdw
+REQ_lign_declaration.WDR
+FEN_declaration.wdw
+FEN_Associes_rbe_chrono_decl.wdw
+FEN_Entite_chrono_decl.wdw
+FEN_Entite_modif_chrono_decl.wdw
+REQ_supp_champ_dmd.WDR
+REQ_supp_docs_dmd.WDR
+FEN_Fiche_Modification_ph.wdw
+FEN_Gerants_mdf_ph2.wdw
+FEN_Brevets_mdf2.wdw
+FEN_Fiche_Modification_pm.wdw
+FEN_Gerants_mdf1.wdw
+FEN_Brevets_mdf3.wdw
+FEN_Fiche_Modification_pm_sc.wdw
+FEN_Gerants_mdf2.wdw
+FEN_Brevets_mdf4.wdw
+REQ_maj_etat_dmd.WDR
+REQ_user_visions.WDR
+REQ_modif_nor_m_css1.WDR
+REQ_modif_nord_m_css.WDR
+REQ_single_ra.WDR
+REQ_suppdoc.WDR
+REQ_list_docs_RA1.WDR
+REQ_suppdocchrono.WDR
+REQ_statut.WDR
+FEN_Traduction.wdw
+REQ_list_champ_traduc.WDR
+REQ_verif_traduc.WDR
+REQ_modif_cod_champ.WDR
+FEN_Gerants_Modification_rech.wdw
+REQ_single_doc.WDR
+REQ_ann_RA.WDR
+REQ_reg_ass.WDR
+REQ_ann_ass.WDR
+REQ_ann_gerant.WDR
+REQ_ann_docs.WDR
+REQ_reg_ass1.WDR
+REQ_vali_reg_chron_maj.WDR
+REQ_list_ra_d1_d21.WDR
+REQ_list_ass_RA_rbe.WDR
+FEN_Vision_Registre_Analytiques_1.wdw
+REQ_RA_1_2.WDR
+ETAT_Table_REQ_list_RA_d1_d2.wde
+FEN_Gerants_chrono_2.wdw
+ETAT_attest_depot.wde
+FEN_Fiche_delai.wdw
+FEN_Table_delai.wdw
+FEN_Vision_delai.wdw
+ETAT_Details_delai.wde
+ETAT_Liste_delai.wde
+REQ_list_RA_d1_d2_del.WDR
+FEN_Vision_Registre_Analytiques_R.wdw
+FEN_Fiche_Nordre4.wdw
+FEN_Table_Nordre4.wdw
+FEN_Vision_Nordre4.wdw
+ETAT_Details_Nordre4.wde
+ETAT_Liste_Nordre4.wde
+REQ_ajout_an_depot1.WDR
+REQ_list_an_depot1.WDR
+REQ_single_an_depot1.WDR
+REQ_modif_nor_depot1.WDR
+FEN_Fiche_Depôt.wdw
+REQ_verif_exist_nord_depot1.WDR
+REQ_verif_ref_depot1.WDR
+REQ_list_soc_nni_ass.WDR
+REQ_list_soc_nni_gerant.WDR
+FEN_Recherche_NNI.wdw
+REQ_list_soc_nni_dr.WDR
+FEN_Fiche_documents_reg_depot2.wdw
+FEN_Table_documents_reg_depot2.wdw
+FEN_Vision_documents_reg_depot2.wdw
+ETAT_Details_documents_reg_depot2.wde
+ETAT_Liste_documents_reg_depot2.wde
+FEN_vision_reg_depots1.wdw
+ETAT_attest_depot_arab.wde
+FEN_Fiche_Depôt_modif.wdw
+REQ_list_docs_depot1.WDR
+REQ_modif_reg_depot1.WDR
+REQ_list_reg_depot_d1_d2_1.WDR
+REQ_modif_typ_ass.WDR
+REQ_list_docs_rbe.WDR
+REQ_single_doc_rbe.WDR
+REQ_single_depot1.WDR
+REQ_modif_nor_modif_be.WDR
+FEN_Fiche_Registre_Analytique_Personne_Physique_modif_R.wdw
+FEN_Brevets_ph_modif_R.wdw
+FEN_Fiche_Registre_Analytique_Personne_Morale_modif_R.wdw
+FEN_Gerants_Modification_R.wdw
+FEN_Gerants_modif_modif_R.wdw
+FEN_Brevets_RA_modif_R.wdw
+FEN_Modification_Brevets_modif_R.wdw
+FEN_Associes_modification_R.wdw
+FEN_Associes_modif_RA_modif_R.wdw
+FEN_Fiche_Registre_Analytique_succursale_modiif_R.wdw
+FEN_Gerants_succ_modif_1_R.wdw
+FEN_Gerants_pm_succ_modif_R.wdw
+FEN_Liste_Modifications_Gen.wdw
+REQ_list_modif_RA_gen.WDR
+Registre.wdy
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\Gensteel.wdy
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_BANNER_BOTTOM.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_BANNER_TOP.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_BREAK.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_BTN_APP_BACK.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_BTN_MEDIA_BCKGRD.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_BTN_MEDIA_CENTER.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_BTN_MEDIA_OK.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_BTN_MEDIA_RIGHT.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_BTN_MENU.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_BTN_MENU2.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_BTN_MENU3.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_BTN_REMOVE.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_BTN_SYST_CLOSE.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_BTN_SYST_INCREASE.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_BTN_SYST_MINIMIZE.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_BTN_TOOL.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_EDT_READONLY.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_FRAME.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_LIB_MEDIA.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_ADD_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_BACK_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_BRWFIRST_H_24_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_BRWFIRST_V_24_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_BRWFORWARD_H_24_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_BRWFORWARD_V_24_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_BRWLAST_H_24_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_BRWLAST_V_24_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_BRWNEXT_H_24_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_BRWNEXT_V_24_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_COPY_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_CUT_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_DETAIL_16_2.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_HELP_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_HOME_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_IMPORT_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_LINK_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_LIST_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_LOGOFF_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_NAVIGFORWARD_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_NAVIGNEXT_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_OPEN_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_PARENTFOLDER_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_PASTE_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_PLANENEXT_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_REDO_24_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_REFRESH_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_REPAIR_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_SAVE_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_SEARCH_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_SYST_CLOSE_5.GIF
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_SYST_MAXIMISE_5.GIF
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_SYST_MINIMIZE_5.GIF
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_SYST_RESTORE_5.GIF
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_SYST_UMC_5.GIF
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_TRAD_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_UNDO_24_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PICT_VISIONPLUS_16_5.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PROGBAR_ACTIV.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PROGBAR_BG.GIF
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PROGBAR_C_BCKGRD.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PROGBAR_C_BORDER.SVG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PROGBAR_C_CENTER.SVG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PROGBAR_C_CENTER2.SVG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PROGBAR_V_ACTIV.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_PROGBAR_V_BG.GIF
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_RIBBON_BG.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_RIBBON_SEPAR.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_SIDE.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_SIDE_LIGHT.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_SLD_BCKGRD.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_SLD_CURSOR.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_SLD_V_BCKGRD.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_SLD_V_CURSOR.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_SPIN_BTNV_LESS.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_SPIN_BTNV_MORE.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_SPIN_BTN_LESS.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_SPIN_BTN_MORE.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_SPLITER_GRIP_H.GIF
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_SPLITER_GRIP_V.GIF
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_SPLITTER_BG.GIF
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_TAB_BOTTOM_BG.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_TAB_LEFT_BG.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_TAB_MDI_TOP.PNG
+C:\WinDev 20\Personnel\Gabarits\190 Gensteel\GENSTEEL_TAB_RIGHT_BG.PNG

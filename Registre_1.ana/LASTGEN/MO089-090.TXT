@@ -1,0 +1,4 @@
+//MO089-090.TXT ANA00089 TO ANA00090
+REG_Ana		TAR	24359	nouvelle taille enregistrement : 24359
+REG_Ana	dat_dmd	RUB+		dat_dmd est une nouvelle clé
+REG_Ana	etat_demand	RUB+		etat_demand est une nouvelle clé

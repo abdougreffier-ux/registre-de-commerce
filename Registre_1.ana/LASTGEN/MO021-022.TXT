@@ -1,0 +1,7 @@
+//MO021-022.TXT ANA00021 TO ANA00022
+Gerants_Fiduciare		TAR	14054	nouvelle taille enregistrement : 14054
+Gerants_Fiduciare	users_nom	RUB-		la clé users_nom est supprimée
+Gerants_Fiduciare	GRP	RUB-		la clé GRP est supprimée
+Gerants_Fiduciare	obj	RUB-		la clé obj est supprimée
+Gerants_Fiduciare	users	RUB-		la clé users est supprimée
+Gerants_Fiduciare	obj_fud	RUB-		la clé obj_fud est supprimée

@@ -1,0 +1,3 @@
+//MO032-033.TXT ANA00032 TO ANA00033
+champs_modif_demand		NFI		nouveau fichier
+demande_modif		NWL	demande_modif (IDdemande_modif) et champs_modif_demand (IDdemande_modif)	Nouvelle liaison entre les fichiers demande_modif (IDdemande_modif) et champs_modif_demand (IDdemande_modif)

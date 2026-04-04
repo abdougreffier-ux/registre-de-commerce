@@ -1,0 +1,3 @@
+//MO110-111.TXT ANA00110 TO ANA00111
+documents_reg_analytiq		FRN		
+num_ana	num	RRN		

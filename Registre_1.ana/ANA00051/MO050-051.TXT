@@ -1,0 +1,2 @@
+//MO050-051.TXT ANA00050 TO ANA00051
+documents_reg_be	IDrEG_be	NNR	IDREG_Ana	ATTENTION : la clé IDREG_Ana a pour nouveau nom IDrEG_be

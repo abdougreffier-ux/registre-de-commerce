@@ -1,0 +1,4 @@
+//MO055-056.TXT ANA00055 TO ANA00056
+lignes_Reg_ana		TAR	24957	nouvelle taille enregistrement : 24957
+lignes_Reg_ana	Iddoc	RUB+		Iddoc est une nouvelle clé
+documents_deman_modif		NWL	documents_deman_modif (iddoc) et lignes_Reg_ana (Iddoc)	Nouvelle liaison entre les fichiers documents_deman_modif (iddoc) et lignes_Reg_ana (Iddoc)

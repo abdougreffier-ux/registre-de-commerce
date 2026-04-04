@@ -1,0 +1,5 @@
+//MO096-097.TXT ANA00096 TO ANA00097
+REG_chrono		TAR	14361	nouvelle taille enregistrement : 14361
+REG_chrono	dat_dpot	RUB+		dat_dpot est une nouvelle clé
+REG_chrono	duree	RUB+		duree est une nouvelle clé
+REG_chrono	capital	RUB+		capital est une nouvelle clé

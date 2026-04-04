@@ -1,0 +1,6 @@
+//MO031-032.TXT ANA00031 TO ANA00032
+demande_modif		TAR	5810	nouvelle taille enregistrement : 5810
+demande_modif	num	RUB+		num est une nouvelle clé
+demande_modif	IDREG_Ana	RUB+		IDREG_Ana est une nouvelle clé
+demande_modif	nom_p_denom	RUB+		nom_p_denom est une nouvelle clé
+demande_modif	etat_demand	RUB+		etat_demand est une nouvelle clé

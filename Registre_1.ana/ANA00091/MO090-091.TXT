@@ -1,0 +1,3 @@
+//MO090-091.TXT ANA00090 TO ANA00091
+Gerants_BE		TAR	14084	nouvelle taille enregistrement : 14084
+Gerants_BE	entites	RUB+		entites est une nouvelle clé

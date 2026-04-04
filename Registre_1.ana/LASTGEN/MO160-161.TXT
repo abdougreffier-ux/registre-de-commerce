@@ -1,0 +1,2 @@
+//MO160-161.TXT ANA00160 TO ANA00161
+Reg_depot1		NFI		nouveau fichier

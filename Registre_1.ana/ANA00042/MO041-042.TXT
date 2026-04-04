@@ -1,0 +1,6 @@
+//MO041-042.TXT ANA00041 TO ANA00042
+demande_modif		TAR	9730	nouvelle taille enregistrement : 9730
+demande_modif	part_ini_cd	RUB+		part_ini_cd est une nouvelle clé
+demande_modif	nv_part_cd	RUB+		nv_part_cd est une nouvelle clé
+demande_modif	part_ini_cess	RUB+		part_ini_cess est une nouvelle clé
+demande_modif	nv_part_cess	RUB+		nv_part_cess est une nouvelle clé

@@ -1,0 +1,13 @@
+//MO138-139.TXT ANA00138 TO ANA00139
+sat_rbe		TAR	5390	nouvelle taille enregistrement : 5390
+sat_rbe	chrono_RA	RUB+		chrono_RA est une nouvelle clé
+sat_rbe	dateev	RUB+		dateev est une nouvelle clé
+sat_rbe	denom_social	RUB+		denom_social est une nouvelle clé
+sat_rbe	nationalt	RUB+		nationalt est une nouvelle clé
+sat_rbe	contact	RUB+		contact est une nouvelle clé
+sat_rbe	gerant_direct	RUB+		gerant_direct est une nouvelle clé
+sat_rbe	form_juridiq	RUB+		form_juridiq est une nouvelle clé
+sat_rbe	nb_ass	RUB+		nb_ass est une nouvelle clé
+sat_rbe	rbe	RUB+		rbe est une nouvelle clé
+sat_rbe	domaine	RUB+		domaine est une nouvelle clé
+sat_rbe	liens	RUB+		liens est une nouvelle clé

@@ -1,0 +1,3 @@
+//MO081-082.TXT ANA00081 TO ANA00082
+associés		TAR	1545	nouvelle taille enregistrement : 1545
+associés	typ_ass	RUB+		typ_ass est une nouvelle clé

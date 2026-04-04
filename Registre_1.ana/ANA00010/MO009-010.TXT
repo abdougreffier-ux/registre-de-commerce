@@ -1,0 +1,4 @@
+//MO009-010.TXT ANA00009 TO ANA00010
+Gerants_BE		TAR	2646	nouvelle taille enregistrement : 2646
+Gerants_BE	criteres	RUB+		criteres est une nouvelle clé
+Gerants_BE	dat_be	RUB+		dat_be est une nouvelle clé

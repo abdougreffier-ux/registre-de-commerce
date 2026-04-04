@@ -1,0 +1,64 @@
+//MO000-001.TXT ANA00000 TO ANA00001
+associés		NFI		nouveau fichier
+associés_lign		NFI		nouveau fichier
+Attest		NFI		nouveau fichier
+autorisations		NFI		nouveau fichier
+brevets		NFI		nouveau fichier
+Champs_extrait		NFI		nouveau fichier
+Champs_extrait1		NFI		nouveau fichier
+champs_modif		NFI		nouveau fichier
+documents_reg_analytiq		NFI		nouveau fichier
+documents_reg_chrono		NFI		nouveau fichier
+documents_reg_depot		NFI		nouveau fichier
+Domaine_activite		NFI		nouveau fichier
+Employe		NFI		nouveau fichier
+emp_scan		NFI		nouveau fichier
+extrait_1		NFI		nouveau fichier
+forme_juridiq		NFI		nouveau fichier
+Gerants		NFI		nouveau fichier
+Group_signe		NFI		nouveau fichier
+Group_signe_poste		NFI		nouveau fichier
+grp_saisie		NFI		nouveau fichier
+grp_users		NFI		nouveau fichier
+lignes_Reg_ana		NFI		nouveau fichier
+maj_soc		NFI		nouveau fichier
+Nordre		NFI		nouveau fichier
+Nordre1		NFI		nouveau fichier
+Nordre2		NFI		nouveau fichier
+Nordre3		NFI		nouveau fichier
+Nordre_not_use		NFI		nouveau fichier
+Nordre_not_use1		NFI		nouveau fichier
+Nordre_not_use2		NFI		nouveau fichier
+Nordre_not_use3		NFI		nouveau fichier
+num_ana		NFI		nouveau fichier
+num_ana1		NFI		nouveau fichier
+num_ana_inst		NFI		nouveau fichier
+num_ana_inst1		NFI		nouveau fichier
+Organisme		NFI		nouveau fichier
+Poste		NFI		nouveau fichier
+REG_Ana		NFI		nouveau fichier
+REG_Ana_maj		NFI		nouveau fichier
+REG_chrono		NFI		nouveau fichier
+Reg_depot		NFI		nouveau fichier
+rubriq_modif		NFI		nouveau fichier
+Signataire		NFI		nouveau fichier
+Signataire_Group_signe		NFI		nouveau fichier
+sign_depot		NFI		nouveau fichier
+sucursales		NFI		nouveau fichier
+typ_extrait		NFI		nouveau fichier
+typ_maj		NFI		nouveau fichier
+vision_users		NFI		nouveau fichier
+REG_Ana		NWL	REG_Ana (IDREG_Ana) et associés (IDREG_Ana)	Nouvelle liaison entre les fichiers REG_Ana (IDREG_Ana) et associés (IDREG_Ana)
+REG_Ana		NWL	REG_Ana (IDREG_Ana) et brevets (IDREG_Ana)	Nouvelle liaison entre les fichiers REG_Ana (IDREG_Ana) et brevets (IDREG_Ana)
+lignes_Reg_ana		NWL	lignes_Reg_ana (IDlignes_Reg_ana) et champs_modif (IDlignes_Reg_ana)	Nouvelle liaison entre les fichiers lignes_Reg_ana (IDlignes_Reg_ana) et champs_modif (IDlignes_Reg_ana)
+REG_Ana		NWL	REG_Ana (IDREG_Ana) et documents_reg_analytiq (IDREG_Ana)	Nouvelle liaison entre les fichiers REG_Ana (IDREG_Ana) et documents_reg_analytiq (IDREG_Ana)
+REG_chrono		NWL	REG_chrono (IDREG_chrono) et documents_reg_chrono (IDREG_chrono)	Nouvelle liaison entre les fichiers REG_chrono (IDREG_chrono) et documents_reg_chrono (IDREG_chrono)
+Reg_depot		NWL	Reg_depot (IDReg_depot) et documents_reg_depot (IDReg_depot)	Nouvelle liaison entre les fichiers Reg_depot (IDReg_depot) et documents_reg_depot (IDReg_depot)
+REG_Ana		NWL	REG_Ana (IDREG_Ana) et Gerants (IDREG_Ana)	Nouvelle liaison entre les fichiers REG_Ana (IDREG_Ana) et Gerants (IDREG_Ana)
+grp_saisie		NWL	grp_saisie (design) et grp_users (Design)	Nouvelle liaison entre les fichiers grp_saisie (design) et grp_users (Design)
+REG_Ana		NWL	REG_Ana (IDREG_Ana) et lignes_Reg_ana (IDREG_Ana)	Nouvelle liaison entre les fichiers REG_Ana (IDREG_Ana) et lignes_Reg_ana (IDREG_Ana)
+REG_Ana		NWL	REG_Ana (IDREG_Ana) et maj_soc (IDREG_Ana)	Nouvelle liaison entre les fichiers REG_Ana (IDREG_Ana) et maj_soc (IDREG_Ana)
+REG_chrono		NWL	REG_chrono (IDREG_chrono) et REG_Ana (IDREG_chrono)	Nouvelle liaison entre les fichiers REG_chrono (IDREG_chrono) et REG_Ana (IDREG_chrono)
+Domaine_activite		NWL	Domaine_activite (domaine) et REG_chrono (Domaine)	Nouvelle liaison entre les fichiers Domaine_activite (domaine) et REG_chrono (Domaine)
+Reg_depot		NWL	Reg_depot (IDReg_depot) et REG_chrono (IDReg_depot)	Nouvelle liaison entre les fichiers Reg_depot (IDReg_depot) et REG_chrono (IDReg_depot)
+MaConnexion2		CNX+		

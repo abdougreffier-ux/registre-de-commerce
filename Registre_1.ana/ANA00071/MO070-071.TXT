@@ -1,0 +1,2 @@
+//MO070-071.TXT ANA00070 TO ANA00071
+nationalite		NFI		nouveau fichier

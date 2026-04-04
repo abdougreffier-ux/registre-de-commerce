@@ -1,0 +1,3 @@
+//MO064-065.TXT ANA00064 TO ANA00065
+demande_modif		TAR	10956	nouvelle taille enregistrement : 10956
+demande_modif	act_cession	RUB+		act_cession est une nouvelle clé

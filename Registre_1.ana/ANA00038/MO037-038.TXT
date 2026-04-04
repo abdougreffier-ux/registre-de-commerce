@@ -1,0 +1,5 @@
+//MO037-038.TXT ANA00037 TO ANA00038
+champs_modif_demand		TAR	17038	nouvelle taille enregistrement : 17038
+champs_modif_demand	denom_social	RUB+		denom_social est une nouvelle clé
+champs_modif_demand	adr	RUB+		adr est une nouvelle clé
+champs_modif_demand	contact	RUB+		contact est une nouvelle clé

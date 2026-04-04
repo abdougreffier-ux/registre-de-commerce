@@ -1,0 +1,3 @@
+//MO004-005.TXT ANA00004 TO ANA00005
+documents_reg_depot1		TAR	741	nouvelle taille enregistrement : 741
+documents_reg_depot1	emp_doc_actu	RUB+		emp_doc_actu est une nouvelle clé

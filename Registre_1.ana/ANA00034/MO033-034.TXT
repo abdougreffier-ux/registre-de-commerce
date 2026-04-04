@@ -1,0 +1,3 @@
+//MO033-034.TXT ANA00033 TO ANA00034
+Champs_extrait		TAR	10172	nouvelle taille enregistrement : 10172
+Champs_extrait	cod_ch	RUB+		cod_ch est une nouvelle clé

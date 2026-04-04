@@ -1,0 +1,3 @@
+//MO006-007.TXT ANA00006 TO ANA00007
+REG_RBE		NFI		nouveau fichier
+Gerants_BE		NFI		nouveau fichier

@@ -1,0 +1,5 @@
+//MO015-016.TXT ANA00015 TO ANA00016
+REG_RBE		TAR	18589	nouvelle taille enregistrement : 18589
+REG_RBE	IDrEG_be	NNR	IDREG_Ana	ATTENTION : la clé IDREG_Ana a pour nouveau nom IDrEG_be
+REG_RBE	NOrdre	RUB+		NOrdre est une nouvelle clé
+REG_RBE	dat_enrg	RUB+		dat_enrg est une nouvelle clé

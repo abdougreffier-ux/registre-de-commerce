@@ -1,0 +1,21 @@
+//MO022-023.TXT ANA00022 TO ANA00023
+REG_RBE		TAR	16227	nouvelle taille enregistrement : 16227
+REG_RBE	constituant	RUB-		la clé constituant est supprimée
+REG_RBE	ref_ct	RUB-		la clé ref_ct est supprimée
+REG_RBE	Description_ct	RUB-		la clé Description_ct est supprimée
+REG_RBE	contact_ct	RUB-		la clé contact_ct est supprimée
+REG_RBE	obj_const	RUB-		la clé obj_const est supprimée
+REG_RBE	fudiciare	RUB-		la clé fudiciare est supprimée
+REG_RBE	ref_fud	RUB-		la clé ref_fud est supprimée
+REG_RBE	Description_fud	RUB-		la clé Description_fud est supprimée
+REG_RBE	obj_fud	RUB-		la clé obj_fud est supprimée
+REG_RBE	contact_fud	RUB-		la clé contact_fud est supprimée
+Gerants_Constituant		TAR	14953	nouvelle taille enregistrement : 14953
+Gerants_Constituant	users_nom	RUB-		la clé users_nom est supprimée
+Gerants_Constituant	GRP	RUB-		la clé GRP est supprimée
+Gerants_Constituant	obj	RUB-		la clé obj est supprimée
+Gerants_Constituant	users	RUB-		la clé users est supprimée
+Gerants_Constituant	constituant	RUB-		la clé constituant est supprimée
+Gerants_Constituant	obj_const	RUB-		la clé obj_const est supprimée
+Gerants_Fiduciare		TAR	14003	nouvelle taille enregistrement : 14003
+Gerants_Fiduciare	fudiciare	RUB-		la clé fudiciare est supprimée

@@ -1,0 +1,12 @@
+//MO040-041.TXT ANA00040 TO ANA00041
+demande_modif		TAR	9690	nouvelle taille enregistrement : 9690
+demande_modif	Cessionnaire	RUB+		Cessionnaire est une nouvelle clé
+demande_modif	nationalt_cc	RUB+		nationalt_cc est une nouvelle clé
+demande_modif	nni_cession	RUB+		nni_cession est une nouvelle clé
+demande_modif	Cédant	RUB+		Cédant est une nouvelle clé
+demande_modif	nationalt_cd	RUB+		nationalt_cd est une nouvelle clé
+demande_modif	nni_cedant	RUB+		nni_cedant est une nouvelle clé
+demande_modif	Dat_naiss_ced	RUB+		Dat_naiss_ced est une nouvelle clé
+demande_modif	lieu_naiss_cess	RUB+		lieu_naiss_cess est une nouvelle clé
+demande_modif	dat_naiss_cess	RUB+		dat_naiss_cess est une nouvelle clé
+demande_modif	lieu_naiss_cd	RUB+		lieu_naiss_cd est une nouvelle clé

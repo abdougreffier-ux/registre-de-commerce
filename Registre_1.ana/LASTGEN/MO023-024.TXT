@@ -1,0 +1,5 @@
+//MO023-024.TXT ANA00023 TO ANA00024
+Gerants_Constituant		TAR	14902	nouvelle taille enregistrement : 14902
+Gerants_Constituant	contact_ct	RUB-		la clé contact_ct est supprimée
+Gerants_Fiduciare		TAR	13952	nouvelle taille enregistrement : 13952
+Gerants_Fiduciare	contact_fud	RUB-		la clé contact_fud est supprimée

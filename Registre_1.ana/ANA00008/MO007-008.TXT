@@ -1,0 +1,10 @@
+//MO007-008.TXT ANA00007 TO ANA00008
+REG_RBE		TAR	19840	nouvelle taille enregistrement : 19840
+REG_RBE	rens_supp	RUB-		la clé rens_supp est supprimée
+REG_RBE	prinspl_ets	RUB-		la clé prinspl_ets est supprimée
+REG_RBE	origin_f_comerce	RUB-		la clé origin_f_comerce est supprimée
+REG_RBE	nom_commer	RUB-		la clé nom_commer est supprimée
+REG_RBE	loc_gerance	RUB-		la clé loc_gerance est supprimée
+REG_RBE	cre_bail	RUB-		la clé cre_bail est supprimée
+REG_RBE	gerant_direct	RUB-		la clé gerant_direct est supprimée
+REG_RBE	nni_derect	RUB-		la clé nni_derect est supprimée

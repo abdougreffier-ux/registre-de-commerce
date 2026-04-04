@@ -1,0 +1,3 @@
+//MO044-045.TXT ANA00044 TO ANA00045
+demande_modif		TAR	10741	nouvelle taille enregistrement : 10741
+demande_modif	adr_cd	RUB+		adr_cd est une nouvelle clé

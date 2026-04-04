@@ -1,0 +1,5 @@
+//MO027-028.TXT ANA00027 TO ANA00028
+Gerants_Constituant		TAR	15604	nouvelle taille enregistrement : 15604
+Gerants_Constituant	telphone	RUB-		la clé telphone est supprimée
+Gerants_Fiduciare		TAR	14654	nouvelle taille enregistrement : 14654
+Gerants_Fiduciare	telphone	RUB-		la clé telphone est supprimée

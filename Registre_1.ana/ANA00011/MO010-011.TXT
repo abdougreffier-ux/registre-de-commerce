@@ -1,0 +1,2 @@
+//MO010-011.TXT ANA00010 TO ANA00011
+demande_modif		NFI		nouveau fichier

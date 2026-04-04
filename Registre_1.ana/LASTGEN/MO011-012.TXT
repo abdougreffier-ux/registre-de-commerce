@@ -1,0 +1,4 @@
+//MO011-012.TXT ANA00011 TO ANA00012
+demande_modif		TAR	796	nouvelle taille enregistrement : 796
+demande_modif	typ	RUB+		typ est une nouvelle clé
+demande_modif	Des_typ_modif	RUB+		Des_typ_modif est une nouvelle clé

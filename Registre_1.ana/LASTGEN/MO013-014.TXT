@@ -1,0 +1,4 @@
+//MO013-014.TXT ANA00013 TO ANA00014
+Gerants_BE		TAR	3048	nouvelle taille enregistrement : 3048
+Gerants_BE	typ_control	RUB+		typ_control est une nouvelle clé
+Gerants_BE	nat_biens_control	RUB+		nat_biens_control est une nouvelle clé

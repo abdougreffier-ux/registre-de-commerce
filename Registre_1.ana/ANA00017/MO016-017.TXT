@@ -1,0 +1,4 @@
+//MO016-017.TXT ANA00016 TO ANA00017
+Gerants_BE		TAR	3056	nouvelle taille enregistrement : 3056
+Gerants_BE	IDrEG_be	RUB+		IDrEG_be est une nouvelle clé
+REG_RBE		NWL	REG_RBE (IDrEG_be) et Gerants_BE (IDrEG_be)	Nouvelle liaison entre les fichiers REG_RBE (IDrEG_be) et Gerants_BE (IDrEG_be)

@@ -1,0 +1,7 @@
+//MO025-026.TXT ANA00025 TO ANA00026
+Gerants_Constituant		TAR	15608	nouvelle taille enregistrement : 15608
+Gerants_Constituant	form_juridiq	RUB+		form_juridiq est une nouvelle clé
+Gerants_Constituant	cap	RUB+		cap est une nouvelle clé
+Gerants_Fiduciare		TAR	14658	nouvelle taille enregistrement : 14658
+Gerants_Fiduciare	form_juridiq	RUB+		form_juridiq est une nouvelle clé
+Gerants_Fiduciare	cap	RUB+		cap est une nouvelle clé

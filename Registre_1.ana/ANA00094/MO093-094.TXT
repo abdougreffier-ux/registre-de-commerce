@@ -1,0 +1,5 @@
+//MO093-094.TXT ANA00093 TO ANA00094
+Reg_depot		TAR	2552	nouvelle taille enregistrement : 2552
+Reg_depot	ref_depot	RUB+		ref_depot est une nouvelle clé
+Reg_depot	montant	RUB+		montant est une nouvelle clé
+MaConnexion2		CNX		

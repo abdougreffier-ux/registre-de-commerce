@@ -1,0 +1,7 @@
+//MO020-021.TXT ANA00020 TO ANA00021
+Gerants_Constituant		TAR	17660	nouvelle taille enregistrement : 17660
+Gerants_Constituant	IDrEG_be	RUB+		IDrEG_be est une nouvelle clé
+Gerants_Fiduciare		TAR	16710	nouvelle taille enregistrement : 16710
+Gerants_Fiduciare	IDrEG_be	RUB+		IDrEG_be est une nouvelle clé
+REG_RBE		NWL	REG_RBE (IDrEG_be) et Gerants_Fiduciare (IDrEG_be)	Nouvelle liaison entre les fichiers REG_RBE (IDrEG_be) et Gerants_Fiduciare (IDrEG_be)
+REG_RBE		NWL	REG_RBE (IDrEG_be) et Gerants_Constituant (IDrEG_be)	Nouvelle liaison entre les fichiers REG_RBE (IDrEG_be) et Gerants_Constituant (IDrEG_be)

@@ -1,0 +1,4 @@
+//MO028-029.TXT ANA00028 TO ANA00029
+Gerants_BE		TAR	9079	nouvelle taille enregistrement : 9079
+Gerants_BE	num	RUB+		num est une nouvelle clé
+Gerants_BE	num_chrono	RUB+		num_chrono est une nouvelle clé

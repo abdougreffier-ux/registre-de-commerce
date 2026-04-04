@@ -1,0 +1,3 @@
+//MO098-099.TXT ANA00098 TO ANA00099
+REG_chrono		TAR	15666	nouvelle taille enregistrement : 15666
+REG_chrono	nationalt1	RUB+		nationalt1 est une nouvelle clé

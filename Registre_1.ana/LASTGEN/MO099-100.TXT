@@ -1,0 +1,4 @@
+//MO099-100.TXT ANA00099 TO ANA00100
+REG_chrono		TAR	16176	nouvelle taille enregistrement : 16176
+REG_chrono	Dat_naiss	RUB+		Dat_naiss est une nouvelle clé
+REG_chrono	lieu_naiss	RUB+		lieu_naiss est une nouvelle clé

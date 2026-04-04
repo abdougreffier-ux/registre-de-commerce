@@ -1,0 +1,3 @@
+//MO034-035.TXT ANA00034 TO ANA00035
+champs_modif_demand		TAR	14035	nouvelle taille enregistrement : 14035
+champs_modif_demand	VA_champ	RUB+		VA_champ est une nouvelle clé

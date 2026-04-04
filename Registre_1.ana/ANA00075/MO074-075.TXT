@@ -1,0 +1,5 @@
+//MO074-075.TXT ANA00074 TO ANA00075
+forme_juridiq_fonctions		NFI		nouveau fichier
+forme_juridiq_fonctions		FIC-	forme_juridiq_ordre_aff	Fichier supprimé forme_juridiq_ordre_aff
+forme_juridiq		NWL	forme_juridiq (form_juridiq) et forme_juridiq_fonctions (Form_juridiq)	Nouvelle liaison entre les fichiers forme_juridiq (form_juridiq) et forme_juridiq_fonctions (Form_juridiq)
+fonctions		NWL	fonctions (design) et forme_juridiq_fonctions (Design)	Nouvelle liaison entre les fichiers fonctions (design) et forme_juridiq_fonctions (Design)

@@ -1,0 +1,5 @@
+//MO024-025.TXT ANA00024 TO ANA00025
+Gerants_Constituant		TAR	14906	nouvelle taille enregistrement : 14906
+Gerants_Constituant	num_chrono	RUB+		num_chrono est une nouvelle clé
+Gerants_Fiduciare		TAR	13956	nouvelle taille enregistrement : 13956
+Gerants_Fiduciare	num_chrono	RUB+		num_chrono est une nouvelle clé

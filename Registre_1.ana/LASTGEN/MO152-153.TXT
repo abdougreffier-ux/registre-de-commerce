@@ -1,0 +1,6 @@
+//MO152-153.TXT ANA00152 TO ANA00153
+Reg_depot		TAR	5257	nouvelle taille enregistrement : 5257
+Reg_depot	form_juridiq	RUB+		form_juridiq est une nouvelle clé
+Reg_depot	obj	RUB+		obj est une nouvelle clé
+Reg_depot	siege	RUB+		siege est une nouvelle clé
+Reg_depot	capital	RUB+		capital est une nouvelle clé
