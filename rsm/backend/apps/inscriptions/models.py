@@ -418,3 +418,133 @@ class PieceJointe(Horodatage, ActeurTrace):
     class Meta:
         verbose_name = _("Pièce jointe")
         verbose_name_plural = _("Pièces jointes")
+
+
+# --------------------------------------------------------------------------- #
+#  Observations de retour pour correction (workflow Greffier ⇄ Déclarant)     #
+# --------------------------------------------------------------------------- #
+class ObservationRetour(Horodatage):
+    """
+    Observation formulée par le greffier lors d'un retour d'une demande
+    au déclarant pour correction (directive MO 2026-05-31).
+
+    Distinction métier (TDR § 4.3 + arbitrage MO) :
+      - **Rejet (art. 80)** : terminal, motifs limitatifs, demande clôturée.
+        Porté par ``Inscription.motif_rejet`` + ``commentaire_rejet_fr/_ar``.
+      - **Retour pour correction** : réversible, observation libre FR + AR,
+        demande conservée en statut ``RETOURNEE`` jusqu'à resoumission.
+        Porté par ce modèle, en plusieurs exemplaires si plusieurs cycles.
+
+    Garde-fous (TDR § garde-fous inviolables) :
+      - intégrité : append-only applicatif — une observation ne peut être
+        modifiée ni supprimée après création ; seul l'instant_resoumission
+        et l'acteur de resoumission peuvent être renseignés une seule
+        fois lorsque le déclarant resoumet ;
+      - parité FR/AR : les deux textes sont obligatoires et non vides ;
+      - traçabilité : chaque retour et chaque resoumission sont audités
+        séparément (cf. CategorieAudit.RETOUR_CORRECTION).
+    """
+
+    inscription = models.ForeignKey(
+        Inscription,
+        verbose_name=_("Inscription concernée"),
+        on_delete=models.PROTECT,
+        related_name="observations_retour",
+    )
+    observation_fr = models.TextField(
+        _("Observation du greffier (FR)"),
+        help_text=_(
+            "Observation détaillée motivant le retour. Obligatoire et "
+            "non vide. Visible du déclarant."
+        ),
+    )
+    observation_ar = models.TextField(
+        _("Observation du greffier (AR)"),
+        help_text=_(
+            "Observation détaillée motivant le retour, version arabe. "
+            "Obligatoire et non vide. Parité juridique avec FR."
+        ),
+    )
+    cree_par = models.ForeignKey(
+        "utilisateurs.Utilisateur",
+        verbose_name=_("Greffier ayant retourné la demande"),
+        on_delete=models.PROTECT,
+        related_name="retours_emis",
+    )
+    statut_au_moment = models.CharField(
+        _("Statut de l'inscription au moment du retour"),
+        max_length=32,
+    )
+    instant_resoumission = models.DateTimeField(
+        _("Instant de la resoumission par le déclarant"),
+        null=True, blank=True,
+        help_text=_(
+            "Renseigné une seule fois lorsque le déclarant resoumet la "
+            "demande après correction. Immuable ensuite."
+        ),
+    )
+    resoumis_par = models.ForeignKey(
+        "utilisateurs.Utilisateur",
+        verbose_name=_("Déclarant ayant resoumis la demande"),
+        on_delete=models.PROTECT,
+        related_name="resoumissions_effectuees",
+        null=True, blank=True,
+    )
+
+    class Meta:
+        verbose_name = _("Observation de retour")
+        verbose_name_plural = _("Observations de retour")
+        ordering = ("cree_le",)
+        indexes = [
+            models.Index(fields=["inscription", "cree_le"]),
+        ]
+
+    def clean(self):
+        """Validation FR/AR non vides (parité juridique)."""
+        from django.core.exceptions import ValidationError
+        if not (self.observation_fr or "").strip():
+            raise ValidationError({
+                "observation_fr": _(
+                    "L'observation française est obligatoire et non vide."
+                ),
+            })
+        if not (self.observation_ar or "").strip():
+            raise ValidationError({
+                "observation_ar": _(
+                    "L'observation arabe est obligatoire et non vide."
+                ),
+            })
+
+    def save(self, *args, **kwargs):
+        # Append-only : interdire la modification du texte ou de l'auteur
+        # après création. Seuls instant_resoumission et resoumis_par peuvent
+        # être renseignés une fois.
+        if self.pk:
+            ancien = type(self).objects.get(pk=self.pk)
+            for champ in ("observation_fr", "observation_ar",
+                          "cree_par_id", "inscription_id",
+                          "statut_au_moment"):
+                if getattr(ancien, champ) != getattr(self, champ):
+                    raise PermissionError(
+                        f"Champ '{champ}' immuable après création "
+                        "(append-only — art. 79 + intégrité)."
+                    )
+            # instant_resoumission et resoumis_par : une seule fois
+            if (ancien.instant_resoumission is not None
+                    and ancien.instant_resoumission != self.instant_resoumission):
+                raise PermissionError(
+                    "Instant de resoumission déjà figé — immuable."
+                )
+            if (ancien.resoumis_par_id is not None
+                    and ancien.resoumis_par_id != self.resoumis_par_id):
+                raise PermissionError(
+                    "Acteur de resoumission déjà figé — immuable."
+                )
+        else:
+            self.full_clean()
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):  # noqa: D401
+        raise PermissionError(
+            "Suppression interdite (art. 79 — conservation pérenne)."
+        )

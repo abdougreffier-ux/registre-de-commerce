@@ -18,11 +18,14 @@ from apps.inscriptions.serializers import (
     DeposerInscriptionSerializer,
     InscriptionSerializer,
     RejeterInscriptionSerializer,
+    RetournerDemandeSerializer,
 )
 from apps.inscriptions.services import (
     DonneesDemandeInscription,
     creer_demande,
     prononcer_rejet,
+    resoumettre_demande,
+    retourner_demande,
     valider_inscription,
 )
 
@@ -112,6 +115,83 @@ class RejeterInscription(APIView):
             commentaire_ar=payload.validated_data.get("commentaire_ar", ""),
             acteur=request.user,
         )
+        return Response(InscriptionSerializer(inscription).data)
+
+
+# --------------------------------------------------------------------------- #
+#  Workflow Demande ⇄ Inscription : retour & resoumission                    #
+# --------------------------------------------------------------------------- #
+class RetournerDemande(APIView):
+    """
+    Retour d'une demande au déclarant avec observation FR + AR obligatoires.
+
+    Réservé au rôle greffier (autorité de validation). La séparation
+    stricte (acteur ≠ saisie initiale) est appliquée dans le service.
+    """
+
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, reference_demande):
+        payload = RetournerDemandeSerializer(data=request.data)
+        payload.is_valid(raise_exception=True)
+        try:
+            inscription = Inscription.objects.get(
+                reference_demande=reference_demande,
+            )
+        except Inscription.DoesNotExist:
+            return Response(
+                {"detail": "Demande introuvable."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        try:
+            observation = retourner_demande(
+                inscription=inscription,
+                observation_fr=payload.validated_data["observation_fr"],
+                observation_ar=payload.validated_data["observation_ar"],
+                acteur=request.user,
+            )
+        except RejetForme as exc:
+            return Response(
+                {"detail": str(exc), "article": getattr(exc, "article", "")},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        return Response(
+            {
+                "detail": "Demande retournée au déclarant.",
+                "observation_id": observation.pk,
+                "inscription": InscriptionSerializer(inscription).data,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
+class ResoumettreDemande(APIView):
+    """
+    Resoumission d'une demande retournée par le déclarant initial.
+    """
+
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, reference_demande):
+        try:
+            inscription = Inscription.objects.get(
+                reference_demande=reference_demande,
+            )
+        except Inscription.DoesNotExist:
+            return Response(
+                {"detail": "Demande introuvable."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        try:
+            inscription = resoumettre_demande(
+                inscription=inscription,
+                acteur=request.user,
+            )
+        except RejetForme as exc:
+            return Response(
+                {"detail": str(exc), "article": getattr(exc, "article", "")},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         return Response(InscriptionSerializer(inscription).data)
 
 

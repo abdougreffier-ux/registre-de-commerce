@@ -26,10 +26,13 @@ import { useTranslation } from 'react-i18next';
  * Centralisé ici pour qu'aucune divergence ne soit possible entre pages.
  */
 export const VARIANTE_PAR_STATUT = {
-  recue:              'neutre',
-  en_controle_forme:  'info',
-  rejetee:            'rejet',
-  inscrite:           'succes',
+  // Workflow Demande ⇄ Inscription (directive MO 2026-05-31)
+  brouillon:          'neutre',   // gris — non encore engagé
+  recue:              'info',     // bleu — soumise au greffe (en flux)
+  en_controle_forme:  'attente',  // ambre — action greffier requise
+  retournee:          'attente',  // ambre — action déclarant requise
+  rejetee:            'rejet',    // rouge — refus définitif art. 80
+  inscrite:           'succes',   // vert — validée et inscrite
   modifiee:           'succes',
   renouvelee:         'succes',
   radiee:             'attente',

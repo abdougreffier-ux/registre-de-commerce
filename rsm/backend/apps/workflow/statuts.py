@@ -15,8 +15,16 @@ from django.utils.translation import gettext_lazy as _
 
 
 class StatutInscription(models.TextChoices):
-    RECUE = "recue", _("Reçue")
-    EN_CONTROLE_FORME = "en_controle_forme", _("En contrôle de forme")
+    BROUILLON = "brouillon", _(
+        "Brouillon (non encore soumis au greffe)"
+    )
+    RECUE = "recue", _("Reçue / Soumise au greffe")
+    EN_CONTROLE_FORME = "en_controle_forme", _(
+        "En contrôle de forme — en attente de validation"
+    )
+    RETOURNEE = "retournee", _(
+        "Retournée au déclarant pour correction (workflow Greffier ⇄ Déclarant)"
+    )
     REJETEE = "rejetee", _("Rejetée")
     INSCRITE = "inscrite", _("Inscrite (en cours de validité)")
     MODIFIEE = "modifiee", _("Modifiée")
@@ -27,9 +35,13 @@ class StatutInscription(models.TextChoices):
 
 
 # Regroupements utilitaires — fondés sur l'article 77 et le § 4.3 du TDR.
+# Note : ``BROUILLON`` et ``RETOURNEE`` sont des états de demande
+# pré-validation, jamais publiés au fichier public.
 STATUTS_PRE_VALIDATION = frozenset({
+    StatutInscription.BROUILLON,
     StatutInscription.RECUE,
     StatutInscription.EN_CONTROLE_FORME,
+    StatutInscription.RETOURNEE,
 })
 
 STATUTS_FICHIER_PUBLIC = frozenset({
@@ -74,6 +86,28 @@ class Transition:
 #: MATRICE DES TRANSITIONS AUTORISÉES — § 4.3 du TDR (§ "Matrice des
 #: transitions autorisées"). La lecture doit se faire article-par-article.
 TRANSITIONS: tuple[Transition, ...] = (
+    # ── Workflow Demande ⇄ Inscription (directive MO 2026-05-31) ──
+    Transition(
+        depuis=StatutInscription.BROUILLON,
+        vers=StatutInscription.RECUE,
+        evenement="soumission_declarant",
+        articles=("78", "85"),
+        motif="Soumission d'un brouillon par le déclarant.",
+    ),
+    Transition(
+        depuis=StatutInscription.EN_CONTROLE_FORME,
+        vers=StatutInscription.RETOURNEE,
+        evenement="retour_observation",
+        articles=("85", "86"),
+        motif="Retour au déclarant avec observation obligatoire FR/AR.",
+    ),
+    Transition(
+        depuis=StatutInscription.RETOURNEE,
+        vers=StatutInscription.EN_CONTROLE_FORME,
+        evenement="resoumission_declarant",
+        articles=("78", "85"),
+        motif="Resoumission après correction par le déclarant.",
+    ),
     Transition(
         depuis=StatutInscription.RECUE,
         vers=StatutInscription.EN_CONTROLE_FORME,
@@ -207,6 +241,13 @@ INTERDICTIONS_EXPLICITES: tuple[tuple[str, str, str], ...] = (
      "Pas de renouvellement après expiration (art. 91)."),
     (StatutInscription.ARCHIVEE, StatutInscription.INSCRITE,
      "Pas de sortie du fichier général vers le fichier public."),
+    # ── Verrous workflow demande-inscription (directive MO 2026-05-31) ──
+    (StatutInscription.RETOURNEE, StatutInscription.INSCRITE,
+     "Une demande retournée ne peut être validée directement : "
+     "elle doit repasser par le contrôle de forme après resoumission."),
+    (StatutInscription.INSCRITE, StatutInscription.RETOURNEE,
+     "Une inscription validée ne peut être retournée au déclarant : "
+     "la correction ne passe que par une modification art. 88."),
 )
 
 

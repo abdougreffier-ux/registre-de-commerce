@@ -55,6 +55,7 @@ export default function MonEspace() {
   );
 
   const enAttente = mesInscriptions.filter((i) => i.statut === 'en_controle_forme');
+  const retournees = mesInscriptions.filter((i) => i.statut === 'retournee');
   const inscritesActives = mesInscriptions.filter((i) => i.statut === 'inscrite');
   const radiees = mesInscriptions.filter((i) => i.statut === 'radiee');
   const rejetees = mesInscriptions.filter((i) => i.statut === 'rejetee');
@@ -122,10 +123,10 @@ export default function MonEspace() {
         </Col>
         <Col xs={12} md={6}>
           <KpiCarte
-            icone={<ReloadOutlined />} accent="jaune"
-            libelle={t('mon_espace.kpi.echeances_90j')}
-            valeur={echeancesProches.length}
-            hint={t('mon_espace.kpi.echeances_90j_hint')}
+            icone={<ReloadOutlined />} accent="rouge"
+            libelle={t('mon_espace.kpi.a_corriger')}
+            valeur={retournees.length}
+            hint={t('mon_espace.kpi.a_corriger_hint')}
           />
         </Col>
         <Col xs={12} md={6}>
@@ -137,6 +138,46 @@ export default function MonEspace() {
           />
         </Col>
       </Row>
+
+      {/* ============= Demandes à corriger (RETOURNEES) ============= */}
+      {retournees.length > 0 && (
+        <section className="rim-section">
+          <div className="rim-section__entete">
+            <h2 className="rim-section__titre --rouge">
+              {t('mon_espace.a_corriger.titre')}
+            </h2>
+            <p className="rim-section__sous-titre">
+              {t('mon_espace.a_corriger.sous_titre')}
+            </p>
+          </div>
+          <Table
+            dataSource={retournees}
+            rowKey={(r) => r.reference_demande}
+            pagination={false}
+            columns={[
+              {
+                title: t('greffe.col.reference'),
+                dataIndex: 'numero_ordre',
+                render: (v, r) => v || (
+                  <Text code>{String(r.reference_demande).slice(0, 8)}…</Text>
+                ),
+              },
+              { title: t('greffe.col.nature'), dataIndex: 'nature_droit_libelle' },
+              { title: t('greffe.col.arrivee'), dataIndex: 'instant_arrivee' },
+              {
+                title: '', key: 'actions',
+                render: (_, r) => (
+                  <Link to={`/inscriptions/${r.reference_demande}`}>
+                    <Button type="primary" size="small">
+                      {t('mon_espace.a_corriger.bouton')}
+                    </Button>
+                  </Link>
+                ),
+              },
+            ]}
+          />
+        </section>
+      )}
 
       {/* ============= Démarches rapides ============= */}
       <section className="rim-section">

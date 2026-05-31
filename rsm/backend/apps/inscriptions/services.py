@@ -37,6 +37,7 @@ from apps.core.horodatage import (
 )
 from apps.inscriptions.models import (
     Inscription,
+    ObservationRetour,
     RoleInscriptionPartie,
     SequenceNumeroOrdre,
 )
@@ -541,6 +542,167 @@ def valider_inscription(
             "horodatage_source": horodatage.source,
             "horodatage_opposable": horodatage.opposable,
             "date_expiration": inscription.date_expiration.isoformat(),
+        },
+        contexte=contexte_courant(),
+    )
+    return inscription
+
+
+# --------------------------------------------------------------------------- #
+# 4. Retour au déclarant pour correction (workflow MO 2026-05-31)            #
+# --------------------------------------------------------------------------- #
+@transaction.atomic
+def retourner_demande(
+    *,
+    inscription: Inscription,
+    observation_fr: str,
+    observation_ar: str,
+    acteur,
+) -> ObservationRetour:
+    """
+    Retourne une demande au déclarant avec une observation OBLIGATOIRE
+    bilingue FR + AR. La demande passe en statut ``RETOURNEE`` et reste
+    réversible (réversibilité gérée par ``resoumettre_demande``).
+
+    Garde-fous :
+      - Séparation stricte : le retour ne peut être prononcé par
+        l'auteur de la saisie initiale (cohérent avec le rejet art. 80).
+      - Statut source impératif : ``EN_CONTROLE_FORME`` (toute autre
+        situation lève ``RejetForme``).
+      - Observation bilingue obligatoire (parité juridique FR/AR).
+      - Append-only : l'observation créée ne pourra plus être modifiée.
+
+    Le journal d'audit reçoit une entrée ``inscription.retourner`` avec
+    catégorie ``RETOUR_CORRECTION`` et résultat ``RETOUR_POUR_CORRECTION``.
+    """
+    if not peut_valider_demande(acteur, saisie_par=inscription.cree_par):
+        from apps.utilisateurs.habilitations import AutorisationRefusee
+        raise AutorisationRefusee(
+            "Retour refusé (rôle manquant ou séparation stricte, § 4.1)."
+        )
+    if inscription.statut != StatutInscription.EN_CONTROLE_FORME:
+        raise RejetForme(
+            "Seule une demande en contrôle de forme peut être retournée "
+            "pour correction."
+        )
+    if not (observation_fr or "").strip() or not (observation_ar or "").strip():
+        raise RejetForme(
+            "Observation obligatoire en FR et AR (parité juridique)."
+        )
+
+    observation = ObservationRetour.objects.create(
+        inscription=inscription,
+        observation_fr=observation_fr.strip(),
+        observation_ar=observation_ar.strip(),
+        cree_par=acteur,
+        statut_au_moment=inscription.statut,
+    )
+
+    # Transition de workflow EN_CONTROLE_FORME → RETOURNEE
+    appliquer_transition(
+        numero_inscription=str(inscription.reference_demande),
+        statut_actuel=inscription.statut,
+        statut_cible=StatutInscription.RETOURNEE,
+        evenement="retour_observation",
+        acteur=acteur,
+        motif=(
+            "Retour au déclarant avec observation obligatoire FR/AR."
+        ),
+    )
+    inscription.statut = StatutInscription.RETOURNEE
+    inscription.modifie_par = acteur
+    super(Inscription, inscription).save(
+        update_fields=["statut", "modifie_par"]
+    )
+
+    tracer(
+        categorie=CategorieAudit.RETOUR_CORRECTION,
+        action_cle="inscription.retourner",
+        resultat=ResultatAudit.RETOUR_POUR_CORRECTION,
+        objet_type="inscription",
+        objet_reference=str(inscription.reference_demande),
+        details={
+            "observation_id": observation.pk,
+            "observation_fr": observation.observation_fr,
+            "observation_ar": observation.observation_ar,
+            "statut_avant": StatutInscription.EN_CONTROLE_FORME,
+            "statut_apres": StatutInscription.RETOURNEE,
+        },
+        contexte=contexte_courant(),
+    )
+    return observation
+
+
+# --------------------------------------------------------------------------- #
+# 5. Resoumission par le déclarant après correction                          #
+# --------------------------------------------------------------------------- #
+@transaction.atomic
+def resoumettre_demande(
+    *,
+    inscription: Inscription,
+    acteur,
+) -> Inscription:
+    """
+    Le déclarant resoumet sa demande après correction. La demande
+    repasse en ``EN_CONTROLE_FORME`` pour réexamen par le greffier.
+
+    Garde-fous :
+      - Seul le créateur initial de la demande peut resoumettre.
+      - Statut source impératif : ``RETOURNEE``.
+      - La dernière ``ObservationRetour`` non encore résolue est
+        marquée comme résolue (``instant_resoumission`` + ``resoumis_par``).
+    """
+    if inscription.cree_par_id and inscription.cree_par_id != acteur.pk:
+        from apps.utilisateurs.habilitations import AutorisationRefusee
+        raise AutorisationRefusee(
+            "Seul le déclarant initial peut resoumettre cette demande."
+        )
+    if inscription.statut != StatutInscription.RETOURNEE:
+        raise RejetForme(
+            "Seule une demande retournée peut être resoumise."
+        )
+
+    # Marquer la dernière observation comme résolue (append-only :
+    # un seul renseignement définitif).
+    derniere_observation = (
+        ObservationRetour.objects
+        .filter(inscription=inscription, instant_resoumission__isnull=True)
+        .order_by("-cree_le")
+        .first()
+    )
+    if derniere_observation is not None:
+        derniere_observation.instant_resoumission = timezone.now()
+        derniere_observation.resoumis_par = acteur
+        super(ObservationRetour, derniere_observation).save(
+            update_fields=["instant_resoumission", "resoumis_par"]
+        )
+
+    appliquer_transition(
+        numero_inscription=str(inscription.reference_demande),
+        statut_actuel=inscription.statut,
+        statut_cible=StatutInscription.EN_CONTROLE_FORME,
+        evenement="resoumission_declarant",
+        acteur=acteur,
+        motif="Resoumission par le déclarant après correction.",
+    )
+    inscription.statut = StatutInscription.EN_CONTROLE_FORME
+    inscription.modifie_par = acteur
+    super(Inscription, inscription).save(
+        update_fields=["statut", "modifie_par"]
+    )
+
+    tracer(
+        categorie=CategorieAudit.DEMANDE,
+        action_cle="inscription.resoumettre",
+        resultat=ResultatAudit.SUCCES,
+        objet_type="inscription",
+        objet_reference=str(inscription.reference_demande),
+        details={
+            "observation_levee_id": (
+                derniere_observation.pk if derniere_observation else None
+            ),
+            "statut_avant": StatutInscription.RETOURNEE,
+            "statut_apres": StatutInscription.EN_CONTROLE_FORME,
         },
         contexte=contexte_courant(),
     )

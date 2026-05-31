@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  Alert, Button, Card, Descriptions, Modal, Select, Space, Spin, Typography,
+  Alert, Button, Card, Descriptions, Form, Input, List, Modal, Select,
+  Space, Spin, Typography,
 } from 'antd';
+import { UndoOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -48,6 +50,12 @@ export default function DetailInscription() {
 
   const peutValider = aUnRole(auth, ['autorite_validation']);
   const enControleForme = inscription?.statut === 'en_controle_forme';
+  const estRetournee = inscription?.statut === 'retournee';
+  const estDeclarantProprietaire = inscription
+    && inscription.cree_par
+    && auth.utilisateur
+    && (inscription.cree_par === auth.utilisateur.id
+        || inscription.cree_par_id === auth.utilisateur.id);
 
   const valider = async () => {
     Modal.confirm({
@@ -59,6 +67,79 @@ export default function DetailInscription() {
       onOk: async () => {
         try {
           await client.post(`/inscriptions/${reference}/valider/`, {});
+          await recharger();
+        } catch (e) { setErreur(formatMessageErreur(e, t)); }
+      },
+    });
+  };
+
+  const retourner = () => {
+    let formRetour;
+    Modal.confirm({
+      title: t('detail.retourner.titre'),
+      width: 600,
+      icon: <UndoOutlined style={{ color: 'var(--statut-attente-fg)' }} />,
+      content: (
+        <Form
+          layout="vertical"
+          ref={(f) => { formRetour = f; }}
+          onValuesChange={() => {}}
+        >
+          <Paragraph type="secondary">
+            {t('detail.retourner.aide')}
+          </Paragraph>
+          <Form.Item
+            name="observation_fr"
+            label={t('detail.retourner.observation_fr')}
+            rules={[{ required: true, whitespace: true,
+                      message: t('detail.retourner.observation_requise') }]}
+          >
+            <Input.TextArea rows={4} placeholder={t('detail.retourner.placeholder_fr')} />
+          </Form.Item>
+          <Form.Item
+            name="observation_ar"
+            label={t('detail.retourner.observation_ar')}
+            rules={[{ required: true, whitespace: true,
+                      message: t('detail.retourner.observation_requise') }]}
+          >
+            <Input.TextArea rows={4} dir="rtl" lang="ar"
+              placeholder={t('detail.retourner.placeholder_ar')} />
+          </Form.Item>
+        </Form>
+      ),
+      okText: t('detail.retourner.bouton'),
+      okButtonProps: { danger: false, type: 'primary' },
+      cancelText: t('soumission.fermer'),
+      onOk: async () => {
+        try {
+          const v = await formRetour.validateFields();
+          await client.post(`/inscriptions/${reference}/retourner/`, {
+            observation_fr: v.observation_fr,
+            observation_ar: v.observation_ar,
+          });
+          await recharger();
+        } catch (e) {
+          if (e?.errorFields) {
+            return Promise.reject();
+          }
+          setErreur(formatMessageErreur(e, t));
+        }
+        return undefined;
+      },
+    });
+  };
+
+  const resoumettre = () => {
+    Modal.confirm({
+      title: t('detail.resoumettre.titre'),
+      content: t('detail.resoumettre.aide'),
+      icon: <ArrowRightOutlined style={{ color: 'var(--rim-vert)' }} />,
+      okText: t('detail.resoumettre.bouton'),
+      okType: 'primary',
+      cancelText: t('soumission.fermer'),
+      onOk: async () => {
+        try {
+          await client.post(`/inscriptions/${reference}/resoumettre/`, {});
           await recharger();
         } catch (e) { setErreur(formatMessageErreur(e, t)); }
       },
@@ -179,11 +260,72 @@ export default function DetailInscription() {
         </Descriptions>
       </Card>
 
+      {/* Historique des observations de retour (lecture seule) */}
+      {Array.isArray(inscription.observations_retour)
+        && inscription.observations_retour.length > 0 && (
+        <Card
+          title={(
+            <Space>
+              <UndoOutlined style={{ color: 'var(--statut-attente-fg)' }} />
+              {t('detail.observations.titre')}
+            </Space>
+          )}
+          style={{ marginBottom: 16 }}
+        >
+          <List
+            dataSource={inscription.observations_retour}
+            renderItem={(obs, idx) => (
+              <List.Item key={obs.id}>
+                <List.Item.Meta
+                  title={(
+                    <Space size={12} wrap>
+                      <Text strong>
+                        {t('detail.observations.numero')} {idx + 1}
+                      </Text>
+                      <Text type="secondary">{obs.cree_le}</Text>
+                      <Text>{obs.cree_par_nom}</Text>
+                      {obs.instant_resoumission && (
+                        <StatutBadge
+                          variante="succes"
+                          libelle={t('detail.observations.resolue')}
+                        />
+                      )}
+                    </Space>
+                  )}
+                  description={(
+                    <div>
+                      <Paragraph style={{ marginBottom: 4 }}>
+                        <Text strong>FR : </Text>
+                        {obs.observation_fr}
+                      </Paragraph>
+                      <Paragraph dir="rtl" lang="ar" style={{ marginBottom: 0 }}>
+                        <Text strong>AR : </Text>
+                        {obs.observation_ar}
+                      </Paragraph>
+                      {obs.instant_resoumission && (
+                        <Text type="secondary" style={{ fontSize: 12 }}>
+                          {t('detail.observations.resoumise_par')} {obs.resoumis_par_nom}
+                          {' — '}{obs.instant_resoumission}
+                        </Text>
+                      )}
+                    </div>
+                  )}
+                />
+              </List.Item>
+            )}
+          />
+        </Card>
+      )}
+
+      {/* Actions greffier : Valider / Retourner / Rejeter */}
       {peutValider && enControleForme && (
         <Card title={t('detail.actions.titre')} style={{ marginBottom: 16 }}>
-          <Space>
+          <Space wrap>
             <Button type="primary" onClick={valider}>
               {t('detail.valider.bouton')}
+            </Button>
+            <Button icon={<UndoOutlined />} onClick={retourner}>
+              {t('detail.retourner.bouton')}
             </Button>
             <Button danger onClick={rejeter}>
               {t('detail.rejeter.bouton')}
@@ -192,6 +334,26 @@ export default function DetailInscription() {
           <Paragraph style={{ marginTop: 12, marginBottom: 0 }}>
             <Text type="secondary">{t('detail.actions.note')}</Text>
           </Paragraph>
+        </Card>
+      )}
+
+      {/* Action déclarant : Modifier et renvoyer après retour */}
+      {estRetournee && estDeclarantProprietaire && (
+        <Card
+          title={(
+            <Space>
+              <ArrowRightOutlined style={{ color: 'var(--rim-vert)' }} />
+              {t('detail.resoumettre.titre_section')}
+            </Space>
+          )}
+          style={{ marginBottom: 16 }}
+        >
+          <Paragraph>{t('detail.resoumettre.aide_section')}</Paragraph>
+          <Space>
+            <Button type="primary" icon={<ArrowRightOutlined />} onClick={resoumettre}>
+              {t('detail.resoumettre.bouton')}
+            </Button>
+          </Space>
         </Card>
       )}
 

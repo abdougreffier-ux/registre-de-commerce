@@ -57,8 +57,14 @@ export default function TableauBordGreffe() {
 
   useEffect(() => { if (peutAcceder) charger(); else setChargement(false); }, [charger, peutAcceder]);
 
-  const fileControleForme = useMemo(
+  const fileEnInstance = useMemo(
     () => inscriptions.filter((i) => i.statut === 'en_controle_forme'),
+    [inscriptions],
+  );
+  // Alias rétro-compatible (utilisé par des sections plus bas)
+  const fileControleForme = fileEnInstance;
+  const fileRetournees = useMemo(
+    () => inscriptions.filter((i) => i.statut === 'retournee'),
     [inscriptions],
   );
   const fileInscrites = useMemo(
@@ -101,9 +107,17 @@ export default function TableauBordGreffe() {
         <Col xs={12} md={6}>
           <KpiCarte
             icone={<ClockCircleOutlined />} accent="jaune"
-            libelle={t('greffe.kpi.controle_forme')}
-            valeur={fileControleForme.length}
-            hint={t('greffe.kpi.controle_forme_hint')}
+            libelle={t('greffe.kpi.demandes_en_instance')}
+            valeur={fileEnInstance.length}
+            hint={t('greffe.kpi.demandes_en_instance_hint')}
+          />
+        </Col>
+        <Col xs={12} md={6}>
+          <KpiCarte
+            icone={<ClockCircleOutlined />} accent="rouge"
+            libelle={t('greffe.kpi.retournees')}
+            valeur={fileRetournees.length}
+            hint={t('greffe.kpi.retournees_hint')}
           />
         </Col>
         <Col xs={12} md={6}>
@@ -116,14 +130,6 @@ export default function TableauBordGreffe() {
         </Col>
         <Col xs={12} md={6}>
           <KpiCarte
-            icone={<ReloadOutlined />}
-            libelle={t('greffe.kpi.renouvellements_attente')}
-            valeur={renouvellements.filter((r) => r.statut === 'recue').length}
-            hint={`${renouvellements.length} ${t('greffe.kpi.total_suffixe')}`}
-          />
-        </Col>
-        <Col xs={12} md={6}>
-          <KpiCarte
             icone={<StopOutlined />} accent="rouge"
             libelle={t('greffe.kpi.radiations_attente')}
             valeur={radiations.filter((r) => r.statut === 'recue').length}
@@ -132,21 +138,21 @@ export default function TableauBordGreffe() {
         </Col>
       </Row>
 
-      {/* ============= File contrôle de forme ============= */}
+      {/* ============= Demandes en instance (en_controle_forme) ============= */}
       <section className="rim-section">
         <div className="rim-section__entete">
           <h2 className="rim-section__titre --jaune">
-            {t('greffe.file_controle.titre')}
+            {t('greffe.file_en_instance.titre')}
           </h2>
           <p className="rim-section__sous-titre">
-            {t('greffe.file_controle.sous_titre')}
+            {t('greffe.file_en_instance.sous_titre')}
           </p>
         </div>
-        {fileControleForme.length === 0 ? (
-          <Empty description={t('greffe.file_controle.vide')} />
+        {fileEnInstance.length === 0 ? (
+          <Empty description={t('greffe.file_en_instance.vide')} />
         ) : (
           <Table
-            dataSource={fileControleForme}
+            dataSource={fileEnInstance}
             rowKey={(r) => r.reference_demande}
             pagination={false}
             columns={[
@@ -175,6 +181,44 @@ export default function TableauBordGreffe() {
           />
         )}
       </section>
+
+      {/* ============= Demandes retournées (en attente déclarant) ============= */}
+      {fileRetournees.length > 0 && (
+        <section className="rim-section">
+          <div className="rim-section__entete">
+            <h2 className="rim-section__titre --rouge">
+              {t('greffe.file_retournees.titre')}
+            </h2>
+            <p className="rim-section__sous-titre">
+              {t('greffe.file_retournees.sous_titre')}
+            </p>
+          </div>
+          <Table
+            dataSource={fileRetournees}
+            rowKey={(r) => r.reference_demande}
+            pagination={false}
+            columns={[
+              {
+                title: t('greffe.col.reference'),
+                dataIndex: 'reference_demande',
+                render: (v) => <Text code>{String(v).slice(0, 8)}…</Text>,
+              },
+              { title: t('greffe.col.nature'), dataIndex: 'nature_droit_libelle' },
+              { title: t('greffe.col.arrivee'), dataIndex: 'instant_arrivee' },
+              {
+                title: '', key: 'actions',
+                render: (_, r) => (
+                  <Link to={`/inscriptions/${r.reference_demande}`}>
+                    <Button size="small">
+                      {t('greffe.col.bouton_consulter')}
+                    </Button>
+                  </Link>
+                ),
+              },
+            ]}
+          />
+        </section>
+      )}
 
       {/* ============= Aperçu des autres files ============= */}
       <section className="rim-section">

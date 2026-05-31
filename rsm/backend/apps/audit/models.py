@@ -32,6 +32,9 @@ class CategorieAudit(models.TextChoices):
     CONTROLE_FORME = "controle_forme", _("Contrôle de forme (art. 80)")
     VALIDATION = "validation", _("Validation par l'autorité de validation")
     REJET = "rejet", _("Rejet motivé (art. 80)")
+    RETOUR_CORRECTION = "retour_correction", _(
+        "Retour au déclarant pour correction (workflow MO 2026-05-31)"
+    )
     CERTIFICAT = "certificat", _("Délivrance d'un certificat")
     RECHERCHE = "recherche", _("Lancement d'une recherche publique")
     EXPORT_STAT = "export_stat", _("Export statistique (art. 82)")
@@ -44,6 +47,9 @@ class ResultatAudit(models.TextChoices):
     ECHEC = "echec", _("Échec")
     REJET = "rejet", _("Rejet pour motif limitatif (art. 80)")
     REFUS_AUTORISATION = "refus_autorisation", _("Refus d'autorisation")
+    RETOUR_POUR_CORRECTION = "retour_pour_correction", _(
+        "Retour au déclarant pour correction (réversible)"
+    )
 
 
 class EntreeAudit(models.Model):

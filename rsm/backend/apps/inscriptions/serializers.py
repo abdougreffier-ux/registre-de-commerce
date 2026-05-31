@@ -10,7 +10,7 @@ from __future__ import annotations
 from rest_framework import serializers
 
 from apps.core.serializers import StrictInputSerializer, StrictModelSerializer
-from apps.inscriptions.models import Inscription
+from apps.inscriptions.models import Inscription, ObservationRetour
 from apps.referentiels.models import LibelleNatureDroit
 
 
@@ -31,6 +31,12 @@ class InscriptionSerializer(StrictModelSerializer):
     type_surete_libelle = serializers.CharField(
         source="get_type_surete_display", read_only=True,
     )
+    observations_retour = serializers.SerializerMethodField()
+
+    def get_observations_retour(self, obj):
+        """Liste chronologique des observations de retour pour cette demande."""
+        qs = obj.observations_retour.all().order_by("cree_le")
+        return ObservationRetourSerializer(qs, many=True).data
 
     def get_nature_droit_libelle(self, obj):
         """Résolution via le référentiel paramétrable (langue FR par défaut)."""
@@ -63,6 +69,7 @@ class InscriptionSerializer(StrictModelSerializer):
             "motif_rejet", "motif_rejet_libelle",
             "commentaire_rejet_fr", "commentaire_rejet_ar",
             "instant_rejet",
+            "observations_retour",
             "cree_le", "modifie_le",
         ]
         read_only_fields = [
@@ -255,3 +262,69 @@ class RejeterInscriptionSerializer(StrictInputSerializer):
     motif = serializers.CharField()
     commentaire_fr = serializers.CharField(required=False, allow_blank=True)
     commentaire_ar = serializers.CharField(required=False, allow_blank=True)
+
+
+class RetournerDemandeSerializer(StrictInputSerializer):
+    """
+    Payload du retour d'une demande au déclarant (workflow MO 2026-05-31).
+
+    Distinct du rejet art. 80 : le retour est réversible (le déclarant
+    corrige et resoumet), l'observation est obligatoirement bilingue.
+    """
+
+    observation_fr = serializers.CharField(
+        max_length=4000,
+        help_text="Observation détaillée motivant le retour, en français.",
+    )
+    observation_ar = serializers.CharField(
+        max_length=4000,
+        help_text="Observation détaillée motivant le retour, en arabe.",
+    )
+
+    def validate_observation_fr(self, value):
+        if not value or not value.strip():
+            raise serializers.ValidationError(
+                "L'observation française est obligatoire et non vide."
+            )
+        return value.strip()
+
+    def validate_observation_ar(self, value):
+        if not value or not value.strip():
+            raise serializers.ValidationError(
+                "L'observation arabe est obligatoire et non vide."
+            )
+        return value.strip()
+
+
+class ObservationRetourSerializer(StrictModelSerializer):
+    """Lecture d'une ``ObservationRetour`` historisée, exposée côté UI."""
+
+    cree_par_nom = serializers.SerializerMethodField()
+    resoumis_par_nom = serializers.SerializerMethodField()
+
+    def get_cree_par_nom(self, obj):
+        if obj.cree_par_id:
+            return (
+                getattr(obj.cree_par, "nom_affichage", "")
+                or obj.cree_par.username
+            )
+        return ""
+
+    def get_resoumis_par_nom(self, obj):
+        if obj.resoumis_par_id:
+            return (
+                getattr(obj.resoumis_par, "nom_affichage", "")
+                or obj.resoumis_par.username
+            )
+        return ""
+
+    class Meta:
+        model = ObservationRetour
+        fields = [
+            "id",
+            "observation_fr", "observation_ar",
+            "cree_le", "cree_par_nom",
+            "statut_au_moment",
+            "instant_resoumission", "resoumis_par_nom",
+        ]
+        read_only_fields = fields
