@@ -17,6 +17,7 @@ import {
 import { BienUnique, normaliserBienUnique } from '../components/formulaires/BienShared';
 import PiecesJointesField from '../components/formulaires/PiecesJointesShared';
 import { soumettreInscription } from '../components/formulaires/soumettreInscription';
+import HorodatageDemandeField from '../components/formulaires/HorodatageDemandeField';
 import { reglesEmail } from '../lib/validation';
 import { CANAL_SAISIE_DEFAUT, NATURE_DROIT_PAR_TYPE_SURETE } from '../lib/typeSurete';
 
@@ -86,7 +87,8 @@ export default function FormulairePrivilegeVendeur() {
         debiteurs: [],
         biens: v.bien ? [normaliserBienUnique(v.bien, ar)] : [],
         donnees_specifiques: {
-          date_demande: dateOuNull(v.date_demande),
+          // ``date_demande`` n'est plus collecté : l'horodatage autoritatif
+          // est ``Inscription.instant_arrivee`` (timezone.now() côté backend).
           date_contrat_vente: dateOuNull(v.date_contrat_vente),
           reference_contrat_vente: v.reference_contrat_vente || '',
           prix_total_vente: v.prix_total_vente || null,
@@ -144,13 +146,7 @@ export default function FormulairePrivilegeVendeur() {
         >
           <Row gutter={16}>
             <Col xs={24} md={12}>
-              <Form.Item
-                name="date_demande"
-                label={t('formulaire.commun.date_demande')}
-                rules={[{ required: true, message: t('formulaire.commun.requis') }]}
-              >
-                <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
-              </Form.Item>
+              <HorodatageDemandeField t={t} />
             </Col>
             <Col xs={24} md={12}>
               <Form.Item
