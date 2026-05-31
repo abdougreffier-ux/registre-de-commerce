@@ -39,8 +39,37 @@ export default function RsmLayout() {
     i18n.changeLanguage(autre);
   };
 
-  const peutGreffer = aUnRole(auth, ['autorite_validation', 'agent_saisie', 'auditeur']);
-  const peutAdminCat = aUnRole(auth, ['autorite_validation', 'admin_fonctionnel']);
+  // Habilitations applicatives — alignées sur TDR § 4.1 et la directive
+  // MO du 2026-05-31 : « aucune fonctionnalité interdite ne doit
+  // apparaître à l'écran ». Le contrôle d'accès backend reste autoritaire
+  // (cf. apps.utilisateurs.habilitations) ; le filtrage du menu n'est
+  // qu'une amélioration ergonomique.
+  const peutGreffer = aUnRole(auth, [
+    'autorite_validation', 'agent_saisie', 'auditeur',
+  ]);
+  const peutAdminCat = aUnRole(auth, [
+    'autorite_validation', 'admin_fonctionnel',
+  ]);
+  // Journal d'audit : greffier (autorité de validation) +
+  // administrateurs (fonctionnel + technique) + auditeur (TDR § 5.2).
+  const peutVoirAudit = aUnRole(auth, [
+    'autorite_validation', 'admin_fonctionnel',
+    'admin_technique', 'auditeur',
+  ]);
+  // Statistiques : monopole du greffe (art. 82) + producteur dédié +
+  // administrateurs + auditeur (lecture seule).
+  const peutVoirStatistiques = aUnRole(auth, [
+    'autorite_validation', 'admin_fonctionnel',
+    'admin_technique', 'auditeur', 'prod_stats',
+  ]);
+  // Liste « Inscriptions » côté interne : toute la chaîne du greffe
+  // + administrateurs + auditeur. Les déclarants externes utilisent
+  // « Mon espace » pour leurs propres inscriptions et « Recherche »
+  // pour les recherches limitées art. 96.
+  const peutVoirInscriptionsInternes = aUnRole(auth, [
+    'autorite_validation', 'agent_saisie', 'auditeur',
+    'admin_fonctionnel', 'admin_technique',
+  ]);
 
   // Garde « mot de passe initial » : tant que ce drapeau est posé, l'usager
   // est redirigé vers la page de changement obligatoire — sauf s'il s'y
@@ -65,9 +94,18 @@ export default function RsmLayout() {
       key: '/admin/categories-biens',
       label: <Link to="/admin/categories-biens">{t('menu.categories_biens')}</Link>,
     },
-    { key: '/inscriptions', label: <Link to="/inscriptions">{t('menu.inscriptions')}</Link> },
-    { key: '/audit', label: <Link to="/audit">{t('menu.audit')}</Link> },
-    { key: '/statistiques', label: <Link to="/statistiques">{t('menu.statistiques')}</Link> },
+    peutVoirInscriptionsInternes && {
+      key: '/inscriptions',
+      label: <Link to="/inscriptions">{t('menu.inscriptions')}</Link>,
+    },
+    peutVoirAudit && {
+      key: '/audit',
+      label: <Link to="/audit">{t('menu.audit')}</Link>,
+    },
+    peutVoirStatistiques && {
+      key: '/statistiques',
+      label: <Link to="/statistiques">{t('menu.statistiques')}</Link>,
+    },
     { key: '/partenaires-bancaires', label: <Link to="/partenaires-bancaires">{t('menu.partenaires')}</Link> },
     {
       key: '/formulaires',
