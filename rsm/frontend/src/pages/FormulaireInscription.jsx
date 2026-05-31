@@ -13,7 +13,10 @@ import { useTranslation } from 'react-i18next';
 import client, { formatMessageErreur } from '../api/client';
 import ProcedureDepot from '../components/ProcedureDepot';
 import { montantEnLettres } from '../lib/montantEnLettres';
-import { reglesEmail } from '../lib/validation';
+import {
+  reglesEmail, reglesNom, reglesNNI, reglesPasseport, reglesTelephone,
+  normaliserNom,
+} from '../lib/validation';
 import { CANAL_SAISIE_DEFAUT } from '../lib/typeSurete';
 
 const { Title, Paragraph, Text } = Typography;
@@ -602,8 +605,13 @@ function ChampsConditionnelsPartie({ t, listName, name }) {
             {!estPm && (
               <Row gutter={12}>
                 <Col xs={24} md={12}>
-                  <Form.Item name={[name, 'nom']} label={t('formulaire.inscription.partie.nom')}>
-                    <Input />
+                  <Form.Item
+                    name={[name, 'nom']}
+                    label={t('formulaire.inscription.partie.nom')}
+                    normalize={normaliserNom}
+                    rules={reglesNom(t, { required: false })}
+                  >
+                    <Input placeholder={t('formulaire.inscription.partie.nom_placeholder')} />
                   </Form.Item>
                 </Col>
                 <Col xs={24} md={12}>
@@ -612,8 +620,52 @@ function ChampsConditionnelsPartie({ t, listName, name }) {
                   </Form.Item>
                 </Col>
                 <Col xs={24} md={12}>
-                  <Form.Item name={[name, 'nni']} label={t('formulaire.inscription.partie.nni')}>
-                    <Input />
+                  <Form.Item
+                    name={[name, 'type_identifiant']}
+                    label={t('formulaire.inscription.partie.type_identifiant')}
+                    initialValue="nni"
+                    rules={[{ required: true, message: t('formulaire.commun.requis') }]}
+                  >
+                    <Select
+                      options={[
+                        { value: 'nni', label: t('formulaire.inscription.partie.type_identifiant.nni') },
+                        { value: 'passeport', label: t('formulaire.inscription.partie.type_identifiant.passeport') },
+                      ]}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col xs={24} md={12}>
+                  <Form.Item noStyle shouldUpdate={(prev, cur) => {
+                    const a = prev?.[listName]?.[name]?.type_identifiant;
+                    const b = cur?.[listName]?.[name]?.type_identifiant;
+                    return a !== b;
+                  }}>
+                    {({ getFieldValue: getF }) => {
+                      const ti = getF([listName, name, 'type_identifiant']) || 'nni';
+                      if (ti === 'passeport') {
+                        return (
+                          <Form.Item
+                            name={[name, 'nni']}
+                            label={t('formulaire.inscription.partie.passeport')}
+                            rules={reglesPasseport(t, { required: false })}
+                          >
+                            <Input placeholder={t('formulaire.inscription.partie.passeport_placeholder')} />
+                          </Form.Item>
+                        );
+                      }
+                      return (
+                        <Form.Item
+                          name={[name, 'nni']}
+                          label={t('formulaire.inscription.partie.nni')}
+                          rules={reglesNNI(t, { required: false })}
+                        >
+                          <Input
+                            maxLength={10}
+                            placeholder={t('formulaire.inscription.partie.nni_placeholder')}
+                          />
+                        </Form.Item>
+                      );
+                    }}
                   </Form.Item>
                 </Col>
                 <Col xs={24} md={12}>
@@ -621,7 +673,7 @@ function ChampsConditionnelsPartie({ t, listName, name }) {
                     <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
                   </Form.Item>
                 </Col>
-                <Col xs={24}>
+                <Col xs={24} md={12}>
                   <Form.Item name={[name, 'lieu_naissance']} label={t('formulaire.inscription.partie.lieu_naissance')}>
                     <Input />
                   </Form.Item>
@@ -659,8 +711,13 @@ function ChampsConditionnelsPartie({ t, listName, name }) {
                 </Form.Item>
               </Col>
               <Col xs={24} md={12}>
-                <Form.Item name={[name, 'telephone']} label={t('formulaire.inscription.partie.telephone')}>
-                  <Input />
+                <Form.Item
+                  name={[name, 'telephone']}
+                  label={t('formulaire.inscription.partie.telephone')}
+                  rules={reglesTelephone(t)}
+                  extra={t('formulaire.inscription.partie.telephone_aide')}
+                >
+                  <Input placeholder="+222 2XXXXXXX" />
                 </Form.Item>
               </Col>
               <Col xs={24} md={12}>
