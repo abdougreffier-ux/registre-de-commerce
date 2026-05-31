@@ -14,6 +14,8 @@ import {
 } from 'antd';
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 
+import { reglesEmail } from '../../lib/validation';
+
 const { Text, Paragraph } = Typography;
 
 /**
@@ -190,7 +192,11 @@ export function ChampsConditionnelsPartie({ t, listName, name }) {
                 </Form.Item>
               </Col>
               <Col xs={12} md={6}>
-                <Form.Item name={[name, 'adresse_electronique']} label={t('formulaire.inscription.partie.email')}>
+                <Form.Item
+                  name={[name, 'adresse_electronique']}
+                  label={t('formulaire.inscription.partie.email')}
+                  rules={reglesEmail(t)}
+                >
                   <Input type="email" />
                 </Form.Item>
               </Col>

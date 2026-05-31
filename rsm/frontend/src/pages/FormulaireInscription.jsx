@@ -13,6 +13,8 @@ import { useTranslation } from 'react-i18next';
 import client, { formatMessageErreur } from '../api/client';
 import ProcedureDepot from '../components/ProcedureDepot';
 import { montantEnLettres } from '../lib/montantEnLettres';
+import { reglesEmail } from '../lib/validation';
+import { CANAL_SAISIE_DEFAUT } from '../lib/typeSurete';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -104,7 +106,8 @@ export default function FormulaireInscription() {
 
       // Normalisation du payload pour le backend.
       const payload = {
-        canal_saisie: valeurs.canal_saisie,
+        // Canal implicite : registre 100% numérisé (directive MO 2026-05-31).
+        canal_saisie: CANAL_SAISIE_DEFAUT,
         nature_droit: valeurs.nature_droit,
         somme_garantie: valeurs.somme_garantie,
         monnaie: valeurs.monnaie,
@@ -210,7 +213,6 @@ export default function FormulaireInscription() {
         form={form}
         layout="vertical"
         initialValues={{
-          canal_saisie: 'portail_electronique',
           monnaie: 'MRU',
           debiteur_est_constituant: false,
           presence_agent_surete: false,
@@ -234,20 +236,6 @@ export default function FormulaireInscription() {
           <Row gutter={16}>
             <Col xs={24} md={12}>
               <Form.Item
-                name="canal_saisie"
-                label={t('formulaire.inscription.canal')}
-                rules={[{ required: true, message: t('formulaire.commun.requis') }]}
-              >
-                <Select
-                  options={[
-                    { value: 'guichet_papier', label: t('formulaire.inscription.canal.guichet_papier') },
-                    { value: 'portail_electronique', label: t('formulaire.inscription.canal.portail_electronique') },
-                  ]}
-                />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={12}>
-              <Form.Item
                 name="nature_droit"
                 label={t('formulaire.inscription.nature_droit')}
                 rules={[{ required: true, message: t('formulaire.commun.requis') }]}
@@ -263,10 +251,11 @@ export default function FormulaireInscription() {
                 />
               </Form.Item>
             </Col>
-            <Col xs={24}>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="adresse_electronique_notifications"
                 label={t('formulaire.inscription.email')}
+                rules={reglesEmail(t)}
               >
                 <Input placeholder="exemple@rsm.mr" />
               </Form.Item>

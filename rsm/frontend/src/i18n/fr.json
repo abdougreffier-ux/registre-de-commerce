@@ -564,6 +564,8 @@
   "formulaire.inscription.bien.observations": "Observations",
   "formulaire.inscription.bien.aide_serie": "L'omission du numéro de série ne prive pas l'inscription d'effet dès lors que le bien est décrit de manière suffisamment précise (art. 85 al. 3).",
   "formulaire.commun.chargement_referentiels": "Chargement des référentiels (natures de droit, catégories de biens)…",
+  "validation.email.obligatoire": "L'adresse électronique est obligatoire.",
+  "validation.email.format_invalide": "L'adresse électronique n'est pas valide (format attendu : prenom.nom@domaine.tld).",
   "formulaire.commun.date_demande": "Date de la demande",
   "formulaire.commun.montant_creance": "Montant de la créance garantie",
   "formulaire.commun.date_naissance_creance": "Date de naissance de la créance",

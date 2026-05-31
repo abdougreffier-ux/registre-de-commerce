@@ -564,6 +564,8 @@
   "formulaire.inscription.bien.observations": "ملاحظات",
   "formulaire.inscription.bien.aide_serie": "لا يُبطل إغفال الرقم التسلسلي أثر التسجيل ما دام المال موصوفاً بشكل دقيق بما فيه الكفاية (المادة 85 ف. 3).",
   "formulaire.commun.chargement_referentiels": "جارٍ تحميل المراجع (طبائع الحق، فئات الأموال)…",
+  "validation.email.obligatoire": "البريد الإلكتروني إلزامي.",
+  "validation.email.format_invalide": "البريد الإلكتروني غير صالح (التنسيق المتوقع : prenom.nom@domaine.tld).",
   "formulaire.commun.date_demande": "تاريخ الطلب",
   "formulaire.commun.montant_creance": "مبلغ الدين المضمون",
   "formulaire.commun.date_naissance_creance": "تاريخ نشأة الدين",

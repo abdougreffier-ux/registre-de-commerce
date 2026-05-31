@@ -253,16 +253,18 @@ def creer_demande(
     # nature doit être ACTIVE au moment du dépôt. Les inscriptions
     # existantes pointant sur une nature ensuite désactivée restent
     # juridiquement valides (art. 79 — conservation pérenne).
-    cles_actives = set(
+    #
+    # Baseline garantie : les 12 natures du décret (art. 76, liste
+    # limitative) sont TOUJOURS acceptées indépendamment du référentiel.
+    # Le référentiel paramétrable étend cette baseline avec les natures
+    # ajoutées par le MO (admin natures-droit) ou les data migrations
+    # (reserve_propriete, credit_bail).
+    from apps.core.enums import NaturesDroitInscrit
+    cles_decret = {v for v, _ in NaturesDroitInscrit.choices}
+    cles_referentiel = set(
         LibelleNatureDroit.objects.filter(actif=True).values_list("cle", flat=True)
     )
-    if not cles_actives:
-        # Fallback : référentiel non peuplé (environnement de test sans
-        # ``seed_referentiels``, ou démarrage initial). On valide alors
-        # contre l'énumération native des 12 clés du décret pour
-        # garantir la disponibilité du service.
-        from apps.core.enums import NaturesDroitInscrit
-        cles_actives = {v for v, _ in NaturesDroitInscrit.choices}
+    cles_actives = cles_decret | cles_referentiel
     if donnees.nature_droit not in cles_actives:
         raise RejetForme(
             "Nature de droit inconnue ou désactivée au moment du dépôt."

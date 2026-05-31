@@ -39,13 +39,32 @@ class SeedReferentielsTests(TestCase):
         self.assertEqual(premier_total, second_total)
 
     def test_couverture_exacte_des_enums(self):
+        """
+        Pour les référentiels figés (motifs de rejet, canaux, critères,
+        types de certificats), la couverture doit être strictement
+        exacte. Pour ``LibelleNatureDroit``, désormais paramétrable
+        (directive MO 2026-05-30), la couverture exigée est une
+        couverture MINIMALE : les valeurs du décret sont présentes,
+        mais des entrées supplémentaires (créées par le greffier ou
+        par data migration) sont admises.
+        """
+        from apps.referentiels.models import LibelleNatureDroit
         call_command("seed_referentiels")
         for modele, valeurs_attendues in LIBELLES_ATTENDUS.items():
             cles = set(modele.objects.values_list("cle", flat=True))
-            self.assertEqual(
-                cles, valeurs_attendues,
-                f"Référentiel {modele.__name__} non couvrant.",
-            )
+            if modele is LibelleNatureDroit:
+                # Couverture minimale : enum ⊆ table.
+                manquants = valeurs_attendues - cles
+                self.assertFalse(
+                    manquants,
+                    f"Référentiel {modele.__name__} : "
+                    f"clés du décret manquantes={sorted(manquants)}",
+                )
+            else:
+                self.assertEqual(
+                    cles, valeurs_attendues,
+                    f"Référentiel {modele.__name__} non couvrant.",
+                )
 
     def test_libelles_fr_et_ar_toujours_renseignes(self):
         call_command("seed_referentiels")

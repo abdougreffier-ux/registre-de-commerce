@@ -15,6 +15,8 @@ import { ListePartiesField, normaliserPartie } from '../components/formulaires/P
 import { BienUnique, normaliserBienUnique } from '../components/formulaires/BienShared';
 import PiecesJointesField from '../components/formulaires/PiecesJointesShared';
 import { soumettreInscription } from '../components/formulaires/soumettreInscription';
+import { reglesEmail } from '../lib/validation';
+import { CANAL_SAISIE_DEFAUT, NATURE_DROIT_PAR_TYPE_SURETE } from '../lib/typeSurete';
 
 const { Title, Paragraph } = Typography;
 
@@ -32,7 +34,6 @@ export default function FormulaireCreditBail() {
   const [form] = Form.useForm();
   const [erreur, setErreur] = useState(null);
   const [enCours, setEnCours] = useState(false);
-  const [naturesDroit, setNaturesDroit] = useState([]);
   const [categories, setCategories] = useState([]);
   const [chargementReferentiels, setChargementReferentiels] = useState(true);
   const [piecesJointes, setPiecesJointes] = useState([]);
@@ -41,12 +42,8 @@ export default function FormulaireCreditBail() {
     let actif = true;
     (async () => {
       try {
-        const [nat, cats] = await Promise.all([
-          client.get('/referentiels/natures-droit/'),
-          client.get('/categories-biens/?actif=1'),
-        ]);
+        const cats = await client.get('/categories-biens/?actif=1');
         if (!actif) return;
-        setNaturesDroit(nat.data.results || nat.data || []);
         setCategories(cats.data.results || cats.data || []);
       } catch (e) {
         if (actif) setErreur(formatMessageErreur(e, t));
@@ -64,8 +61,10 @@ export default function FormulaireCreditBail() {
       const v = await form.validateFields();
       const payload = {
         type_surete: 'credit_bail',
-        canal_saisie: v.canal_saisie,
-        nature_droit: v.nature_droit,
+        // Canal implicite (registre 100% numérisé) et nature déduite
+        // du type_surete (directive MO 2026-05-31).
+        canal_saisie: CANAL_SAISIE_DEFAUT,
+        nature_droit: NATURE_DROIT_PAR_TYPE_SURETE.credit_bail,
         somme_garantie: v.montant_total_loyers,
         monnaie: v.monnaie,
         duree_en_jours: v.duree_en_jours,
@@ -129,7 +128,6 @@ export default function FormulaireCreditBail() {
         form={form}
         layout="vertical"
         initialValues={{
-          canal_saisie: 'portail_electronique',
           monnaie: 'MRU',
           constituants: [{ type_partie: 'pp' }],
           creanciers: [{ type_partie: 'pm' }],
@@ -142,27 +140,17 @@ export default function FormulaireCreditBail() {
         {/* Identification */}
         <Card title={<Space><FileTextOutlined />{t('formulaire.commun.section.identification')}</Space>} style={{ marginBottom: 16 }}>
           <Row gutter={16}>
-            <Col xs={24} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="date_demande" label={t('formulaire.commun.date_demande')} rules={[{ required: true }]}>
                 <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
               </Form.Item>
             </Col>
-            <Col xs={24} md={8}>
-              <Form.Item name="canal_saisie" label={t('formulaire.inscription.canal')} rules={[{ required: true }]}>
-                <Select options={[
-                  { value: 'guichet_papier', label: t('formulaire.inscription.canal.guichet_papier') },
-                  { value: 'portail_electronique', label: t('formulaire.inscription.canal.portail_electronique') },
-                ]} />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={8}>
-              <Form.Item name="nature_droit" label={t('formulaire.inscription.nature_droit')} rules={[{ required: true }]}>
-                <Select showSearch optionFilterProp="label"
-                  options={naturesDroit.map((n) => ({ value: n.cle, label: ar ? n.libelle_ar : n.libelle_fr }))} />
-              </Form.Item>
-            </Col>
-            <Col xs={24}>
-              <Form.Item name="adresse_electronique_notifications" label={t('formulaire.inscription.email')}>
+            <Col xs={24} md={12}>
+              <Form.Item
+                name="adresse_electronique_notifications"
+                label={t('formulaire.inscription.email')}
+                rules={reglesEmail(t)}
+              >
                 <Input placeholder="exemple@rsm.mr" />
               </Form.Item>
             </Col>

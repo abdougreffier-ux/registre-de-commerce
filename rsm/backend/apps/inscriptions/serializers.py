@@ -199,7 +199,15 @@ class DeposerInscriptionSerializer(StrictInputSerializer):
     donnees_specifiques = serializers.DictField(
         required=False, default=dict,
     )
-    canal_saisie = serializers.CharField()
+    # Registre 100% numérisé (directive MO 2026-05-31) : le canal de saisie
+    # devient implicite, valeur par défaut "portail_electronique". Le champ
+    # reste accepté en entrée pour rétro-compatibilité (formulaires anciens).
+    canal_saisie = serializers.CharField(
+        required=False, default="portail_electronique",
+    )
+    # nature_droit reste requis côté modèle ; les 3 parcours contextuels
+    # (privilege_vendeur, reserve_propriete, credit_bail) le déduisent du
+    # type_surete et l'envoient en silence côté frontend.
     nature_droit = serializers.CharField()
     somme_garantie = serializers.DecimalField(
         max_digits=18, decimal_places=2, required=False, allow_null=True,
