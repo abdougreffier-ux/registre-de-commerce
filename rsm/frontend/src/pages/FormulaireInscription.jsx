@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 import client, { formatMessageErreur } from '../api/client';
 import ProcedureDepot from '../components/ProcedureDepot';
+import HorodatageDemandeField from '../components/formulaires/HorodatageDemandeField';
 import { montantEnLettres } from '../lib/montantEnLettres';
 import {
   reglesEmail, reglesNom, reglesNNI, reglesPasseport, reglesTelephone,
@@ -236,6 +237,9 @@ export default function FormulaireInscription() {
           )}
         >
           <Row gutter={20}>
+            <Col xs={24} md={12}>
+              <HorodatageDemandeField t={t} />
+            </Col>
             <Col xs={24} md={12}>
               <Form.Item
                 name="nature_droit"

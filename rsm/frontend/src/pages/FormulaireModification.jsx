@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import client, { formatMessageErreur } from '../api/client';
 import ProcedureDepot from '../components/ProcedureDepot';
+import HorodatageDemandeField from '../components/formulaires/HorodatageDemandeField';
 
 const { Title, Paragraph } = Typography;
 
@@ -62,7 +63,10 @@ export default function FormulaireModification() {
       <Form form={form} layout="vertical">
         <Card title={t('formulaire.commun.section.identification')} style={{ marginBottom: 16 }}>
           <Row gutter={16}>
-            <Col span={24}>
+            <Col xs={24} md={12}>
+              <HorodatageDemandeField t={t} />
+            </Col>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="inscription"
                 label={t('formulaire.modification.numero_inscription')}
