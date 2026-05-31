@@ -31,6 +31,18 @@ class TypePartie(models.TextChoices):
     PERSONNE_MORALE = "pm", _("Personne morale")
 
 
+class TypeIdentifiantPP(models.TextChoices):
+    """
+    Type d'identifiant utilisé pour une personne physique (directive MO
+    2026-05-31). Le NNI mauritanien (10 chiffres) cohabite avec le
+    passeport (numéro libre, ≥ 4 caractères) pour les déclarants
+    étrangers ou non titulaires de NNI.
+    """
+
+    NNI = "nni", _("NNI (numéro national d'identification)")
+    PASSEPORT = "passeport", _("Numéro de passeport")
+
+
 class RolePartie(models.TextChoices):
     CONSTITUANT = "constituant", _("Constituant (art. 85)")
     CREANCIER = "creancier", _("Créancier garanti (art. 85)")
@@ -60,13 +72,23 @@ class Partie(Horodatage, ActeurTrace):
     prenom = models.CharField(_("Prénom(s)"), max_length=150, blank=True)
     date_naissance = models.DateField(_("Date de naissance"), null=True, blank=True)
     lieu_naissance = models.CharField(_("Lieu de naissance"), max_length=150, blank=True)
+    type_identifiant = models.CharField(
+        _("Type d'identifiant (personne physique)"),
+        max_length=16, choices=TypeIdentifiantPP.choices,
+        default=TypeIdentifiantPP.NNI, blank=True,
+        help_text=_(
+            "Détermine la nature de la valeur stockée dans ``nni`` : "
+            "NNI mauritanien (10 chiffres) ou numéro de passeport "
+            "(chaîne libre ≥ 4 caractères)."
+        ),
+    )
     nni = models.CharField(
-        _("NNI / identifiant national"),
+        _("NNI / Numéro de passeport"),
         max_length=64, blank=True, db_index=True,
         help_text=_(
-            "Numéro national d'identification (Mauritanie) ou autre "
-            "identifiant fourni. Information déclarative, non vérifiée "
-            "par le greffe (art. 86)."
+            "Valeur de l'identifiant. NNI : exactement 10 chiffres, "
+            "non répétitifs. Passeport : numéro tel qu'il figure sur "
+            "le document. Information déclarative (art. 86)."
         ),
     )
 
@@ -135,6 +157,16 @@ class Partie(Horodatage, ActeurTrace):
         if self.type_partie == TypePartie.PERSONNE_PHYSIQUE:
             return f"{self.nom} {self.prenom}".strip().upper()
         return self.denomination_sociale.strip().upper()
+
+    def save(self, *args, **kwargs):
+        """
+        Défense en profondeur : normalise systématiquement le nom en
+        MAJUSCULES côté backend (directive MO 2026-05-31), même si le
+        frontend a omis la transformation.
+        """
+        if self.nom:
+            self.nom = self.nom.strip().upper()
+        super().save(*args, **kwargs)
 
     def __str__(self) -> str:  # pragma: no cover
         return self.libelle_indexation() or f"Partie #{self.pk}"

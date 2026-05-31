@@ -101,6 +101,10 @@ class PartieDeposeeSerializer(StrictInputSerializer):
     lieu_naissance = serializers.CharField(
         required=False, allow_blank=True, max_length=150,
     )
+    type_identifiant = serializers.ChoiceField(
+        choices=["nni", "passeport"],
+        required=False, default="nni",
+    )
     nni = serializers.CharField(required=False, allow_blank=True, max_length=64)
     # Personne morale
     denomination_sociale = serializers.CharField(
@@ -124,13 +128,66 @@ class PartieDeposeeSerializer(StrictInputSerializer):
         required=False, allow_blank=True,
     )
 
+    def validate_telephone(self, value):
+        """
+        Téléphone : format international obligatoire. Pour la Mauritanie
+        (+222) : 8 chiffres commençant par 2, 3 ou 4.
+        """
+        import re
+        if not value:
+            return value
+        v = value.strip()
+        if not v.startswith("+"):
+            raise serializers.ValidationError(
+                "Le numéro doit commencer par l'indicatif international "
+                "(+XXX). Pour la Mauritanie : +222."
+            )
+        if v.startswith("+222"):
+            if not re.match(r"^\+222\s?[234]\d{7}$", v):
+                raise serializers.ValidationError(
+                    "Numéro mauritanien invalide : +222 suivi de 8 "
+                    "chiffres commençant par 2, 3 ou 4."
+                )
+            return v
+        if not re.match(r"^\+\d{1,3}\s?\d{6,14}$", v):
+            raise serializers.ValidationError(
+                "Format international invalide. Exemple : +XXX puis "
+                "le numéro local."
+            )
+        return v
+
     def validate(self, attrs):
+        import re
         t = attrs.get("type_partie")
         if t == "pp":
             if not attrs.get("nom") and not attrs.get("prenom"):
                 raise serializers.ValidationError(
                     "Personne physique : nom ou prénom requis."
                 )
+            # Normalisation MAJUSCULES côté backend (défense en profondeur).
+            if attrs.get("nom"):
+                attrs["nom"] = attrs["nom"].strip().upper()
+            # Validation NNI / Passeport selon type_identifiant.
+            type_id = attrs.get("type_identifiant", "nni")
+            valeur = (attrs.get("nni") or "").strip()
+            if valeur:
+                if type_id == "nni":
+                    if not re.match(r"^\d{10}$", valeur):
+                        raise serializers.ValidationError({
+                            "nni": "Le NNI doit comporter exactement "
+                                   "10 chiffres numériques.",
+                        })
+                    if len(set(valeur)) == 1:
+                        raise serializers.ValidationError({
+                            "nni": "Le NNI ne peut pas être une "
+                                   "séquence d'un même chiffre.",
+                        })
+                elif type_id == "passeport":
+                    if len(valeur) < 4:
+                        raise serializers.ValidationError({
+                            "nni": "Le numéro de passeport doit "
+                                   "comporter au moins 4 caractères.",
+                        })
         elif t == "pm":
             if not attrs.get("denomination_sociale"):
                 raise serializers.ValidationError(

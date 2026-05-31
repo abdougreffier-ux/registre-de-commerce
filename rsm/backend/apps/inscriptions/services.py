@@ -108,6 +108,7 @@ def _creer_partie(payload: dict, *, acteur) -> Partie:
         prenom=payload.get("prenom", ""),
         date_naissance=payload.get("date_naissance"),
         lieu_naissance=payload.get("lieu_naissance", ""),
+        type_identifiant=payload.get("type_identifiant") or "nni",
         nni=payload.get("nni", ""),
         denomination_sociale=payload.get("denomination_sociale", ""),
         numero_rc=payload.get("numero_rc", ""),
