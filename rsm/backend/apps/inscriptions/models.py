@@ -30,6 +30,7 @@ from apps.core.enums import (
     FichierRegistre,
     MotifRejet,
     NatureConvention,
+    TypeSurete,
 )
 from apps.core.models import ActeurTrace, DescriptionBilingue, Horodatage
 from apps.workflow.statuts import (
@@ -152,6 +153,28 @@ class Inscription(Horodatage, ActeurTrace):
     )
 
     # --- Contenu de l'inscription (art. 85) ------------------------------- #
+    type_surete = models.CharField(
+        _("Type de sûreté objet de l'inscription"),
+        max_length=32, choices=TypeSurete.choices,
+        default=TypeSurete.DEPOT_SURETE, db_index=True,
+        help_text=_(
+            "Distinction métier entre les 4 parcours de dépôt : sûreté "
+            "générique (art. 76), privilège du vendeur, vente avec "
+            "réserve de propriété, crédit-bail. Les éventuelles données "
+            "spécifiques au type sont conservées dans "
+            "``donnees_specifiques``."
+        ),
+    )
+    donnees_specifiques = models.JSONField(
+        _("Données spécifiques au type de sûreté"),
+        default=dict, blank=True,
+        help_text=_(
+            "Dictionnaire des champs spécifiques au type_surete déposé "
+            "(ex. date du contrat de vente, prix total, durée, etc.). "
+            "Forme libre côté backend (régime déclaratif art. 86) ; "
+            "validé en amont par les formulaires."
+        ),
+    )
     nature_droit = models.CharField(
         _("Nature du droit / sûreté (art. 85)"),
         max_length=48,

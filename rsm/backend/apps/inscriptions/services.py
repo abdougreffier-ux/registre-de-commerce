@@ -26,6 +26,7 @@ from apps.core.enums import (
     FichierRegistre,
     MotifRejet,
     NatureConvention,
+    TypeSurete,
 )
 from apps.referentiels.models import LibelleNatureDroit
 from apps.core.exceptions import RejetForme
@@ -71,6 +72,10 @@ class DonneesDemandeInscription:
     monnaie: str
     duree_en_jours: int
     adresse_electronique_notifications: str = ""
+    # Type de sûreté et données spécifiques au parcours
+    # (depot_surete / privilege_vendeur / reserve_propriete / credit_bail).
+    type_surete: str = "depot_surete"
+    donnees_specifiques: dict = field(default_factory=dict)
     # Montant en lettres (FR + AR), calculé par le service (le serializer
     # peut en transmettre une version frontend à titre indicatif, le
     # service recalcule pour être autoritatif).
@@ -267,6 +272,11 @@ def creer_demande(
         and donnees.nature_convention not in dict(NatureConvention.choices)
     ):
         raise RejetForme("Nature de convention non admise.")
+    # Le type de sûreté est limité aux 4 valeurs supportées par le système.
+    if donnees.type_surete not in dict(TypeSurete.choices):
+        raise RejetForme(
+            "Type de sûreté inconnu (parcours non supporté par le système)."
+        )
 
     # Calcul autoritatif du montant en lettres côté serveur.
     montant_fr = _calculer_montant_lettres(
@@ -280,6 +290,8 @@ def creer_demande(
         canal_saisie=donnees.canal_saisie,
         instant_arrivee=timezone.now(),
         statut=StatutInscription.RECUE,
+        type_surete=donnees.type_surete,
+        donnees_specifiques=donnees.donnees_specifiques or {},
         nature_droit=donnees.nature_droit,
         somme_garantie=donnees.somme_garantie,
         monnaie=donnees.monnaie,
@@ -301,6 +313,7 @@ def creer_demande(
         objet_type="inscription",
         objet_reference=str(inscription.reference_demande),
         details={
+            "type_surete": donnees.type_surete,
             "canal": donnees.canal_saisie,
             "nature_droit": donnees.nature_droit,
             "duree_en_jours": donnees.duree_en_jours,
@@ -309,6 +322,7 @@ def creer_demande(
             "nb_creanciers": len(donnees.creanciers),
             "nb_biens": len(donnees.biens),
             "debiteur_est_constituant": donnees.debiteur_est_constituant,
+            "nb_donnees_specifiques": len(donnees.donnees_specifiques or {}),
         },
         contexte=contexte_courant(),
     )

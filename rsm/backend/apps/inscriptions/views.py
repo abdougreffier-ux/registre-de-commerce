@@ -61,6 +61,8 @@ class ListeDeposerInscription(generics.ListCreateAPIView):
                     montant_en_lettres_ar=d.get("montant_en_lettres_ar", ""),
                     nature_convention=d.get("nature_convention", ""),
                     date_convention=d.get("date_convention"),
+                    type_surete=d.get("type_surete", "depot_surete"),
+                    donnees_specifiques=d.get("donnees_specifiques") or {},
                     debiteur_est_constituant=d.get(
                         "debiteur_est_constituant", False
                     ),

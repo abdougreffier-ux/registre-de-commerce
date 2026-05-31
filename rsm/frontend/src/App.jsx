@@ -20,6 +20,10 @@ import ChangerMotDePasse from './pages/ChangerMotDePasse';
 import GestionCategoriesBiens from './pages/GestionCategoriesBiens';
 
 import FormulaireInscription from './pages/FormulaireInscription';
+import FormulairePrivilegeVendeur from './pages/FormulairePrivilegeVendeur';
+import FormulaireReserveProprete from './pages/FormulaireReserveProprete';
+import FormulaireCreditBail from './pages/FormulaireCreditBail';
+import ChoixTypeSurete from './pages/ChoixTypeSurete';
 import FormulaireModification from './pages/FormulaireModification';
 import FormulaireRenouvellement from './pages/FormulaireRenouvellement';
 import FormulaireRadiation from './pages/FormulaireRadiation';
@@ -44,7 +48,12 @@ export default function App() {
               <Route path="/changer-mot-de-passe" element={<ChangerMotDePasse />} />
               <Route path="/admin/categories-biens" element={<GestionCategoriesBiens />} />
 
-              <Route path="/formulaires/inscription" element={<FormulaireInscription />} />
+              {/* Choix du type de sûreté + 4 parcours dédiés */}
+              <Route path="/formulaires/inscription" element={<ChoixTypeSurete />} />
+              <Route path="/formulaires/inscription/depot-surete" element={<FormulaireInscription />} />
+              <Route path="/formulaires/inscription/privilege-vendeur" element={<FormulairePrivilegeVendeur />} />
+              <Route path="/formulaires/inscription/reserve-propriete" element={<FormulaireReserveProprete />} />
+              <Route path="/formulaires/inscription/credit-bail" element={<FormulaireCreditBail />} />
               <Route path="/formulaires/modification" element={<FormulaireModification />} />
               <Route path="/formulaires/renouvellement" element={<FormulaireRenouvellement />} />
               <Route path="/formulaires/radiation" element={<FormulaireRadiation />} />

@@ -101,6 +101,34 @@ class CritereRecherche(models.TextChoices):
     )
 
 
+class TypeSurete(models.TextChoices):
+    """
+    Type de sûreté objet de l'inscription — distinction au sens des
+    pratiques juridiques mauritaniennes (art. 76 + corpus civil).
+
+    - ``depot_surete`` : sûreté générique de l'article 76 (nantissement,
+      privilèges, etc.) — formulaire historique du RSM.
+    - ``privilege_vendeur`` : privilège du vendeur de fonds ou de biens
+      mobiliers (art. 76 § 3 + droit civil).
+    - ``reserve_propriete`` : clause de réserve de propriété — le
+      transfert de propriété est suspendu jusqu'au paiement intégral.
+    - ``credit_bail`` : contrat de crédit-bail mobilier — le bien
+      demeure propriété du crédit-bailleur pendant l'exécution.
+
+    La distinction est portée par l'utilisateur au stade du dépôt.
+    Le système conserve la valeur sous ``Inscription.type_surete`` et
+    indexe les éventuelles données spécifiques dans
+    ``Inscription.donnees_specifiques`` (JSON).
+    """
+
+    DEPOT_SURETE = "depot_surete", _("Déposer une sûreté (générique)")
+    PRIVILEGE_VENDEUR = "privilege_vendeur", _("Privilège du vendeur")
+    RESERVE_PROPRIETE = "reserve_propriete", _(
+        "Vente avec réserve du droit de propriété"
+    )
+    CREDIT_BAIL = "credit_bail", _("Contrat de crédit-bail")
+
+
 class NatureConvention(models.TextChoices):
     """
     Nature de la convention constitutive de la sûreté (titre constitutif).

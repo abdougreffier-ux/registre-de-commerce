@@ -28,6 +28,9 @@ class InscriptionSerializer(StrictModelSerializer):
     nature_convention_libelle = serializers.CharField(
         source="get_nature_convention_display", read_only=True, allow_null=True,
     )
+    type_surete_libelle = serializers.CharField(
+        source="get_type_surete_display", read_only=True,
+    )
 
     def get_nature_droit_libelle(self, obj):
         """Résolution via le référentiel paramétrable (langue FR par défaut)."""
@@ -49,6 +52,8 @@ class InscriptionSerializer(StrictModelSerializer):
             "instant_arrivee", "instant_saisie_opposable",
             "statut", "statut_libelle",
             "mention_radiee", "fichier_actuel",
+            "type_surete", "type_surete_libelle",
+            "donnees_specifiques",
             "nature_droit", "nature_droit_libelle",
             "somme_garantie", "monnaie", "duree_en_jours", "date_expiration",
             "montant_en_lettres_fr", "montant_en_lettres_ar",
@@ -174,8 +179,26 @@ class BienDeposeSerializer(StrictInputSerializer):
 
 
 class DeposerInscriptionSerializer(StrictInputSerializer):
-    """Payload de dépôt d'une nouvelle demande — art. 85 intégral."""
+    """Payload de dépôt d'une nouvelle demande — art. 85 intégral.
 
+    Le payload couvre désormais 4 parcours métier distingués par
+    ``type_surete`` : sûreté générique (depot_surete), privilège du
+    vendeur, vente avec réserve de propriété, crédit-bail. Les champs
+    spécifiques à chaque parcours sont passés dans
+    ``donnees_specifiques`` (dictionnaire libre validé par les
+    formulaires côté frontend).
+    """
+
+    type_surete = serializers.ChoiceField(
+        choices=[
+            "depot_surete", "privilege_vendeur",
+            "reserve_propriete", "credit_bail",
+        ],
+        default="depot_surete",
+    )
+    donnees_specifiques = serializers.DictField(
+        required=False, default=dict,
+    )
     canal_saisie = serializers.CharField()
     nature_droit = serializers.CharField()
     somme_garantie = serializers.DecimalField(
