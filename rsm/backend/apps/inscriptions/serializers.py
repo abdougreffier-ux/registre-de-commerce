@@ -127,6 +127,30 @@ class PartieDeposeeSerializer(StrictInputSerializer):
         return attrs
 
 
+class AgentSureteDeposeSerializer(PartieDeposeeSerializer):
+    """
+    Agent de sûreté — étend PartieDeposeeSerializer avec un mécanisme
+    facultatif de réutilisation d'un créancier déjà saisi dans la même
+    demande.
+
+    Si ``from_creancier_index`` est fourni (entier ≥ 0), l'agent
+    correspond à la N-ième entrée du tableau ``creanciers`` de la même
+    demande : le backend réutilise la même ``Partie`` (pas de
+    duplication d'entité) et ignore les champs locaux.
+    """
+
+    from_creancier_index = serializers.IntegerField(
+        required=False, allow_null=True, min_value=0,
+    )
+
+    def validate(self, attrs):
+        # Si l'agent reprend un créancier existant, les contrôles
+        # type/champs sur les données locales sont inopérants.
+        if attrs.get("from_creancier_index") is not None:
+            return attrs
+        return super().validate(attrs)
+
+
 class BienDeposeSerializer(StrictInputSerializer):
     """Bien grevé déposé en input — aligné sur ``apps.biens.BienGreve``."""
 
@@ -185,6 +209,12 @@ class DeposerInscriptionSerializer(StrictInputSerializer):
     constituants = PartieDeposeeSerializer(many=True, required=False, default=list)
     debiteurs = PartieDeposeeSerializer(many=True, required=False, default=list)
     creanciers = PartieDeposeeSerializer(many=True, required=False, default=list)
+
+    # Agent de sûreté (facultatif) — peut reprendre un créancier
+    # existant via ``from_creancier_index``.
+    agents_surete = AgentSureteDeposeSerializer(
+        many=True, required=False, default=list,
+    )
 
     # Biens grevés
     biens = BienDeposeSerializer(many=True, required=False, default=list)

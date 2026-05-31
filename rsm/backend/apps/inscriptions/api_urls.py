@@ -1,4 +1,4 @@
-"""API des inscriptions — dépôt, consultation, validation, rejet."""
+"""API des inscriptions — dépôt, consultation, validation, rejet, PJ."""
 from django.urls import path
 
 from apps.inscriptions import views
@@ -11,4 +11,7 @@ urlpatterns = [
          name="inscription-valider"),
     path("<uuid:reference_demande>/rejeter/", views.RejeterInscription.as_view(),
          name="inscription-rejeter"),
+    path("<uuid:reference_demande>/pieces-jointes/",
+         views.PieceJointeUploadView.as_view(),
+         name="inscription-piece-jointe"),
 ]

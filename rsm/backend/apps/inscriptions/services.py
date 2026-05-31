@@ -84,6 +84,10 @@ class DonneesDemandeInscription:
     constituants: tuple = field(default_factory=tuple)
     debiteurs: tuple = field(default_factory=tuple)
     creanciers: tuple = field(default_factory=tuple)
+    # Agents de sûreté (facultatifs) : peuvent contenir un champ
+    # ``from_creancier_index`` qui désigne une entrée du tableau
+    # ``creanciers`` ci-dessus à réutiliser.
+    agents_surete: tuple = field(default_factory=tuple)
     biens: tuple = field(default_factory=tuple)
 
 
@@ -316,10 +320,13 @@ def creer_demande(
         _attacher_role(inscription, partie, RolePartie.CONSTITUANT, idx)
         constituants_objs.append(partie)
 
-    # Création des créanciers
+    # Création des créanciers — on conserve les objets pour pouvoir les
+    # réutiliser comme agents de sûreté (cas paramétrable).
+    creanciers_objs: list[Partie] = []
     for idx, payload in enumerate(donnees.creanciers):
         partie = _creer_partie(payload, acteur=acteur)
         _attacher_role(inscription, partie, RolePartie.CREANCIER, idx)
+        creanciers_objs.append(partie)
 
     # Création des débiteurs :
     # - si ``debiteur_est_constituant`` → on rattache les constituants déjà
@@ -333,6 +340,31 @@ def creer_demande(
         for idx, payload in enumerate(donnees.debiteurs):
             partie = _creer_partie(payload, acteur=acteur)
             _attacher_role(inscription, partie, RolePartie.DEBITEUR, idx)
+
+    # Agents de sûreté (facultatif) : peuvent reprendre un créancier
+    # existant via ``from_creancier_index``. Quand c'est le cas, on
+    # rattache la même Partie sous le rôle AGENT_SURETE plutôt que d'en
+    # créer une nouvelle — cohérence d'identité et économie de saisie.
+    for idx, payload in enumerate(donnees.agents_surete):
+        index_creancier = payload.get("from_creancier_index")
+        if (
+            index_creancier is not None
+            and 0 <= index_creancier < len(creanciers_objs)
+        ):
+            partie = creanciers_objs[index_creancier]
+            _attacher_role(inscription, partie, RolePartie.AGENT_SURETE, idx)
+            tracer(
+                categorie=CategorieAudit.DEMANDE,
+                action_cle="agent_surete.reprendre_creancier",
+                resultat=ResultatAudit.SUCCES,
+                objet_type="partie",
+                objet_reference=str(partie.pk),
+                details={"index_creancier": index_creancier},
+                contexte=contexte_courant(),
+            )
+        else:
+            partie = _creer_partie(payload, acteur=acteur)
+            _attacher_role(inscription, partie, RolePartie.AGENT_SURETE, idx)
 
     # Création des biens grevés
     for payload in donnees.biens:

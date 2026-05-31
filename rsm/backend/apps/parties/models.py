@@ -36,6 +36,9 @@ class RolePartie(models.TextChoices):
     CREANCIER = "creancier", _("Créancier garanti (art. 85)")
     DEBITEUR = "debiteur", _("Débiteur (art. 85)")
     REQUERANT = "requerant", _("Requérant (art. 85)")
+    AGENT_SURETE = "agent_surete", _(
+        "Agent de sûreté (mandataire des créanciers, facultatif — décision MO)"
+    )
 
 
 class Partie(Horodatage, ActeurTrace):

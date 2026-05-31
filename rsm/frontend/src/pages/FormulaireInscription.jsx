@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   Alert, Button, Card, Checkbox, Col, DatePicker, Divider, Form, Input,
-  InputNumber, Modal, Row, Select, Space, Spin, Typography,
+  InputNumber, List, Modal, Row, Select, Space, Spin, Typography, Upload,
 } from 'antd';
 import {
-  PlusOutlined, DeleteOutlined, UserOutlined, BankOutlined,
+  PlusOutlined, DeleteOutlined, UserOutlined,
   FileTextOutlined, DollarOutlined, AppstoreOutlined,
+  SafetyCertificateOutlined, PaperClipOutlined, FilePdfOutlined,
 } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 
@@ -15,20 +16,34 @@ import { montantEnLettres } from '../lib/montantEnLettres';
 
 const { Title, Paragraph, Text } = Typography;
 
+const PJ_TAILLE_MAX = 10 * 1024 * 1024; // 10 Mo
+const PJ_TYPES_AUTORISES = ['application/pdf'];
+
 /**
- * Dépôt d'inscription de sûreté mobilière (art. 85) — refonte fonctionnelle.
+ * Dépôt d'inscription de sûreté mobilière (art. 85) — refonte fonctionnelle
+ * + module Agent de sûreté + pièces jointes PDF.
  *
- * Organisation en 5 sections claires :
+ * Organisation en 6 sections claires :
  *   1. Identification de la demande
- *   2. Conditions financières (somme + monnaie + durée + montant en lettres FR/AR)
+ *   2. Conditions financières (somme + monnaie + durée + montant en lettres
+ *      dans la LANGUE ACTIVE uniquement — pas de duplication FR/AR)
  *   3. Titre constitutif (convention + date)
- *   4. Parties (constituants / débiteurs / créanciers, dynamiques)
- *   5. Biens grevés (dynamiques, basés sur les catégories paramétrables)
+ *   4. Parties (constituants / débiteurs / créanciers + agent de sûreté
+ *      facultatif, dynamiques)
+ *   5. Biens grevés (dynamiques, basés sur les catégories paramétrables,
+ *      description dans la LANGUE ACTIVE uniquement)
+ *   6. Pièces jointes PDF (multipart, 10 Mo max, multiple)
+ *
+ * Principe mono-langue (directive MO 2026-05-31) :
+ *   UNE langue active = UN seul ensemble de champs. Aucune duplication
+ *   FR/AR dans le même écran. Le backend continue de stocker en
+ *   bilingue (montant en lettres calculé dans les deux langues, mais
+ *   description du bien dans la seule langue de saisie).
  *
  * Garde-fous (post-bascule MO du 2026-05-30) :
  *   - intégrité : aucune mutation directe — submit via /inscriptions/ ;
- *   - traçabilité : chaque sous-création tracée côté backend ;
- *   - parité FR/AR : libellés résolus via i18n, dynamiques selon la langue active.
+ *   - traçabilité : chaque sous-création et chaque PJ tracées côté backend ;
+ *   - parité FR/AR : les écrans FR et AR sont structurellement identiques.
  */
 export default function FormulaireInscription() {
   const { t, i18n } = useTranslation();
@@ -40,6 +55,9 @@ export default function FormulaireInscription() {
   const [naturesDroit, setNaturesDroit] = useState([]);
   const [categories, setCategories] = useState([]);
   const [chargementReferentiels, setChargementReferentiels] = useState(true);
+
+  // File d'attente locale des PJ — envoyées après création de l'inscription.
+  const [piecesJointes, setPiecesJointes] = useState([]);
 
   // Chargement parallèle des référentiels (natures de droit + catégories de biens).
   useEffect(() => {
@@ -65,18 +83,17 @@ export default function FormulaireInscription() {
   }, [t]);
 
   // Observation temps réel de la somme garantie et de la monnaie pour
-  // calcul instantané du montant en lettres FR + AR.
+  // calcul instantané du montant en lettres (langue active uniquement).
   const sommeWatch = Form.useWatch('somme_garantie', form);
   const monnaieWatch = Form.useWatch('monnaie', form);
   const debiteurEstConstituantWatch = Form.useWatch('debiteur_est_constituant', form);
+  const presenceAgentWatch = Form.useWatch('presence_agent_surete', form);
 
-  const lettresFr = useMemo(
-    () => montantEnLettres(sommeWatch, monnaieWatch || '', 'fr'),
-    [sommeWatch, monnaieWatch],
-  );
-  const lettresAr = useMemo(
-    () => montantEnLettres(sommeWatch, monnaieWatch || '', 'ar'),
-    [sommeWatch, monnaieWatch],
+  // Conversion dans la langue active (affichée). La langue inactive
+  // est recalculée côté backend par num2words pour persistance.
+  const lettresActive = useMemo(
+    () => montantEnLettres(sommeWatch, monnaieWatch || '', ar ? 'ar' : 'fr'),
+    [sommeWatch, monnaieWatch, ar],
   );
 
   const soumettre = async () => {
@@ -87,51 +104,96 @@ export default function FormulaireInscription() {
 
       // Normalisation du payload pour le backend.
       const payload = {
-        ...valeurs,
-        // DatePicker → "YYYY-MM-DD"
+        canal_saisie: valeurs.canal_saisie,
+        nature_droit: valeurs.nature_droit,
+        somme_garantie: valeurs.somme_garantie,
+        monnaie: valeurs.monnaie,
+        duree_en_jours: valeurs.duree_en_jours,
+        adresse_electronique_notifications: valeurs.adresse_electronique_notifications || '',
+        // Le backend recalcule autoritativement le montant en lettres FR + AR.
+        // Le frontend transmet ce qu'il a affiché pour traçabilité, mais
+        // n'est pas autoritatif.
+        montant_en_lettres_fr: ar ? '' : lettresActive,
+        montant_en_lettres_ar: ar ? lettresActive : '',
+        nature_convention: valeurs.nature_convention || '',
         date_convention: valeurs.date_convention
           ? valeurs.date_convention.format('YYYY-MM-DD')
           : null,
-        montant_en_lettres_fr: lettresFr,
-        montant_en_lettres_ar: lettresAr,
-        // Si débiteur = constituant, on n'envoie pas de débiteurs (le backend duplique).
-        debiteurs: valeurs.debiteur_est_constituant ? [] : (valeurs.debiteurs || []),
-        constituants: valeurs.constituants || [],
-        creanciers: valeurs.creanciers || [],
-        // Normalisation des biens : date du DatePicker éventuel des attributs
-        // spécifiques (laissé tel quel pour l'instant — le backend stocke en JSON).
-        biens: (valeurs.biens || []).map((b) => ({
-          categorie_cle: b.categorie_cle,
-          description_fr: b.description_fr || '',
-          description_ar: b.description_ar || '',
-          marque: b.marque || '',
-          modele: b.modele || '',
-          annee: b.annee || null,
-          numero_serie: b.numero_serie || '',
-          attributs_specifiques: b.attributs_specifiques || {},
-          observations: b.observations || '',
-        })),
-        // Normalisation parties (dates de naissance)
+        debiteur_est_constituant: !!valeurs.debiteur_est_constituant,
         constituants: (valeurs.constituants || []).map(normaliserPartie),
         creanciers: (valeurs.creanciers || []).map(normaliserPartie),
+        debiteurs: valeurs.debiteur_est_constituant
+          ? []
+          : (valeurs.debiteurs || []).map(normaliserPartie),
+        agents_surete: valeurs.presence_agent_surete
+          ? (valeurs.agents_surete || []).map(normaliserAgent)
+          : [],
+        biens: (valeurs.biens || []).map((b) => normaliserBien(b, ar)),
       };
-      if (!valeurs.debiteur_est_constituant) {
-        payload.debiteurs = (valeurs.debiteurs || []).map(normaliserPartie);
-      }
 
       const { data } = await client.post('/inscriptions/', payload);
+
+      // Upload des pièces jointes (séquentiel pour éviter de saturer le réseau).
+      const reference = data.reference_demande;
+      const pjErreurs = [];
+      for (const pj of piecesJointes) {
+        try {
+          const fd = new FormData();
+          fd.append('fichier', pj.originFileObj || pj);
+          await client.post(
+            `/inscriptions/${reference}/pieces-jointes/`,
+            fd,
+            { headers: { 'Content-Type': 'multipart/form-data' } },
+          );
+        } catch (eu) {
+          pjErreurs.push(`${pj.name} : ${formatMessageErreur(eu, t)}`);
+        }
+      }
+
+      const contenu = [
+        `${t('soumission.succes.contenu')} (${reference || ''})`,
+        pjErreurs.length
+          ? `\n\n${t('formulaire.inscription.pj.erreurs')} :\n${pjErreurs.join('\n')}`
+          : '',
+      ].join('');
+
       Modal.success({
         title: t('soumission.succes.titre'),
-        content: `${t('soumission.succes.contenu')} (${data.reference_demande || ''})`,
+        content: contenu,
         okText: t('soumission.fermer'),
       });
       form.resetFields();
+      setPiecesJointes([]);
     } catch (e) {
       if (e?.errorFields) return; // erreur de validation formulaire AntD
       setErreur(formatMessageErreur(e, t));
     } finally {
       setEnCours(false);
     }
+  };
+
+  // ====== Validation locale d'une PJ avant ajout à la file ======
+  const onAvantUpload = (fichier) => {
+    if (!PJ_TYPES_AUTORISES.includes(fichier.type)) {
+      Modal.error({
+        title: t('formulaire.inscription.pj.erreur.type.titre'),
+        content: t('formulaire.inscription.pj.erreur.type.contenu'),
+      });
+      return Upload.LIST_IGNORE;
+    }
+    if (fichier.size > PJ_TAILLE_MAX) {
+      Modal.error({
+        title: t('formulaire.inscription.pj.erreur.taille.titre'),
+        content: t('formulaire.inscription.pj.erreur.taille.contenu', { max: 10 }),
+      });
+      return Upload.LIST_IGNORE;
+    }
+    setPiecesJointes((curr) => [...curr, fichier]);
+    return false; // empêche l'upload immédiat — fait par soumettre()
+  };
+
+  const onRetirerPj = (uid) => {
+    setPiecesJointes((curr) => curr.filter((p) => p.uid !== uid));
   };
 
   return (
@@ -151,9 +213,11 @@ export default function FormulaireInscription() {
           canal_saisie: 'portail_electronique',
           monnaie: 'MRU',
           debiteur_est_constituant: false,
+          presence_agent_surete: false,
           constituants: [{ type_partie: 'pp' }],
           creanciers: [{ type_partie: 'pp' }],
           debiteurs: [],
+          agents_surete: [],
           biens: [{}],
         }}
       >
@@ -254,24 +318,16 @@ export default function FormulaireInscription() {
             </Col>
           </Row>
 
+          {/* Montant en lettres : LANGUE ACTIVE UNIQUEMENT. Le backend calcule
+              et stocke aussi l'autre langue pour les certificats bilingues. */}
           <Row gutter={16}>
-            <Col xs={24} md={12}>
-              <Form.Item label={t('formulaire.inscription.montant_lettres_fr')}>
+            <Col xs={24}>
+              <Form.Item label={t('formulaire.inscription.montant_lettres')}>
                 <Input
-                  value={lettresFr}
+                  value={lettresActive}
                   readOnly
-                  placeholder={t('formulaire.inscription.montant_lettres_placeholder')}
-                  style={{ background: 'var(--gris-50)' }}
-                />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={12}>
-              <Form.Item label={t('formulaire.inscription.montant_lettres_ar')}>
-                <Input
-                  value={lettresAr}
-                  readOnly
-                  dir="rtl"
-                  lang="ar"
+                  dir={ar ? 'rtl' : 'ltr'}
+                  lang={ar ? 'ar' : 'fr'}
                   placeholder={t('formulaire.inscription.montant_lettres_placeholder')}
                   style={{ background: 'var(--gris-50)' }}
                 />
@@ -364,6 +420,26 @@ export default function FormulaireInscription() {
             description={t('formulaire.inscription.partie.creanciers.description')}
             minimum={1}
           />
+
+          <Divider />
+
+          {/* Agent de sûreté (FACULTATIF) */}
+          <Form.Item
+            name="presence_agent_surete"
+            valuePropName="checked"
+            style={{ marginBottom: 12 }}
+          >
+            <Checkbox>
+              <Space size={4}>
+                <SafetyCertificateOutlined />
+                {t('formulaire.inscription.agent_surete.checkbox')}
+              </Space>
+            </Checkbox>
+          </Form.Item>
+
+          {presenceAgentWatch && (
+            <ListeAgentsSureteField t={t} ar={ar} form={form} />
+          )}
         </Card>
 
         {/* ============ Section 5 — Biens grevés ============ */}
@@ -380,6 +456,58 @@ export default function FormulaireInscription() {
             {t('formulaire.inscription.biens.description')}
           </Paragraph>
           <ListeBiensField t={t} ar={ar} categories={categories} />
+        </Card>
+
+        {/* ============ Section 6 — Pièces jointes ============ */}
+        <Card
+          title={(
+            <Space>
+              <PaperClipOutlined />
+              {t('formulaire.inscription.section.pieces_jointes')}
+            </Space>
+          )}
+          style={{ marginBottom: 16 }}
+        >
+          <Paragraph type="secondary" style={{ marginBottom: 12 }}>
+            {t('formulaire.inscription.pj.aide')}
+          </Paragraph>
+          <Upload
+            accept=".pdf"
+            beforeUpload={onAvantUpload}
+            showUploadList={false}
+            multiple
+          >
+            <Button icon={<PlusOutlined />}>
+              {t('formulaire.inscription.pj.bouton_ajouter')}
+            </Button>
+          </Upload>
+          {piecesJointes.length > 0 && (
+            <List
+              size="small"
+              style={{ marginTop: 12 }}
+              dataSource={piecesJointes}
+              renderItem={(item) => (
+                <List.Item
+                  actions={[
+                    <Button
+                      key="retirer"
+                      size="small" danger type="text"
+                      icon={<DeleteOutlined />}
+                      onClick={() => onRetirerPj(item.uid)}
+                    >
+                      {t('formulaire.inscription.pj.retirer')}
+                    </Button>,
+                  ]}
+                >
+                  <List.Item.Meta
+                    avatar={<FilePdfOutlined style={{ fontSize: 22, color: 'var(--rim-rouge)' }} />}
+                    title={item.name}
+                    description={`${(item.size / 1024 / 1024).toFixed(2)} Mo`}
+                  />
+                </List.Item>
+              )}
+            />
+          )}
         </Card>
 
         <ProcedureDepot
@@ -415,6 +543,7 @@ function ListePartiesField({ t, ar, nom, titre, description, minimum = 0 }) {
               <PartieFieldset
                 key={field.key}
                 t={t} ar={ar}
+                listName={nom}
                 name={field.name}
                 index={idx}
                 onRetirer={fields.length > minimum ? () => remove(field.name) : null}
@@ -439,21 +568,7 @@ function ListePartiesField({ t, ar, nom, titre, description, minimum = 0 }) {
 /* =========================================================================
  * Fieldset d'une partie unique (avec bascule PP / PM)
  * ========================================================================= */
-function PartieFieldset({ t, ar, name, index, onRetirer }) {
-  const form = Form.useFormInstance();
-  // Récupère le chemin du parent Form.List : on observe via watch
-  // (le chemin complet est inconnu ici, donc on lit côté form via getFieldValue
-  // en pratique, on s'appuie sur le nom relatif passé par Form.List).
-  const typePartiePath = (parent) => [parent, name, 'type_partie'];
-
-  // On ne connaît pas le nom de la liste parente ici ; on contourne en
-  // observant les champs via le name local et la valeur courante.
-  // Ant Design supporte la lecture relative via le `name` du fieldset.
-  // Trick : on utilise un Form.Item name=["type_partie"] dans un sous-Form,
-  // mais c'est plus simple de juste lire depuis form.getFieldValue avec un
-  // chemin dynamique. Pour simplifier ici, on rend les deux groupes de
-  // champs et on les masque via shouldUpdate.
-
+function PartieFieldset({ t, ar, listName, name, index, onRetirer }) {
   return (
     <Card
       type="inner"
@@ -483,151 +598,255 @@ function PartieFieldset({ t, ar, name, index, onRetirer }) {
         />
       </Form.Item>
 
-      <Form.Item shouldUpdate noStyle>
-        {() => {
-          // Sécurité : on lit la valeur via le path actuel,
-          // sans connaître la liste parente, en utilisant Form.useWatch global.
-          // Workaround : on cherche le type via le state du formulaire.
-          // Comme le name est dans une Form.List, le path complet est résolu
-          // côté Ant Design ; pour rester portable, on utilise un BadgeRef
-          // via dépend du form parent.
-          // Implémentation : on utilise une dépendance via shouldUpdate
-          // et on lit avec Form.getFieldValue en se basant sur la
-          // racine du formulaire (path inconnu) — alternative : on
-          // récupère le type via la prop `dependencies` du Form.Item
-          // englobant. Pour rester simple, on rend les deux blocs et on
-          // n'oblige rien : la validation backend filtre selon le type.
-          return null;
-        }}
-      </Form.Item>
-
-      {/* Champs personne physique */}
-      <Form.Item shouldUpdate noStyle>
-        {({ getFieldValue }) => {
-          // ARTUCE : on accède au type via le path RELATIF connu.
-          // Form.List passe `name` qui correspond au sous-index. Le
-          // path complet en dépend ; on utilise un getter sur le state.
-          // Le `getFieldValue([nom_liste, name, 'type_partie'])` ne marche
-          // pas sans connaître nom_liste. On utilise donc un sentinel :
-          // on rend toujours les deux blocs, et le backend ignore les
-          // champs vides selon `type_partie`. Cette approche est
-          // robuste (zéro JS) et n'introduit aucune divergence FR/AR.
-          return null;
-        }}
-      </Form.Item>
-
-      <PartiePhysiqueChamps t={t} name={name} />
-      <PartieMoraleChamps t={t} ar={ar} name={name} />
-
-      {/* Champs communs */}
-      <Row gutter={12}>
-        <Col xs={24} md={12}>
-          <Form.Item name={[name, 'adresse']} label={t('formulaire.inscription.partie.adresse')}>
-            <Input.TextArea rows={2} />
-          </Form.Item>
-        </Col>
-        <Col xs={12} md={6}>
-          <Form.Item name={[name, 'telephone']} label={t('formulaire.inscription.partie.telephone')}>
-            <Input />
-          </Form.Item>
-        </Col>
-        <Col xs={12} md={6}>
-          <Form.Item name={[name, 'adresse_electronique']} label={t('formulaire.inscription.partie.email')}>
-            <Input type="email" />
-          </Form.Item>
-        </Col>
-      </Row>
+      <ChampsConditionnelsPartie t={t} listName={listName} name={name} />
     </Card>
   );
 }
 
 
-/* --- Champs Personne Physique (affichés conditionnellement) --- */
-function PartiePhysiqueChamps({ t, name }) {
+/* --- Affichage conditionnel selon le type de partie (PP / PM) --- */
+function ChampsConditionnelsPartie({ t, listName, name }) {
   return (
-    <Form.Item noStyle shouldUpdate={(prev, cur) => prev !== cur}>
+    <Form.Item noStyle shouldUpdate={(prev, cur) => {
+      const a = prev[listName]?.[name]?.type_partie;
+      const b = cur[listName]?.[name]?.type_partie;
+      return a !== b;
+    }}>
       {({ getFieldValue }) => {
-        // On accède au type via le path absolu : Form.List enveloppe
-        // les noms dans son tableau. Comme `name` est relatif, on
-        // utilise une astuce : on lit via le getter de Form sur tous
-        // les chemins probables (constituants/debiteurs/creanciers).
-        const type = (
-          getFieldValue(['constituants', name, 'type_partie'])
-          ?? getFieldValue(['debiteurs', name, 'type_partie'])
-          ?? getFieldValue(['creanciers', name, 'type_partie'])
-        );
-        if (type === 'pm') return null;
+        const type = getFieldValue([listName, name, 'type_partie']);
+        const estPm = type === 'pm';
         return (
-          <Row gutter={12}>
-            <Col xs={12} md={8}>
-              <Form.Item name={[name, 'nom']} label={t('formulaire.inscription.partie.nom')}>
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col xs={12} md={8}>
-              <Form.Item name={[name, 'prenom']} label={t('formulaire.inscription.partie.prenom')}>
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col xs={12} md={8}>
-              <Form.Item name={[name, 'nni']} label={t('formulaire.inscription.partie.nni')}>
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col xs={12} md={8}>
-              <Form.Item name={[name, 'date_naissance']} label={t('formulaire.inscription.partie.date_naissance')}>
-                <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
-              </Form.Item>
-            </Col>
-            <Col xs={12} md={16}>
-              <Form.Item name={[name, 'lieu_naissance']} label={t('formulaire.inscription.partie.lieu_naissance')}>
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
+          <>
+            {!estPm && (
+              <Row gutter={12}>
+                <Col xs={12} md={8}>
+                  <Form.Item name={[name, 'nom']} label={t('formulaire.inscription.partie.nom')}>
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col xs={12} md={8}>
+                  <Form.Item name={[name, 'prenom']} label={t('formulaire.inscription.partie.prenom')}>
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col xs={12} md={8}>
+                  <Form.Item name={[name, 'nni']} label={t('formulaire.inscription.partie.nni')}>
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col xs={12} md={8}>
+                  <Form.Item name={[name, 'date_naissance']} label={t('formulaire.inscription.partie.date_naissance')}>
+                    <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
+                  </Form.Item>
+                </Col>
+                <Col xs={12} md={16}>
+                  <Form.Item name={[name, 'lieu_naissance']} label={t('formulaire.inscription.partie.lieu_naissance')}>
+                    <Input />
+                  </Form.Item>
+                </Col>
+              </Row>
+            )}
+            {estPm && (
+              <Row gutter={12}>
+                <Col xs={24} md={12}>
+                  <Form.Item name={[name, 'denomination_sociale']} label={t('formulaire.inscription.partie.denomination_sociale')}>
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col xs={12} md={6}>
+                  <Form.Item name={[name, 'numero_rc']} label={t('formulaire.inscription.partie.numero_rc')}>
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col xs={12} md={6}>
+                  <Form.Item name={[name, 'representant_legal']} label={t('formulaire.inscription.partie.representant_legal')}>
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col xs={24}>
+                  <Form.Item name={[name, 'siege_social']} label={t('formulaire.inscription.partie.siege_social')}>
+                    <Input />
+                  </Form.Item>
+                </Col>
+              </Row>
+            )}
+            <Row gutter={12}>
+              <Col xs={24} md={12}>
+                <Form.Item name={[name, 'adresse']} label={t('formulaire.inscription.partie.adresse')}>
+                  <Input.TextArea rows={2} />
+                </Form.Item>
+              </Col>
+              <Col xs={12} md={6}>
+                <Form.Item name={[name, 'telephone']} label={t('formulaire.inscription.partie.telephone')}>
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col xs={12} md={6}>
+                <Form.Item name={[name, 'adresse_electronique']} label={t('formulaire.inscription.partie.email')}>
+                  <Input type="email" />
+                </Form.Item>
+              </Col>
+            </Row>
+          </>
         );
       }}
     </Form.Item>
   );
 }
 
-/* --- Champs Personne Morale (affichés conditionnellement) --- */
-function PartieMoraleChamps({ t, ar, name }) {
+
+/* =========================================================================
+ * Composant Liste d'agents de sûreté (avec pioche créancier)
+ * ========================================================================= */
+function ListeAgentsSureteField({ t, ar, form }) {
+  // Observation des créanciers déjà saisis pour proposer la pioche.
+  const creanciers = Form.useWatch('creanciers', form) || [];
+
+  const optionsCreanciers = creanciers
+    .map((c, idx) => ({ idx, partie: c }))
+    .filter(({ partie }) => partie && (
+      partie.nom || partie.prenom || partie.denomination_sociale
+    ))
+    .map(({ idx, partie }) => ({
+      value: idx,
+      label: partie.type_partie === 'pm'
+        ? `${partie.denomination_sociale} (PM)`
+        : `${partie.nom || ''} ${partie.prenom || ''}`.trim() + ' (PP)',
+    }));
+
+  // Quand on choisit "reprendre un créancier", on recopie ses valeurs
+  // pour affichage en lecture seule. La pioche reste prioritaire côté
+  // backend via le champ from_creancier_index.
+  const onChoisirCreancier = (idxAgent, valeur) => {
+    const liste = form.getFieldValue('agents_surete') || [];
+    const courant = { ...(liste[idxAgent] || {}) };
+    if (valeur === undefined || valeur === null) {
+      courant.from_creancier_index = null;
+    } else {
+      courant.from_creancier_index = valeur;
+      const source = creanciers[valeur] || {};
+      // Recopie pour visualisation (champ technique reste le pivot).
+      Object.assign(courant, {
+        type_partie: source.type_partie,
+        nom: source.nom, prenom: source.prenom,
+        nni: source.nni,
+        date_naissance: source.date_naissance,
+        lieu_naissance: source.lieu_naissance,
+        denomination_sociale: source.denomination_sociale,
+        numero_rc: source.numero_rc,
+        siege_social: source.siege_social,
+        representant_legal: source.representant_legal,
+        adresse: source.adresse,
+        telephone: source.telephone,
+        adresse_electronique: source.adresse_electronique,
+      });
+    }
+    const nouveau = [...liste];
+    nouveau[idxAgent] = courant;
+    form.setFieldsValue({ agents_surete: nouveau });
+  };
+
   return (
-    <Form.Item noStyle shouldUpdate={(prev, cur) => prev !== cur}>
-      {({ getFieldValue }) => {
-        const type = (
-          getFieldValue(['constituants', name, 'type_partie'])
-          ?? getFieldValue(['debiteurs', name, 'type_partie'])
-          ?? getFieldValue(['creanciers', name, 'type_partie'])
-        );
-        if (type !== 'pm') return null;
-        return (
-          <Row gutter={12}>
-            <Col xs={24} md={12}>
-              <Form.Item name={[name, 'denomination_sociale']} label={t('formulaire.inscription.partie.denomination_sociale')}>
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col xs={12} md={6}>
-              <Form.Item name={[name, 'numero_rc']} label={t('formulaire.inscription.partie.numero_rc')}>
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col xs={12} md={6}>
-              <Form.Item name={[name, 'representant_legal']} label={t('formulaire.inscription.partie.representant_legal')}>
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col xs={24}>
-              <Form.Item name={[name, 'siege_social']} label={t('formulaire.inscription.partie.siege_social')}>
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
-        );
-      }}
-    </Form.Item>
+    <div>
+      <div style={{ marginBottom: 8 }}>
+        <Text strong>{t('formulaire.inscription.agent_surete.titre')}</Text>
+        <Paragraph type="secondary" style={{ marginBottom: 0, fontSize: 12.5 }}>
+          {t('formulaire.inscription.agent_surete.description')}
+        </Paragraph>
+      </div>
+
+      <Form.List name="agents_surete">
+        {(fields, { add, remove }) => (
+          <>
+            {fields.map((field, idx) => (
+              <Card
+                key={field.key}
+                type="inner"
+                size="small"
+                title={`${t('formulaire.inscription.agent_surete.numero')} ${idx + 1}`}
+                extra={(
+                  <Button
+                    size="small" danger type="text"
+                    icon={<DeleteOutlined />}
+                    onClick={() => remove(field.name)}
+                  >
+                    {t('formulaire.inscription.agent_surete.retirer')}
+                  </Button>
+                )}
+                style={{ marginBottom: 12 }}
+              >
+                <Form.Item
+                  name={[field.name, 'from_creancier_index']}
+                  label={t('formulaire.inscription.agent_surete.reprendre_creancier')}
+                  tooltip={t('formulaire.inscription.agent_surete.reprendre_creancier_aide')}
+                >
+                  <Select
+                    allowClear
+                    placeholder={t('formulaire.inscription.agent_surete.reprendre_creancier_placeholder')}
+                    options={optionsCreanciers}
+                    onChange={(v) => onChoisirCreancier(field.name, v)}
+                  />
+                </Form.Item>
+
+                <Form.Item noStyle shouldUpdate={(prev, cur) => {
+                  const a = prev.agents_surete?.[field.name]?.from_creancier_index;
+                  const b = cur.agents_surete?.[field.name]?.from_creancier_index;
+                  return a !== b;
+                }}>
+                  {({ getFieldValue }) => {
+                    const reprend = getFieldValue([
+                      'agents_surete', field.name, 'from_creancier_index',
+                    ]);
+                    if (reprend !== undefined && reprend !== null) {
+                      // En mode pioche : on rappelle ce qui a été repris,
+                      // sans permettre d'édition. Champ d'identité résumé.
+                      const source = creanciers[reprend] || {};
+                      const resume = source.type_partie === 'pm'
+                        ? `${source.denomination_sociale || ''} — RC ${source.numero_rc || '—'}`
+                        : `${source.nom || ''} ${source.prenom || ''}`.trim();
+                      return (
+                        <Alert
+                          type="info"
+                          showIcon
+                          message={t('formulaire.inscription.agent_surete.reprise_active')}
+                          description={resume}
+                        />
+                      );
+                    }
+                    // Sinon : saisie manuelle complète.
+                    return (
+                      <>
+                        <Form.Item
+                          name={[field.name, 'type_partie']}
+                          label={t('formulaire.inscription.partie.type')}
+                          rules={[{ required: true, message: t('formulaire.commun.requis') }]}
+                        >
+                          <Select
+                            options={[
+                              { value: 'pp', label: t('formulaire.inscription.partie.type.pp') },
+                              { value: 'pm', label: t('formulaire.inscription.partie.type.pm') },
+                            ]}
+                          />
+                        </Form.Item>
+                        <ChampsConditionnelsPartie t={t} listName="agents_surete" name={field.name} />
+                      </>
+                    );
+                  }}
+                </Form.Item>
+              </Card>
+            ))}
+            <Button
+              type="dashed"
+              onClick={() => add({ type_partie: 'pp' })}
+              icon={<PlusOutlined />}
+              style={{ width: '100%', marginTop: 8 }}
+            >
+              {t('formulaire.inscription.agent_surete.ajouter')}
+            </Button>
+          </>
+        )}
+      </Form.List>
+    </div>
   );
 }
 
@@ -665,7 +884,7 @@ function ListeBiensField({ t, ar, categories }) {
 }
 
 
-/* --- Fieldset d'un bien unique --- */
+/* --- Fieldset d'un bien unique (description mono-langue) --- */
 function BienFieldset({ t, ar, categories, name, index, onRetirer }) {
   return (
     <Card
@@ -702,14 +921,11 @@ function BienFieldset({ t, ar, categories, name, index, onRetirer }) {
             <Input />
           </Form.Item>
         </Col>
-        <Col xs={24} md={12}>
-          <Form.Item name={[name, 'description_fr']} label={t('formulaire.inscription.bien.description_fr')}>
-            <Input.TextArea rows={2} />
-          </Form.Item>
-        </Col>
-        <Col xs={24} md={12}>
-          <Form.Item name={[name, 'description_ar']} label={t('formulaire.inscription.bien.description_ar')}>
-            <Input.TextArea rows={2} dir="rtl" />
+        {/* Description : MONO-LANGUE (active). Backend stocke dans description_fr ou _ar
+            selon la langue de saisie. */}
+        <Col xs={24}>
+          <Form.Item name={[name, 'description']} label={t('formulaire.inscription.bien.description_label')}>
+            <Input.TextArea rows={2} dir={ar ? 'rtl' : 'ltr'} />
           </Form.Item>
         </Col>
         <Col xs={8} md={6}>
@@ -739,7 +955,7 @@ function BienFieldset({ t, ar, categories, name, index, onRetirer }) {
 
 
 /* =========================================================================
- * Normalisation d'une partie avant envoi (dates dayjs → ISO, blancs, etc.)
+ * Normalisations avant envoi
  * ========================================================================= */
 function normaliserPartie(p) {
   if (!p) return p;
@@ -747,9 +963,6 @@ function normaliserPartie(p) {
   if (out.date_naissance && out.date_naissance.format) {
     out.date_naissance = out.date_naissance.format('YYYY-MM-DD');
   }
-  // Selon le type de partie, on nettoie les champs non pertinents
-  // pour éviter d'envoyer du bruit ; le backend les accepte mais on
-  // reste propre.
   if (out.type_partie === 'pp') {
     out.denomination_sociale = '';
     out.numero_rc = '';
@@ -763,4 +976,31 @@ function normaliserPartie(p) {
     out.nni = '';
   }
   return out;
+}
+
+function normaliserAgent(a) {
+  if (!a) return a;
+  // Si l'agent reprend un créancier, on n'envoie que l'index. Le backend
+  // réutilise la même Partie côté serveur — pas de duplication d'entité.
+  if (a.from_creancier_index !== undefined && a.from_creancier_index !== null) {
+    return { from_creancier_index: a.from_creancier_index, type_partie: 'pp' };
+  }
+  return normaliserPartie(a);
+}
+
+function normaliserBien(b, ar) {
+  if (!b) return b;
+  // Description mono-langue : mappage selon la langue active.
+  const description = b.description || '';
+  return {
+    categorie_cle: b.categorie_cle,
+    description_fr: ar ? '' : description,
+    description_ar: ar ? description : '',
+    marque: b.marque || '',
+    modele: b.modele || '',
+    annee: b.annee || null,
+    numero_serie: b.numero_serie || '',
+    attributs_specifiques: b.attributs_specifiques || {},
+    observations: b.observations || '',
+  };
 }
