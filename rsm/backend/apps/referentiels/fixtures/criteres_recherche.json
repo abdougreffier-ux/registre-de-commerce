@@ -1,0 +1,48 @@
+[
+  {
+    "model": "referentiels.libellecritererecherche",
+    "fields": {
+      "cle": "nom_constituant",
+      "libelle_fr": "Nom et prénom ou dénomination sociale du constituant (art. 96)",
+      "libelle_ar": "الاسم واللقب أو التسمية الاجتماعية للمنشئ (المادة 96)",
+      "langue_faisant_foi": "equ",
+      "description_fr": "Critère LIMITATIF de l'article 96. Si utilisé, le résultat inclut l'ensemble des homonymes (art. 97 al. 2).",
+      "description_ar": "معيار حصري في المادة 96. عند استعماله، تشمل النتيجة جميع المتشابهين (المادة 97 الفقرة 2).",
+      "actif": true,
+      "ordre": 10
+    }
+  },
+  {
+    "model": "referentiels.libellecritererecherche",
+    "fields": {
+      "cle": "numero_rc",
+      "libelle_fr": "Numéro d'immatriculation au registre du commerce (art. 96)",
+      "libelle_ar": "رقم التسجيل في السجل التجاري (المادة 96)",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 20
+    }
+  },
+  {
+    "model": "referentiels.libellecritererecherche",
+    "fields": {
+      "cle": "numero_serie_bien",
+      "libelle_fr": "Numéro de série du bien (art. 96)",
+      "libelle_ar": "الرقم التسلسلي للمال (المادة 96)",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 30
+    }
+  },
+  {
+    "model": "referentiels.libellecritererecherche",
+    "fields": {
+      "cle": "numero_inscription",
+      "libelle_fr": "Numéro de l'inscription initiale ou de la modification (art. 96)",
+      "libelle_ar": "رقم التسجيل الأولي أو التعديل (المادة 96)",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 40
+    }
+  }
+]

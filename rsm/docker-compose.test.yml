@@ -1,0 +1,51 @@
+# =================================================================
+# Environnement de TEST FONCTIONNEL — RSM
+# Orchestration : PostgreSQL + backend Django
+# =================================================================
+# Usage :
+#   docker compose -f docker-compose.test.yml up --build
+#
+# ⚠️ ENVIRONNEMENT DE TEST uniquement. NE PAS DÉPLOYER EN PRODUCTION.
+# Les zones gelées (horodatage, scellement, signature, MFA) sont en
+# mode STUB conformément à la gouvernance des arbitrages MO.
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: rsm-db-test
+    environment:
+      POSTGRES_DB: rsm_test
+      POSTGRES_USER: rsm_test
+      POSTGRES_PASSWORD: rsm_test_password
+    volumes:
+      - rsm_test_db_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"   # Port 5433 côté hôte pour éviter les conflits
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rsm_test -d rsm_test"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: rsm-backend-test
+    env_file:
+      - ./backend/.env.test
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py seed_referentiels &&
+             python manage.py seed_demo_test &&
+             python manage.py runserver 0.0.0.0:8000"
+
+volumes:
+  rsm_test_db_data:

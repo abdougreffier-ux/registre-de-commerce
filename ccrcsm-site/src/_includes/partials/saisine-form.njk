@@ -1,0 +1,159 @@
+{!
+  Formulaire de saisine — s'appuie sur les clés i18n.forms.
+  Côté client : validation progressive JS (data-validate) ; côté serveur : l'action
+  `/{locale}/saisine/` doit être traitée par un endpoint CSRF-protégé (cf. docs/security.md).
+
+  Champs masqués :
+    - `locale`    : trace la version du site utilisée
+    - `form_ts`   : timestamp JS pour anti-spam côté serveur (rejet si < 1.5s)
+    - `form_hp`   : honeypot invisible (doit rester vide)
+!}
+{% set f = i18n[locale].forms.fields %}
+{% set v = i18n[locale].forms.validation %}
+
+<form class="form"
+      method="post"
+      action="/{{ locale }}/saisine/"
+      enctype="multipart/form-data"
+      data-validate
+      novalidate
+      aria-labelledby="saisine-heading">
+
+  <div class="form__intro">
+    <p>{{ i18n[locale].forms.saisineLead }}</p>
+  </div>
+
+  <input type="hidden" name="locale" value="{{ locale }}">
+  <input type="hidden" name="form_ts" value="">
+
+  {! Honeypot anti-spam — ce champ est masqué visuellement ET pour lecteurs d'écran ;
+     s'il est rempli, le serveur doit rejeter silencieusement la soumission. !}
+  <div aria-hidden="true" style="position:absolute; left:-9999px; inline-size:1px; block-size:1px; overflow:hidden;">
+    <label for="form_hp">Leave this field empty</label>
+    <input type="text" id="form_hp" name="form_hp" tabindex="-1" autocomplete="off">
+  </div>
+
+  <div class="field">
+    <label class="field__label" for="lastName">{{ f.lastName }}<span class="field__required" aria-hidden="true"> *</span><span class="visually-hidden"> ({{ i18n[locale].labels.required }})</span></label>
+    <input class="field__control" type="text" id="lastName" name="lastName"
+           required autocomplete="family-name" maxlength="80"
+           aria-describedby="err-lastName"
+           data-error-required="{{ v.requiredField }}">
+    <p id="err-lastName" class="field__error" hidden></p>
+  </div>
+
+  <div class="field">
+    <label class="field__label" for="firstName">{{ f.firstName }}<span class="field__required" aria-hidden="true"> *</span><span class="visually-hidden"> ({{ i18n[locale].labels.required }})</span></label>
+    <input class="field__control" type="text" id="firstName" name="firstName"
+           required autocomplete="given-name" maxlength="80"
+           aria-describedby="err-firstName"
+           data-error-required="{{ v.requiredField }}">
+    <p id="err-firstName" class="field__error" hidden></p>
+  </div>
+
+  <div class="field">
+    <label class="field__label" for="quality">{{ f.quality }}</label>
+    <input class="field__control" type="text" id="quality" name="quality"
+           placeholder="{{ f.qualityPlaceholder }}" maxlength="120"
+           autocomplete="organization-title">
+  </div>
+
+  <div class="field">
+    <label class="field__label" for="organization">{{ f.organization }}</label>
+    <input class="field__control" type="text" id="organization" name="organization"
+           maxlength="160" autocomplete="organization">
+  </div>
+
+  <div class="field">
+    <label class="field__label" for="email">{{ f.email }}<span class="field__required" aria-hidden="true"> *</span><span class="visually-hidden"> ({{ i18n[locale].labels.required }})</span></label>
+    <input class="field__control" type="email" id="email" name="email"
+           required autocomplete="email" maxlength="160"
+           aria-describedby="err-email"
+           data-error-required="{{ v.requiredField }}"
+           data-error-email="{{ v.invalidEmail }}">
+    <p id="err-email" class="field__error" hidden></p>
+  </div>
+
+  <div class="field">
+    <label class="field__label" for="phone">{{ f.phone }}</label>
+    <input class="field__control" type="tel" id="phone" name="phone"
+           autocomplete="tel" maxlength="30" pattern="[\d\s\+\-\(\)]{6,30}">
+  </div>
+
+  <div class="field">
+    <label class="field__label" for="category">{{ f.category }}<span class="field__required" aria-hidden="true"> *</span></label>
+    <select class="field__control" id="category" name="category" required
+            aria-describedby="err-category"
+            data-error-required="{{ v.requiredField }}">
+      <option value="">—</option>
+      <option value="info">{{ f.categoryOptions.info }}</option>
+      <option value="avis">{{ f.categoryOptions.avis }}</option>
+      <option value="anomaly">{{ f.categoryOptions.anomaly }}</option>
+      <option value="cooperation">{{ f.categoryOptions.cooperation }}</option>
+      <option value="other">{{ f.categoryOptions.other }}</option>
+    </select>
+    <p id="err-category" class="field__error" hidden></p>
+  </div>
+
+  <div class="field">
+    <label class="field__label" for="subject">{{ f.subject }}<span class="field__required" aria-hidden="true"> *</span></label>
+    <input class="field__control" type="text" id="subject" name="subject"
+           required maxlength="160" placeholder="{{ f.subjectPlaceholder }}"
+           aria-describedby="err-subject"
+           data-error-required="{{ v.requiredField }}">
+    <p id="err-subject" class="field__error" hidden></p>
+  </div>
+
+  <div class="field">
+    <label class="field__label" for="message">{{ f.message }}<span class="field__required" aria-hidden="true"> *</span></label>
+    <textarea class="field__control" id="message" name="message"
+              required maxlength="4000" rows="8"
+              aria-describedby="err-message msg-hint"
+              data-error-required="{{ v.requiredField }}"></textarea>
+    <p id="msg-hint" class="field__hint">{% if locale == "ar" %}بحد أقصى 4000 حرف.{% else %}4000 caractères maximum.{% endif %}</p>
+    <p id="err-message" class="field__error" hidden></p>
+  </div>
+
+  <div class="field">
+    <label class="field__label" for="attachment">{{ f.attachment }}</label>
+    <input class="field__control" type="file" id="attachment" name="attachment"
+           accept="application/pdf"
+           aria-describedby="att-hint err-attachment"
+           data-error-file-size="{{ v.fileTooLarge }}"
+           data-error-file-type="{{ v.invalidFileType }}">
+    <p id="att-hint" class="field__hint">{% if locale == "ar" %}PDF فقط — بحد أقصى 10 ميغابايت.{% else %}PDF uniquement — 10 Mo maximum.{% endif %}</p>
+    <p id="err-attachment" class="field__error" hidden></p>
+  </div>
+
+  <div class="field field--checkbox">
+    <input type="checkbox" id="privacy" name="privacy" required
+           aria-describedby="err-privacy"
+           data-error-required="{{ v.mustAcceptPrivacy }}">
+    <label class="field__label" for="privacy">
+      {{ f.privacy }}
+      <a href="/{{ locale }}/confidentialite/">{% if locale == "ar" %}(اطلع على السياسة){% else %}(consulter la politique){% endif %}</a>
+    </label>
+    <p id="err-privacy" class="field__error" hidden></p>
+  </div>
+
+  {! Question de vérification humaine accessible (WCAG) — pas de CAPTCHA visuel.
+     Le résultat est vérifié côté serveur (voir docs/security.md). !}
+  <div class="field">
+    <label class="field__label" for="humanCheck">
+      {{ f.humanCheck }}
+      {% if locale == "ar" %}: كم يساوي 3 + 4 ?{% else %}: combien font 3 + 4 ?{% endif %}
+    </label>
+    <input class="field__control" type="text" inputmode="numeric"
+           id="humanCheck" name="humanCheck" required maxlength="3"
+           autocomplete="off"
+           aria-describedby="err-humanCheck"
+           data-error-required="{{ v.requiredField }}">
+    <p id="err-humanCheck" class="field__error" hidden></p>
+  </div>
+
+  <div class="form__actions">
+    <button type="submit" class="btn btn--primary">{{ i18n[locale].actions.submit }}</button>
+    <button type="reset" class="btn btn--ghost">{{ i18n[locale].actions.reset }}</button>
+  </div>
+</form>
+{! Le timestamp anti-spam est renseigné par main.js (CSP stricte, pas de script inline). !}

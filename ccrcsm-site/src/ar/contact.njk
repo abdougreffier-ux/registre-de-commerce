@@ -1,0 +1,36 @@
+---
+title: الاتصال والإحالة
+description: نموذج آمن للإحالة إلى اللجنة وبيانات الاتصال بالأمانة.
+lead: هذا النموذج مخصص للطلبات المندرجة ضمن اختصاص اللجنة. تعالج الإدارات المعنية الطلبات الأخرى.
+permalink: /ar/contact/
+breadcrumbs:
+  - { label: "الاتصال والإحالة" }
+lastUpdated: 2026-03-01
+---
+
+<section aria-labelledby="coords-heading">
+  <h2 id="coords-heading">بيانات الاتصال بالأمانة</h2>
+  <address>
+    <p>{{ site.contact.address[locale] }}</p>
+    <p>
+      <strong>البريد الإلكتروني:</strong> <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a><br>
+      <strong>الهاتف:</strong> <a href="tel:{{ site.contact.phone | replace(' ', '') }}" dir="ltr">{{ site.contact.phone }}</a>
+    </p>
+    <p><strong>ساعات العمل:</strong> {{ site.contact.hours[locale] }}</p>
+  </address>
+</section>
+
+<section aria-labelledby="saisine-heading">
+  <h2 id="saisine-heading">الإحالة إلى اللجنة</h2>
+  {% include "partials/saisine-form.njk" %}
+</section>
+
+<section aria-labelledby="data-heading">
+  <h2 id="data-heading">معالجة طلبكم</h2>
+  <p>
+    تعالج أمانة اللجنة المعلومات المقدمة لغرض الرد على طلبكم فقط. ويُرسل إليكم إشعار إلكتروني
+    بالاستلام يحمل رقمًا مرجعيًا. وتُحفظ المعطيات طيلة المدة اللازمة للمعالجة ثم تُؤرشف وفق القواعد
+    المعمول بها للمراسلات المؤسسية. لمزيد من التفاصيل راجعوا
+    <a href="/ar/confidentialite/">سياسة حماية المعطيات</a>.
+  </p>
+</section>

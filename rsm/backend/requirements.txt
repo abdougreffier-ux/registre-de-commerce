@@ -1,0 +1,22 @@
+Django==4.2.11
+djangorestframework==3.14.0
+django-filter==23.5
+django-cors-headers==4.3.1
+psycopg2-binary==2.9.9
+python-decouple==3.8
+Pillow==10.4.0
+
+# Rendu arabe (structurel — utilisé pour les documents bilingues ultérieurement)
+arabic-reshaper==3.0.0
+python-bidi==0.4.2
+
+# Conversion de montants en lettres (FR + AR) — art. 85 / certificats
+num2words==0.5.14
+
+# Génération documentaire (structurelle — la génération probante art. 97 est GELÉE)
+reportlab==4.1.0
+openpyxl==3.1.2
+
+# Exploitation
+whitenoise==6.6.0
+gunicorn==21.2.0

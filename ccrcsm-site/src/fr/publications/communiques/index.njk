@@ -1,0 +1,25 @@
+---
+title: Communiqués
+description: Communiqués officiels émis par la présidence du CCRCSM.
+lead: Les communiqués sont classés du plus récent au plus ancien.
+permalink: /fr/publications/communiques/
+breadcrumbs:
+  - { label: "Publications", href: "/fr/publications/" }
+  - { label: "Communiqués" }
+---
+
+{% set items = collections.communiques_fr %}
+{% if items and items.length %}
+<ul class="card-grid">
+  {% for item in items %}
+  <li class="card">
+    <p class="card__rubrique">{{ i18n[locale].nav.communiques }}</p>
+    <h2 class="card__title"><a href="{{ item.url }}">{{ item.data.title }}</a></h2>
+    <p class="card__meta"><time datetime="{{ item.data.date | dateISO }}">{{ item.data.date | dateFR }}</time></p>
+    <p class="card__description">{{ item.data.description }}</p>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>Aucun communiqué publié pour le moment.</p>
+{% endif %}

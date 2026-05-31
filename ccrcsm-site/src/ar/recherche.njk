@@ -1,0 +1,32 @@
+---
+title: البحث
+description: "بحث داخلي شامل لمنشورات اللجنة: الآراء، النصوص، الأخبار، الصفحات المؤسسية."
+lead: "يشمل البحث العناوين والأوصاف والأبواب. وهو يسمح بالتسامح مع التشكيل (العربي والفرنسي) وحالة الأحرف."
+permalink: /ar/recherche/
+searchable: false
+breadcrumbs:
+  - { label: "البحث" }
+---
+
+<form role="search" class="search-box" data-search-form aria-labelledby="search-title">
+  <label class="visually-hidden" for="search-input">{{ i18n[locale].search.placeholder }}</label>
+  <input class="field__control" type="search" id="search-input"
+         name="q" data-search-input
+         placeholder="{{ i18n[locale].search.placeholder }}"
+         autocomplete="off" maxlength="120" spellcheck="true">
+  <button type="submit" class="btn btn--primary">{{ i18n[locale].actions.search }}</button>
+</form>
+
+<p class="page__meta">{{ i18n[locale].search.help }}</p>
+
+<div class="search-filters" role="toolbar" aria-label="مرشحات البحث">
+  <button type="button" data-search-filter="all" aria-pressed="true">{{ i18n[locale].search.filters.all }}</button>
+  <button type="button" data-search-filter="avis" aria-pressed="false">{{ i18n[locale].search.filters.avis }}</button>
+  <button type="button" data-search-filter="texte" aria-pressed="false">{{ i18n[locale].search.filters.text }}</button>
+  <button type="button" data-search-filter="actualite" aria-pressed="false">{{ i18n[locale].search.filters.news }}</button>
+  <button type="button" data-search-filter="communique" aria-pressed="false">{{ i18n[locale].search.filters.communique }}</button>
+</div>
+
+<p data-search-status aria-live="polite" role="status" class="page__meta"></p>
+
+<ul data-search-results class="search-results" aria-label="نتائج البحث"></ul>

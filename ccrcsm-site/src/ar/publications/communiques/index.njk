@@ -1,0 +1,25 @@
+---
+title: البيانات
+description: بيانات رسمية صادرة عن رئاسة اللجنة.
+lead: ترتب البيانات من الأحدث إلى الأقدم.
+permalink: /ar/publications/communiques/
+breadcrumbs:
+  - { label: "المنشورات", href: "/ar/publications/" }
+  - { label: "البيانات" }
+---
+
+{% set items = collections.communiques_ar %}
+{% if items and items.length %}
+<ul class="card-grid">
+  {% for item in items %}
+  <li class="card">
+    <p class="card__rubrique">{{ i18n[locale].nav.communiques }}</p>
+    <h2 class="card__title"><a href="{{ item.url }}">{{ item.data.title }}</a></h2>
+    <p class="card__meta"><time datetime="{{ item.data.date | dateISO }}">{{ item.data.date | dateAR }}</time></p>
+    <p class="card__description">{{ item.data.description }}</p>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>لم يُنشر أي بيان حتى الآن.</p>
+{% endif %}

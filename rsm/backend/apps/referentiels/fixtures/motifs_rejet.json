@@ -1,0 +1,41 @@
+[
+  {
+    "model": "referentiels.libellemotifrejet",
+    "fields": {
+      "cle": "canal_non_autorise",
+      "libelle_fr": "Demande soumise par un canal non autorisé (art. 80)",
+      "libelle_ar": "طلب مقدم عبر قناة غير مرخص بها (المادة 80)",
+      "langue_faisant_foi": "equ",
+      "description_fr": "Motif LIMITATIF de l'article 80. Seul le guichet papier et le portail électronique officiel sont admis (art. 78).",
+      "description_ar": "سبب حصري في المادة 80. لا يُقبل إلا الشباك الورقي والبوابة الإلكترونية الرسمية (المادة 78).",
+      "actif": true,
+      "ordre": 10
+    }
+  },
+  {
+    "model": "referentiels.libellemotifrejet",
+    "fields": {
+      "cle": "informations_illisibles",
+      "libelle_fr": "Informations illisibles (art. 80)",
+      "libelle_ar": "معلومات غير مقروءة (المادة 80)",
+      "langue_faisant_foi": "equ",
+      "description_fr": "Motif LIMITATIF de l'article 80. Contrôle de forme uniquement ; le régime déclaratif de l'art. 86 interdit tout contrôle au fond.",
+      "description_ar": "سبب حصري في المادة 80. مراقبة شكلية فقط ؛ النظام التصريحي للمادة 86 يمنع أي مراقبة على المضمون.",
+      "actif": true,
+      "ordre": 20
+    }
+  },
+  {
+    "model": "referentiels.libellemotifrejet",
+    "fields": {
+      "cle": "informations_incomprehensibles",
+      "libelle_fr": "Informations incompréhensibles (art. 80)",
+      "libelle_ar": "معلومات غير مفهومة (المادة 80)",
+      "langue_faisant_foi": "equ",
+      "description_fr": "Motif LIMITATIF de l'article 80. Contrôle de forme uniquement.",
+      "description_ar": "سبب حصري في المادة 80. مراقبة شكلية فقط.",
+      "actif": true,
+      "ordre": 30
+    }
+  }
+]

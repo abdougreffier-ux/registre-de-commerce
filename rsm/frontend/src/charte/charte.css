@@ -1,0 +1,833 @@
+/*
+ * Charte graphique RSM — refonte UX/UI institutionnelle.
+ *
+ * Principes :
+ *   - palette dominante NEUTRE (blanc + gris doux) pour la lisibilité ;
+ *   - couleurs officielles RIM (vert / rouge / jaune) en ACCENTS uniquement
+ *     (filets, statuts, signaux) — jamais en aplats dominants ;
+ *   - bleu doux institutionnel pour les états informatifs / focus ;
+ *   - hiérarchie typographique nette (petites majuscules de section,
+ *     titres généreux, corps lisible) ;
+ *   - composants compacts mais respirants (densité maîtrisée).
+ *
+ * Aucune couleur ne porte du SENS à elle seule (accessibilité) : les
+ * statuts sont toujours composés d'une icône, d'un libellé et d'une
+ * teinte.
+ */
+
+:root {
+  /* ─── Couleurs officielles RIM (charte mai 2020, p. 56) ───────── */
+  --rim-vert:        #00A95C;
+  --rim-vert-fonce:  #007a40;
+  --rim-rouge:       #D01C1F;
+  --rim-rouge-fonce: #a51416;
+  --rim-jaune:       #FFD700;
+  --rim-jaune-fonce: #b39400;
+  --rim-blanc:       #FFFFFF;
+
+  /* ─── Palette neutre institutionnelle ─────────────────────────── */
+  --gris-50:  #f8f9fb;   /* fond de l'application */
+  --gris-100: #f1f3f6;   /* surface secondaire */
+  --gris-200: #e4e8ee;   /* bordures discrètes */
+  --gris-300: #cfd5dd;   /* séparateurs */
+  --gris-400: #9aa3b0;   /* texte tertiaire / icônes inactives */
+  --gris-500: #6b7280;   /* texte faible */
+  --gris-600: #4b5563;   /* texte secondaire */
+  --gris-700: #2d3748;   /* texte courant */
+  --gris-900: #111827;   /* titres forts */
+
+  /* ─── Bleu institutionnel (info / focus, hors charte juridique) ── */
+  --info-50:  #eff5fb;
+  --info-100: #dbe8f4;
+  --info-500: #1f5fa3;
+  --info-700: #163f6e;
+
+  /* ─── Couleurs sémantiques de statuts (avec teintes douces) ───── */
+  --statut-neutre-bg:     var(--gris-100);
+  --statut-neutre-fg:     var(--gris-700);
+  --statut-neutre-bord:   var(--gris-300);
+
+  --statut-attente-bg:    #fff8db;        /* jaune RIM délavé */
+  --statut-attente-fg:    #6b5a00;
+  --statut-attente-bord:  #e9d680;
+
+  --statut-succes-bg:     #e3f5ec;        /* vert RIM délavé */
+  --statut-succes-fg:     #0a6b3c;
+  --statut-succes-bord:   #97d4b1;
+
+  --statut-rejet-bg:      #fdecec;        /* rouge RIM délavé */
+  --statut-rejet-fg:      #8d1517;
+  --statut-rejet-bord:    #f0b6b7;
+
+  --statut-info-bg:       var(--info-50);
+  --statut-info-fg:       var(--info-700);
+  --statut-info-bord:     #b8cfe6;
+
+  --statut-archive-bg:    #f3f0e6;        /* sépia neutre */
+  --statut-archive-fg:    #3f3a2c;
+  --statut-archive-bord:  #d6cdb1;
+
+  /* ─── Tokens de design ───────────────────────────────────────── */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  --espace-1: 4px;
+  --espace-2: 8px;
+  --espace-3: 12px;
+  --espace-4: 16px;
+  --espace-5: 24px;
+  --espace-6: 32px;
+  --espace-8: 48px;
+
+  --ombre-1: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --ombre-2: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --ombre-3: 0 4px 12px rgba(15, 23, 42, 0.07), 0 1px 3px rgba(15, 23, 42, 0.05);
+  --ombre-focus: 0 0 0 3px rgba(31, 95, 163, 0.18);
+
+  --transition: 160ms cubic-bezier(0.2, 0, 0, 1);
+
+  /* ─── Polices officielles ───────────────────────────────────── */
+  --rim-police-mauritanie: "Mauritanie", "Amiri Quran", "Traditional Arabic", serif;
+  --rim-police-ouguiya:    "Ouguiya", "Inter", "Segoe UI", "Arial", sans-serif;
+  --rim-police-louguiya:   "Louguiya", "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
+}
+
+/* @font-face dans public/assets/charte-fonts.css */
+
+/* ───────────────────────────────────────────────────────────────
+ *  Réinitialisation et typographie globale
+ * ─────────────────────────────────────────────────────────────── */
+html, body {
+  font-family: var(--rim-police-ouguiya);
+  color: var(--gris-700);
+  background: var(--gris-50);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  line-height: 1.55;
+}
+html[lang="ar"] body, html[dir="rtl"] body {
+  font-family: var(--rim-police-louguiya);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: inherit;
+  color: var(--gris-900);
+  letter-spacing: -0.01em;
+  font-weight: 700;
+  margin: 0;
+}
+
+a { color: var(--info-500); }
+a:hover { color: var(--info-700); }
+
+::selection { background: rgba(0, 169, 92, 0.18); }
+
+/* ───────────────────────────────────────────────────────────────
+ *  Bandeau MODE TEST — version « filet » ultra-discret
+ * ─────────────────────────────────────────────────────────────── */
+.rim-bandeau-test {
+  background: var(--rim-rouge);
+  color: var(--rim-blanc);
+  padding: 4px 16px;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.5;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+/* ───────────────────────────────────────────────────────────────
+ *  En-tête officiel COMPACT (mono-ligne)
+ *  Hauteur cible : ~76 px (vs ~300 px précédemment)
+ * ─────────────────────────────────────────────────────────────── */
+.rim-entete-conteneur {
+  background: var(--rim-blanc);
+  border-bottom: 1px solid var(--gris-200);
+}
+
+.rim-entete-compact {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-4);
+  padding: 12px 24px;
+  max-width: 1320px;
+  margin: 0 auto;
+  position: relative;
+}
+html[dir="rtl"] .rim-entete-compact { flex-direction: row-reverse; }
+
+.rim-entete-compact__sceau {
+  flex: 0 0 auto;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--rim-blanc);
+  padding: 2px;
+  box-shadow:
+    0 0 0 1.5px var(--rim-jaune),
+    0 0 0 3px var(--rim-vert);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rim-entete-compact__textes {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rim-entete-compact__ligne1 {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.rim-entete-compact__nation {
+  font-family: var(--rim-police-louguiya);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  color: var(--gris-900);
+  text-transform: uppercase;
+}
+.rim-entete-compact__sep {
+  display: inline-block;
+  width: 4px; height: 4px;
+  background: var(--rim-jaune);
+  transform: rotate(45deg);
+  margin: 0 2px;
+}
+.rim-entete-compact__entite {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--rim-rouge);
+}
+.rim-entete-compact__systeme {
+  font-size: 12px;
+  color: var(--gris-500);
+}
+
+.rim-entete-compact__filet {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  display: flex;
+}
+.rim-entete-compact__filet > span { flex: 1; }
+.rim-entete-compact__filet > span:nth-child(1) { background: var(--rim-rouge); }
+.rim-entete-compact__filet > span:nth-child(2) { background: var(--rim-vert); }
+.rim-entete-compact__filet > span:nth-child(3) { background: var(--rim-jaune); }
+
+/* ───────────────────────────────────────────────────────────────
+ *  Barre de navigation principale (sticky, aérée)
+ * ─────────────────────────────────────────────────────────────── */
+.rim-menu {
+  background: var(--rim-blanc);
+  border-bottom: 1px solid var(--gris-200);
+  box-shadow: var(--ombre-1);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: var(--espace-4);
+  max-width: 1320px;
+  margin: 0 auto;
+  width: 100%;
+}
+.rim-menu .ant-menu-horizontal {
+  border-bottom: none;
+  font-weight: 500;
+  font-size: 13.5px;
+}
+.rim-menu .ant-menu-item-selected,
+.rim-menu .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  color: var(--rim-vert-fonce) !important;
+}
+.rim-menu .ant-menu-item-selected::after {
+  border-bottom: 2px solid var(--rim-vert) !important;
+}
+.rim-menu .ant-menu-item:hover,
+.rim-menu .ant-menu-submenu:hover > .ant-menu-submenu-title {
+  color: var(--rim-vert) !important;
+}
+
+/* ───────────────────────────────────────────────────────────────
+ *  Pied de page institutionnel (sobre)
+ * ─────────────────────────────────────────────────────────────── */
+.rim-pied {
+  background: var(--gris-900);
+  color: var(--gris-300);
+  padding: 16px 24px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.6;
+  border-top: 2px solid var(--rim-vert);
+}
+.rim-pied a { color: var(--rim-jaune); }
+.rim-pied strong { color: var(--rim-blanc); }
+
+/* ───────────────────────────────────────────────────────────────
+ *  Conteneur principal de contenu
+ * ─────────────────────────────────────────────────────────────── */
+.rim-conteneur {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 28px 24px 56px;
+}
+
+/* ───────────────────────────────────────────────────────────────
+ *  Bandeau « paramètres en attente » — discret, repliable visuel
+ * ─────────────────────────────────────────────────────────────── */
+.rim-bandeau-attente {
+  background: var(--info-50);
+  border: 1px solid var(--info-100);
+  border-left: 3px solid var(--info-500);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 12.5px;
+  color: var(--gris-600);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 18px;
+  line-height: 1.55;
+}
+html[dir="rtl"] .rim-bandeau-attente {
+  border-left: 1px solid var(--info-100);
+  border-right: 3px solid var(--info-500);
+}
+.rim-bandeau-attente__pastille {
+  flex: 0 0 auto;
+  width: 7px; height: 7px;
+  background: var(--info-500);
+  border-radius: 50%;
+  margin-top: 6px;
+}
+.rim-bandeau-attente__titre {
+  display: block;
+  font-weight: 600;
+  color: var(--info-700);
+  margin-bottom: 2px;
+}
+
+/* ───────────────────────────────────────────────────────────────
+ *  Hero institutionnel (page d'accueil) — épuré
+ * ─────────────────────────────────────────────────────────────── */
+.rim-hero {
+  background: var(--rim-blanc);
+  border: 1px solid var(--gris-200);
+  border-radius: var(--radius-lg);
+  padding: 36px 36px 32px;
+  box-shadow: var(--ombre-2);
+  position: relative;
+  overflow: hidden;
+}
+.rim-hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    var(--rim-rouge) 0%, var(--rim-rouge) 33.33%,
+    var(--rim-vert)  33.33%, var(--rim-vert)  66.66%,
+    var(--rim-jaune) 66.66%, var(--rim-jaune) 100%);
+}
+.rim-hero__surtitre {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gris-100);
+  color: var(--gris-700);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+.rim-hero__surtitre::before {
+  content: "";
+  width: 6px; height: 6px;
+  background: var(--rim-vert);
+  border-radius: 50%;
+}
+.rim-hero__titre {
+  font-size: clamp(22px, 2vw, 28px);
+  font-weight: 800;
+  margin: 14px 0 8px;
+  line-height: 1.2;
+  color: var(--gris-900);
+}
+.rim-hero__titre strong { color: var(--rim-vert-fonce); }
+.rim-hero__sous-titre {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--gris-500);
+  max-width: 880px;
+}
+.rim-hero__cta { margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ───────────────────────────────────────────────────────────────
+ *  Sections de contenu
+ * ─────────────────────────────────────────────────────────────── */
+.rim-section { margin-top: 36px; }
+.rim-section__entete {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.rim-section__titre {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gris-900);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  padding-inline-start: 12px;
+}
+.rim-section__titre::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 4px; bottom: 4px;
+  width: 3px;
+  background: var(--rim-vert);
+  border-radius: 2px;
+}
+.rim-section__titre.--rouge::before { background: var(--rim-rouge); }
+.rim-section__titre.--jaune::before { background: var(--rim-jaune); }
+.rim-section__titre.--info::before { background: var(--info-500); }
+.rim-section__sous-titre {
+  font-size: 13px;
+  color: var(--gris-500);
+  margin: 0;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+/* ───────────────────────────────────────────────────────────────
+ *  KPI compact
+ * ─────────────────────────────────────────────────────────────── */
+.rim-kpi {
+  background: var(--rim-blanc);
+  border: 1px solid var(--gris-200);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 86px;
+  position: relative;
+  transition: var(--transition);
+}
+.rim-kpi:hover {
+  border-color: var(--gris-300);
+  box-shadow: var(--ombre-2);
+  transform: translateY(-1px);
+}
+.rim-kpi__icone {
+  flex: 0 0 auto;
+  width: 40px; height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--gris-100);
+  color: var(--gris-600);
+  font-size: 20px;
+}
+.rim-kpi.--accent-vert .rim-kpi__icone { background: var(--statut-succes-bg); color: var(--rim-vert-fonce); }
+.rim-kpi.--accent-rouge .rim-kpi__icone { background: var(--statut-rejet-bg); color: var(--rim-rouge); }
+.rim-kpi.--accent-jaune .rim-kpi__icone { background: var(--statut-attente-bg); color: var(--statut-attente-fg); }
+.rim-kpi.--accent-info .rim-kpi__icone { background: var(--info-50); color: var(--info-500); }
+
+.rim-kpi__corps { flex: 1; min-width: 0; }
+.rim-kpi__libelle {
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--gris-500);
+  margin-bottom: 2px;
+}
+.rim-kpi__valeur {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--gris-900);
+  line-height: 1.1;
+}
+.rim-kpi__suffixe { font-size: 13px; color: var(--gris-500); font-weight: 400; }
+.rim-kpi__hint { font-size: 11.5px; color: var(--gris-500); margin-top: 4px; }
+
+/* ───────────────────────────────────────────────────────────────
+ *  Cartes de parcours
+ * ─────────────────────────────────────────────────────────────── */
+.rim-parcours-grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+.rim-carte-parcours {
+  background: var(--rim-blanc);
+  border: 1px solid var(--gris-200);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+  position: relative;
+}
+.rim-carte-parcours:hover {
+  border-color: var(--rim-vert);
+  box-shadow: var(--ombre-3);
+  transform: translateY(-2px);
+}
+.rim-carte-parcours__icone {
+  width: 40px; height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--statut-succes-bg);
+  color: var(--rim-vert-fonce);
+  font-size: 20px;
+}
+.rim-carte-parcours.--accent-rouge .rim-carte-parcours__icone {
+  background: var(--statut-rejet-bg); color: var(--rim-rouge);
+}
+.rim-carte-parcours.--accent-jaune .rim-carte-parcours__icone {
+  background: var(--statut-attente-bg); color: var(--statut-attente-fg);
+}
+.rim-carte-parcours__article {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--gris-500);
+}
+.rim-carte-parcours__titre {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gris-900);
+  margin: 0;
+}
+.rim-carte-parcours__description {
+  font-size: 13px;
+  color: var(--gris-500);
+  line-height: 1.55;
+  margin: 0;
+}
+.rim-carte-parcours__cta {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--rim-vert-fonce);
+  font-weight: 600;
+  font-size: 13px;
+}
+.rim-carte-parcours__cta::after {
+  content: "→";
+  transition: transform var(--transition);
+}
+html[dir="rtl"] .rim-carte-parcours__cta::after { content: "←"; }
+.rim-carte-parcours:hover .rim-carte-parcours__cta::after {
+  transform: translateX(3px);
+}
+html[dir="rtl"] .rim-carte-parcours:hover .rim-carte-parcours__cta::after {
+  transform: translateX(-3px);
+}
+
+/* ───────────────────────────────────────────────────────────────
+ *  STATUTS — système unifié de badges
+ * ─────────────────────────────────────────────────────────────── */
+.rim-statut {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  border: 1px solid;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+.rim-statut__pastille {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: 0 0 auto;
+}
+.rim-statut.--neutre {
+  background: var(--statut-neutre-bg);
+  color: var(--statut-neutre-fg);
+  border-color: var(--statut-neutre-bord);
+}
+.rim-statut.--attente {
+  background: var(--statut-attente-bg);
+  color: var(--statut-attente-fg);
+  border-color: var(--statut-attente-bord);
+}
+.rim-statut.--succes {
+  background: var(--statut-succes-bg);
+  color: var(--statut-succes-fg);
+  border-color: var(--statut-succes-bord);
+}
+.rim-statut.--rejet {
+  background: var(--statut-rejet-bg);
+  color: var(--statut-rejet-fg);
+  border-color: var(--statut-rejet-bord);
+}
+.rim-statut.--info {
+  background: var(--statut-info-bg);
+  color: var(--statut-info-fg);
+  border-color: var(--statut-info-bord);
+}
+.rim-statut.--archive {
+  background: var(--statut-archive-bg);
+  color: var(--statut-archive-fg);
+  border-color: var(--statut-archive-bord);
+}
+
+/* ───────────────────────────────────────────────────────────────
+ *  Bloc « espace greffier » (accent rouge contenu)
+ * ─────────────────────────────────────────────────────────────── */
+.rim-bloc-greffier {
+  background: var(--rim-blanc);
+  border: 1px solid var(--gris-200);
+  border-left: 3px solid var(--rim-rouge);
+  border-radius: var(--radius-md);
+  padding: 18px 22px;
+  box-shadow: var(--ombre-1);
+}
+html[dir="rtl"] .rim-bloc-greffier {
+  border-left: 1px solid var(--gris-200);
+  border-right: 3px solid var(--rim-rouge);
+}
+.rim-bloc-greffier__titre {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--rim-rouge-fonce);
+  margin: 0 0 6px;
+}
+
+/* ───────────────────────────────────────────────────────────────
+ *  Surcharges Ant Design
+ * ─────────────────────────────────────────────────────────────── */
+
+/* Boutons : primaire vert RIM, dangereux rouge RIM, neutre gris */
+.ant-btn {
+  border-radius: var(--radius-sm) !important;
+  font-weight: 500;
+  height: 36px;
+  padding: 0 16px;
+  transition: var(--transition);
+  border: 1px solid var(--gris-300);
+}
+.ant-btn-primary {
+  background: var(--rim-vert) !important;
+  border-color: var(--rim-vert) !important;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04) !important;
+}
+.ant-btn-primary:hover, .ant-btn-primary:focus {
+  background: var(--rim-vert-fonce) !important;
+  border-color: var(--rim-vert-fonce) !important;
+}
+.ant-btn-dangerous.ant-btn-primary {
+  background: var(--rim-rouge) !important;
+  border-color: var(--rim-rouge) !important;
+}
+.ant-btn-dangerous.ant-btn-primary:hover {
+  background: var(--rim-rouge-fonce) !important;
+  border-color: var(--rim-rouge-fonce) !important;
+}
+.ant-btn:not(.ant-btn-primary):not(.ant-btn-dangerous):hover {
+  border-color: var(--rim-vert) !important;
+  color: var(--rim-vert-fonce) !important;
+}
+.ant-btn-lg { height: 42px; padding: 0 22px; font-size: 14px; }
+.ant-btn-sm { height: 28px; padding: 0 12px; font-size: 12.5px; }
+
+/* Cartes : surface blanche, bordure légère, ombre douce */
+.ant-card {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--gris-200);
+  box-shadow: var(--ombre-1);
+  overflow: hidden;
+}
+.ant-card > .ant-card-head {
+  background: var(--rim-blanc);
+  border-bottom: 1px solid var(--gris-200);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--gris-900);
+  min-height: 48px;
+  padding: 0 18px;
+}
+.ant-card > .ant-card-head .ant-card-head-title { padding: 14px 0; }
+.ant-card > .ant-card-body { padding: 18px; }
+.ant-card.--accent-rouge { border-top: 3px solid var(--rim-rouge); }
+.ant-card.--accent-vert { border-top: 3px solid var(--rim-vert); }
+.ant-card.--accent-jaune { border-top: 3px solid var(--rim-jaune); }
+
+/* Tableaux : en-tête neutre, lignes aérées, hover doux */
+.ant-table {
+  border-radius: var(--radius-md);
+  font-size: 13.5px;
+}
+.ant-table-thead > tr > th {
+  background: var(--gris-100) !important;
+  color: var(--gris-700) !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  border-bottom: 1px solid var(--gris-200) !important;
+}
+.ant-table-tbody > tr:hover > td { background: var(--gris-50) !important; }
+.ant-table-tbody > tr > td { border-bottom: 1px solid var(--gris-200); }
+
+/* Tags : style sobre par défaut (les statuts utilisent .rim-statut) */
+.ant-tag {
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--gris-200);
+  background: var(--gris-50);
+  color: var(--gris-700);
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 1px 10px;
+  letter-spacing: 0.2px;
+}
+.ant-tag-green {
+  background: var(--statut-succes-bg) !important;
+  color: var(--statut-succes-fg) !important;
+  border-color: var(--statut-succes-bord) !important;
+}
+.ant-tag-red {
+  background: var(--statut-rejet-bg) !important;
+  color: var(--statut-rejet-fg) !important;
+  border-color: var(--statut-rejet-bord) !important;
+}
+.ant-tag-orange, .ant-tag-gold, .ant-tag-yellow {
+  background: var(--statut-attente-bg) !important;
+  color: var(--statut-attente-fg) !important;
+  border-color: var(--statut-attente-bord) !important;
+}
+.ant-tag-blue {
+  background: var(--statut-info-bg) !important;
+  color: var(--statut-info-fg) !important;
+  border-color: var(--statut-info-bord) !important;
+}
+
+/* Alertes : douces et bien lisibles */
+.ant-alert {
+  border-radius: var(--radius-sm);
+  border-width: 1px;
+  padding: 12px 16px;
+}
+.ant-alert.ant-alert-info {
+  background: var(--info-50);
+  border-color: var(--info-100);
+  border-left: 3px solid var(--info-500);
+}
+html[dir="rtl"] .ant-alert.ant-alert-info {
+  border-left: 1px solid var(--info-100);
+  border-right: 3px solid var(--info-500);
+}
+.ant-alert.ant-alert-success {
+  background: var(--statut-succes-bg);
+  border-color: var(--statut-succes-bord);
+}
+.ant-alert.ant-alert-warning {
+  background: var(--statut-attente-bg);
+  border-color: var(--statut-attente-bord);
+}
+.ant-alert.ant-alert-error {
+  background: var(--statut-rejet-bg);
+  border-color: var(--statut-rejet-bord);
+}
+.ant-alert-message { font-weight: 600; color: var(--gris-900); }
+.ant-alert-description { color: var(--gris-600); font-size: 13px; }
+
+/* Champs de formulaire : neutres, focus bleu institutionnel */
+.ant-input, .ant-input-number, .ant-select-selector, .ant-picker {
+  border-radius: var(--radius-sm) !important;
+  border-color: var(--gris-300) !important;
+  transition: var(--transition);
+}
+.ant-input:hover, .ant-input-number:hover,
+.ant-select:hover .ant-select-selector, .ant-picker:hover {
+  border-color: var(--rim-vert) !important;
+}
+.ant-input:focus, .ant-input-focused,
+.ant-input-number-focused,
+.ant-select-focused .ant-select-selector,
+.ant-picker-focused {
+  border-color: var(--rim-vert) !important;
+  box-shadow: 0 0 0 3px rgba(0, 169, 92, 0.12) !important;
+}
+
+.ant-form-item-label > label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gris-700);
+}
+
+/* Modales : épurées */
+.ant-modal-content {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--ombre-3);
+}
+.ant-modal-header {
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  border-bottom: 1px solid var(--gris-200);
+}
+.ant-modal-title { font-weight: 700; color: var(--gris-900); }
+
+/* Drawer : liseré vert subtil */
+.ant-drawer-header {
+  background: var(--rim-blanc);
+  border-bottom: 1px solid var(--gris-200);
+}
+
+/* ───────────────────────────────────────────────────────────────
+ *  Tricolore RIM (filet décoratif réutilisable)
+ * ─────────────────────────────────────────────────────────────── */
+.rim-tricolore { display: flex; width: 100%; height: 2px; }
+.rim-tricolore > span { flex: 1; }
+.rim-tricolore > span:nth-child(1) { background: var(--rim-rouge); }
+.rim-tricolore > span:nth-child(2) { background: var(--rim-vert); }
+.rim-tricolore > span:nth-child(3) { background: var(--rim-jaune); }
+
+/* ───────────────────────────────────────────────────────────────
+ *  Responsive
+ * ─────────────────────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .rim-conteneur { padding: 18px 14px 32px; }
+  .rim-hero { padding: 22px 18px; }
+  .rim-entete-compact { padding: 10px 14px; gap: 12px; }
+  .rim-entete-compact__sceau { width: 44px; height: 44px; }
+  .rim-entete-compact__nation { font-size: 12px; }
+  .rim-menu { padding: 0 12px; }
+}

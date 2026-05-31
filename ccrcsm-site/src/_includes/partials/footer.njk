@@ -1,0 +1,67 @@
+{! Pied de page institutionnel !}
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="site-footer__grid">
+
+      <section class="site-footer__about" aria-labelledby="footer-about-heading">
+        <h2 id="footer-about-heading" class="site-footer__heading">{{ i18n[locale].footer.about }}</h2>
+        <p class="site-footer__about-text">{{ i18n[locale].footer.aboutText }}</p>
+        <address class="site-footer__address">
+          <p>{{ site.contact.address[locale] }}</p>
+          <p>
+            <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a><br>
+            <a href="tel:{{ site.contact.phone | replace(' ', '') }}" dir="ltr">{{ site.contact.phone }}</a>
+          </p>
+          <p class="site-footer__hours">{{ site.contact.hours[locale] }}</p>
+        </address>
+      </section>
+
+      <nav class="site-footer__nav" aria-labelledby="footer-inst-heading">
+        <h2 id="footer-inst-heading" class="site-footer__heading">{{ i18n[locale].footer.institutional }}</h2>
+        <ul class="site-footer__links">
+          {% for item in navigation.footer.institutional %}
+          <li>
+            <a href="/{{ locale }}{{ item.href }}">{{ i18n[locale].nav[item.key] }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+
+      <nav class="site-footer__nav" aria-labelledby="footer-legal-heading">
+        <h2 id="footer-legal-heading" class="site-footer__heading">{{ i18n[locale].footer.legalCorner }}</h2>
+        <ul class="site-footer__links">
+          {% for item in navigation.footer.legalCorner %}
+          <li>
+            <a href="/{{ locale }}{{ item.href }}">{{ i18n[locale].nav[item.key] }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+
+      <section class="site-footer__feeds" aria-labelledby="footer-feeds-heading">
+        <h2 id="footer-feeds-heading" class="site-footer__heading">{{ i18n[locale].footer.followFeed }}</h2>
+        <ul class="site-footer__links">
+          <li>
+            <a href="/{{ locale }}/feeds/avis.xml" rel="alternate" type="application/rss+xml">
+              {{ i18n[locale].footer.feedAvis }}
+            </a>
+          </li>
+          <li>
+            <a href="/{{ locale }}/feeds/actualites.xml" rel="alternate" type="application/rss+xml">
+              {{ i18n[locale].footer.feedNews }}
+            </a>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p class="site-footer__rights">
+        © 2026 {{ site.shortName[locale] }} — {{ i18n[locale].footer.rights }}.
+      </p>
+      <p class="site-footer__version">
+        {% if locale == "ar" %}إصدار{% else %}Version{% endif %} {{ site.version }}
+      </p>
+    </div>
+  </div>
+</footer>

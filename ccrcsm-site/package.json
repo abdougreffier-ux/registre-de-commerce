@@ -1,0 +1,25 @@
+{
+  "name": "ccrcsm-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Site web institutionnel bilingue du Comité de Coordination du Registre du Commerce et des Sûretés Mobilières (CCRCSM) — République Islamique de Mauritanie.",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "clean": "node -e \"require('fs').rmSync('_site', { recursive: true, force: true })\"",
+    "build": "npm run clean && eleventy",
+    "serve": "eleventy --serve --port=8080",
+    "dev": "npm run clean && eleventy --serve --port=8080",
+    "start": "npm run dev"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "@11ty/eleventy-plugin-rss": "^2.0.2",
+    "luxon": "^3.4.4",
+    "markdown-it": "^14.0.0",
+    "markdown-it-anchor": "^8.6.7",
+    "markdown-it-attrs": "^4.3.1"
+  }
+}

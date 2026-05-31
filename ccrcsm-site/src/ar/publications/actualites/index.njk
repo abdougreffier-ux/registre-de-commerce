@@ -1,0 +1,31 @@
+---
+title: الأخبار
+description: "الأخبار المؤسسية للجنة: الدورات، الفعاليات، التعيينات، التعاونات."
+lead: تجدون هنا المعلومات المتعلقة بحياة اللجنة، مرتبة من الأحدث إلى الأقدم.
+permalink: /ar/publications/actualites/
+breadcrumbs:
+  - { label: "المنشورات", href: "/ar/publications/" }
+  - { label: "الأخبار" }
+---
+
+<p class="page__meta">
+  <a href="/ar/feeds/actualites.xml" rel="alternate" type="application/rss+xml">
+    {{ i18n[locale].actions.subscribe }} — تدفق RSS
+  </a>
+</p>
+
+{% set items = collections.actualites_ar %}
+{% if items and items.length %}
+<ul class="card-grid">
+  {% for item in items %}
+  <li class="card">
+    <p class="card__rubrique">{{ i18n[locale].nav.news }}</p>
+    <h2 class="card__title"><a href="{{ item.url }}">{{ item.data.title }}</a></h2>
+    <p class="card__meta"><time datetime="{{ item.data.date | dateISO }}">{{ item.data.date | dateAR }}</time></p>
+    <p class="card__description">{{ item.data.description }}</p>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>لم تُنشر أي أخبار حتى الآن.</p>
+{% endif %}

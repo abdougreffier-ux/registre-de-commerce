@@ -1,0 +1,22 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+searchable: false
+---
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{% for page in collections.all %}
+{%- if page.data.searchable !== false and page.data.layout -%}
+  <url>
+    <loc>{{ page.url | absoluteUrl(site.url) }}</loc>
+    {% if page.data.lastUpdated %}<lastmod>{{ page.data.lastUpdated | dateISO }}</lastmod>
+    {% elif page.data.date %}<lastmod>{{ page.data.date | dateISO }}</lastmod>{% endif %}
+    <changefreq>monthly</changefreq>
+    {%- set altUrl = page.url | replace("/fr/", "/ar/") if page.url.indexOf("/fr/") == 0 else page.url | replace("/ar/", "/fr/") -%}
+    <xhtml:link rel="alternate" hreflang="{{ "fr" if page.url.indexOf("/fr/") == 0 else "ar" }}" href="{{ page.url | absoluteUrl(site.url) }}" />
+    <xhtml:link rel="alternate" hreflang="{{ "ar" if page.url.indexOf("/fr/") == 0 else "fr" }}" href="{{ altUrl | absoluteUrl(site.url) }}" />
+  </url>
+{%- endif -%}
+{% endfor %}
+</urlset>

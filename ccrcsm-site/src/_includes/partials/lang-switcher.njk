@@ -1,0 +1,28 @@
+{!
+  Sélecteur de langue — FR/AR.
+  Pointe vers la page équivalente dans l'autre langue si `alternate` est fourni,
+  sinon vers la racine de l'autre version linguistique.
+  Déclaré en <nav aria-label> pour être détectable aux lecteurs d'écran.
+!}
+{% set otherLocale = "ar" if locale == "fr" else "fr" %}
+{% set otherLabel = i18n[otherLocale].lang %}
+{% set targetUrl = alternate if alternate else ("/" + otherLocale + "/") %}
+
+<nav class="lang-switcher" aria-label="{{ i18n[locale].labels.selectLanguage }}">
+  <ul class="lang-switcher__list">
+    <li>
+      <span class="lang-switcher__current" aria-current="true" lang="{{ locale }}">
+        {{ i18n[locale].lang }}
+      </span>
+    </li>
+    <li>
+      <a class="lang-switcher__link"
+         href="{{ targetUrl }}"
+         hreflang="{{ otherLocale }}"
+         lang="{{ otherLocale }}"
+         {% if otherLocale == "ar" %}dir="rtl"{% else %}dir="ltr"{% endif %}>
+        {{ otherLabel }}
+      </a>
+    </li>
+  </ul>
+</nav>

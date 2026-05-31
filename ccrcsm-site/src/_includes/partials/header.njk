@@ -1,0 +1,76 @@
+{! En-tête institutionnel — barre d'affiliation + logo + navigation principale !}
+<div class="gov-bar" role="complementary" aria-label="{% if locale == 'ar' %}الشريط الحكومي{% else %}Bandeau gouvernemental{% endif %}">
+  <div class="container gov-bar__inner">
+    <p class="gov-bar__republic">
+      <strong>{{ site.republic[locale] }}</strong>
+      <span class="gov-bar__sep" aria-hidden="true">·</span>
+      <span class="gov-bar__motto">{{ site.motto[locale] }}</span>
+    </p>
+    <p class="gov-bar__ministry">{{ site.ministry[locale] }}</p>
+  </div>
+</div>
+
+<header class="site-header" role="banner">
+  <div class="container site-header__inner">
+    <a class="site-header__brand" href="/{{ locale }}/" aria-label="{{ site.name[locale] }} — {{ i18n[locale].nav.home }}">
+      <img class="site-header__logo"
+           src="/assets/img/logo-ccrcsm.svg"
+           alt=""
+           role="presentation"
+           width="56" height="56">
+      <span class="site-header__titles">
+        <span class="site-header__short">{{ site.shortName[locale] }}</span>
+        <span class="site-header__long">{{ site.name[locale] }}</span>
+      </span>
+    </a>
+
+    <div class="site-header__tools">
+      {% include "partials/lang-switcher.njk" %}
+      <a class="btn btn--ghost site-header__search-link" href="/{{ locale }}/recherche/" aria-label="{{ i18n[locale].nav.search }}">
+        <svg class="icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="m20 20-3.5-3.5"></path>
+        </svg>
+        <span>{{ i18n[locale].nav.search }}</span>
+      </a>
+      <button type="button"
+              class="site-header__menu-btn"
+              aria-expanded="false"
+              aria-controls="primary-nav"
+              data-menu-toggle>
+        <span class="site-header__menu-label" data-menu-label-open>{{ i18n[locale].actions.openMenu }}</span>
+        <span class="site-header__menu-label" data-menu-label-close hidden>{{ i18n[locale].actions.closeMenu }}</span>
+      </button>
+    </div>
+  </div>
+
+  <nav id="primary-nav" class="site-nav" aria-label="{% if locale == 'ar' %}القائمة الرئيسية{% else %}Menu principal{% endif %}">
+    <div class="container">
+      <ul class="site-nav__list">
+        {% for item in navigation.primary %}
+          {% set itemUrl = "/" + locale + item.href %}
+          {% set isActive = (page.url == itemUrl) or (item.href != "/" and page.url.indexOf(itemUrl) == 0) %}
+          <li class="site-nav__item{% if item.children %} site-nav__item--has-children{% endif %}">
+            <a class="site-nav__link{% if isActive %} is-active{% endif %}"
+               href="{{ itemUrl }}"
+               {% if isActive %}aria-current="page"{% endif %}>
+              {{ i18n[locale].nav[item.key] }}
+            </a>
+            {% if item.children %}
+              <ul class="site-nav__submenu">
+                {% for child in item.children %}
+                  {% set childUrl = "/" + locale + child.href %}
+                  <li>
+                    <a class="site-nav__sublink" href="{{ childUrl }}">
+                      {{ i18n[locale].nav[child.key] }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </nav>
+</header>

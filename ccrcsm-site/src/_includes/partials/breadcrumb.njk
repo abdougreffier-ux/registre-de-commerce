@@ -1,0 +1,31 @@
+{!
+  Fil d'Ariane — BEM + microdonnées schema.org.
+  Le fil s'appuie sur la front-matter `breadcrumbs: [{label, href}, ...]`.
+  L'item courant est sans href pour indiquer la position.
+!}
+{% if breadcrumbs and breadcrumbs.length %}
+<nav class="breadcrumb" aria-label="{{ i18n[locale].labels.breadcrumb }}">
+  <div class="container">
+    <ol class="breadcrumb__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+      <li class="breadcrumb__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a class="breadcrumb__link" href="/{{ locale }}/" itemprop="item">
+          <span itemprop="name">{{ i18n[locale].nav.home }}</span>
+        </a>
+        <meta itemprop="position" content="1">
+      </li>
+      {% for crumb in breadcrumbs %}
+      <li class="breadcrumb__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        {% if crumb.href and not loop.last %}
+          <a class="breadcrumb__link" href="{{ crumb.href }}" itemprop="item">
+            <span itemprop="name">{{ crumb.label }}</span>
+          </a>
+        {% else %}
+          <span class="breadcrumb__current" aria-current="page" itemprop="name">{{ crumb.label }}</span>
+        {% endif %}
+        <meta itemprop="position" content="{{ loop.index + 1 }}">
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</nav>
+{% endif %}

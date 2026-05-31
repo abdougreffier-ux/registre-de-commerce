@@ -1,0 +1,85 @@
+{!
+  Layout de base — document HTML5 sémantique.
+
+  Variables attendues dans la front-matter :
+    - locale        : "fr" | "ar"  (obligatoire)
+    - title         : titre de la page (obligatoire, utilisé dans <title> et <h1>)
+    - description   : méta description (obligatoire pour référencement)
+    - alternate     : URL équivalente dans l'autre langue (permet le hreflang)
+
+  Sécurité :
+    - Autoescaping Nunjucks activé par défaut (toute valeur interpolée est échappée).
+    - Aucun script inline : tout JS est dans /assets/js/*.js pour permettre une CSP
+      `script-src 'self'` stricte sans 'unsafe-inline'.
+    - Aucun style inline dans cette page ; la CSS est dans /assets/css/main.css.
+!}
+<!doctype html>
+<html lang="{{ locale }}" dir="{{ site.direction[locale] }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+
+  <title>{{ title }} — {{ site.shortName[locale] }}</title>
+  <meta name="description" content="{{ description }}">
+
+  {! Prévention clickjacking au niveau HTML (complémentaire aux en-têtes HTTP) !}
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; font-src 'self'; style-src 'self'; script-src 'self'; form-action 'self'; base-uri 'self'; frame-ancestors 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="index,follow">
+
+  {! Préchargement des polices (activer une fois les WOFF2 déposées dans /assets/fonts/).
+     Voir src/assets/fonts/README.md pour la procédure. !}
+  {% if site.hasLocalFonts %}
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-var.woff2" crossorigin>
+  {% if locale == "ar" %}
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/noto-naskh-arabic-var.woff2" crossorigin>
+  {% endif %}
+  {% endif %}
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  {! Indication à l'utilisateur et aux moteurs de la version équivalente dans l'autre langue !}
+  {% if alternate %}
+    {% set otherLocale = "ar" if locale == "fr" else "fr" %}
+    <link rel="alternate" hreflang="{{ otherLocale }}" href="{{ alternate }}">
+    <link rel="alternate" hreflang="{{ locale }}" href="{{ page.url }}">
+    <link rel="alternate" hreflang="x-default" href="{{ page.url }}">
+  {% endif %}
+
+  <link rel="canonical" href="{{ page.url | absoluteUrl(site.url) }}">
+
+  {! Icône — placeholder, à remplacer par le logo officiel lors de la livraison finale !}
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+
+  {! Flux RSS découvrables !}
+  <link rel="alternate" type="application/rss+xml" title="{{ i18n[locale].footer.feedAvis }}" href="/{{ locale }}/feeds/avis.xml">
+  <link rel="alternate" type="application/rss+xml" title="{{ i18n[locale].footer.feedNews }}" href="/{{ locale }}/feeds/actualites.xml">
+
+  {! Open Graph — partage institutionnel !}
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="{{ 'fr_FR' if locale == 'fr' else 'ar_MR' }}">
+  <meta property="og:title" content="{{ title }} — {{ site.shortName[locale] }}">
+  <meta property="og:description" content="{{ description }}">
+  <meta property="og:url" content="{{ page.url | absoluteUrl(site.url) }}">
+  <meta property="og:site_name" content="{{ site.shortName[locale] }}">
+</head>
+<body data-locale="{{ locale }}">
+
+  {! Lien d'évitement — WCAG 2.1 SC 2.4.1 !}
+  <a class="skip-link" href="#main">{{ i18n[locale].skipToContent }}</a>
+
+  {% include "partials/header.njk" %}
+
+  <main id="main" tabindex="-1" role="main">
+    {% block content %}{% endblock %}
+    {{ content | safe }}
+  </main>
+
+  {% include "partials/footer.njk" %}
+
+  {! JavaScript strictement progressif — le site fonctionne sans !}
+  <script src="/assets/js/main.js" defer></script>
+</body>
+</html>

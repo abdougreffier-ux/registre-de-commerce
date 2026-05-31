@@ -1,0 +1,26 @@
+[
+  {
+    "model": "referentiels.libellecanalsaisie",
+    "fields": {
+      "cle": "guichet_papier",
+      "libelle_fr": "Bordereau papier au guichet (art. 78)",
+      "libelle_ar": "كشف ورقي عند الشباك (المادة 78)",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 10
+    }
+  },
+  {
+    "model": "referentiels.libellecanalsaisie",
+    "fields": {
+      "cle": "portail_electronique",
+      "libelle_fr": "Voie électronique (art. 78)",
+      "libelle_ar": "الوسيلة الإلكترونية (المادة 78)",
+      "langue_faisant_foi": "equ",
+      "description_fr": "Paramétrage définitif conditionné par l'arrêté d'application (art. 8, 81, 84). Zone d'arbitrage MO.",
+      "description_ar": "الضبط النهائي مشروط بقرار التطبيق (المواد 8 و81 و84). منطقة تحكيم السلطة المتعاقدة.",
+      "actif": true,
+      "ordre": 20
+    }
+  }
+]

@@ -1,0 +1,36 @@
+/* RSM — feuille de style minimaliste bilingue FR/AR.
+   Les règles ci-dessous sont symétriques et ne contiennent aucune
+   directionnalité codée en dur : la propriété `dir="rtl"` posée sur
+   <html> suffit à basculer les alignements. */
+
+:root {
+  --fond: #f7f7f2;
+  --texte: #111;
+  --accent: #0a4d68;
+  --alerte: #b14c00;
+  --radius: 6px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--fond); color: var(--texte); }
+body { font-family: system-ui, "Segoe UI", "Amiri", "Noto Naskh Arabic", serif; line-height: 1.5; }
+
+header, footer, main { padding: 1rem 2rem; }
+header { background: var(--accent); color: #fff; }
+header a { color: #fff; margin-inline-end: .75rem; }
+
+main h1 { color: var(--accent); }
+
+ul.actions { list-style: none; padding-inline-start: 0; }
+ul.actions li { padding-block: .25rem; }
+
+aside.zone-gelee {
+  margin-top: 2rem;
+  padding: 1rem;
+  border-inline-start: 4px solid var(--alerte);
+  background: #fff4eb;
+  border-radius: var(--radius);
+}
+
+footer { font-size: .9rem; color: #444; border-top: 1px solid #ddd; }
+footer .zone-gelee { color: var(--alerte); }

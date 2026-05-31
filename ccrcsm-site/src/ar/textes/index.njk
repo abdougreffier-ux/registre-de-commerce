@@ -1,0 +1,41 @@
+---
+title: النصوص القانونية
+description: المدونة التجارية، المرسوم 033-2021، القانون 011-2022 والقرارات المعمول بها في مجال السجل التجاري والضمانات المنقولة.
+lead: تضع اللجنة رهن إشارة العموم النصوص المؤسِّسة التي تؤطر عملها، فضلًا عن النصوص التطبيقية المفيدة للعاملين في الميدان.
+permalink: /ar/textes/
+breadcrumbs:
+  - { label: "النصوص القانونية" }
+lastUpdated: 2026-03-10
+---
+
+<p>
+  تتوفر لكل نص نسخة كاملة؛ والأصل هو المعتمد (الجريدة الرسمية).
+  ويوجد كذلك <a href="/ar/glossaire/">معجم قانوني ثنائي اللغة</a>.
+</p>
+
+<table class="legal-table">
+  <caption class="visually-hidden">قائمة النصوص القانونية المرجعية</caption>
+  <thead>
+    <tr>
+      <th scope="col">المرجع</th>
+      <th scope="col">الموضوع</th>
+      <th scope="col">التاريخ</th>
+      <th scope="col">اللغة المعتمدة</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% set textes = collections.textes_ar %}
+    {% for t in textes %}
+    <tr>
+      <th scope="row"><a href="{{ t.url }}">{{ t.data.reference or t.data.title }}</a></th>
+      <td>{{ t.data.description }}</td>
+      <td><time datetime="{{ t.data.date | dateISO }}">{{ t.data.date | dateAR }}</time></td>
+      <td>{{ t.data.authoritativeLanguage or "FR / AR" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<p class="page__meta">
+  <a href="/ar/feeds/avis.xml" rel="alternate" type="application/rss+xml">تدفق RSS — آراء اللجنة</a>
+</p>

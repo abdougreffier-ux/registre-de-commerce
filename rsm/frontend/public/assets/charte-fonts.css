@@ -1,0 +1,55 @@
+/*
+ * Déclarations @font-face officielles (charte graphique RIM, mai 2020).
+ *
+ * Ce fichier est STATIQUE : il est servi tel quel depuis public/ sans
+ * traitement webpack. Les navigateurs chargent paresseusement chaque
+ * police ; si le fichier est absent, le navigateur passe silencieusement
+ * au fallback défini dans src/charte/charte.css.
+ *
+ * Dépôt des fichiers officiels :
+ *   public/assets/fonts/Mauritanie.woff2
+ *   public/assets/fonts/Ouguiya-Regular.woff2 (+ Bold)
+ *   public/assets/fonts/Louguiya-Regular.woff2 (+ Bold)
+ * (fichiers à obtenir depuis https://kennach.gov.mr)
+ */
+
+@font-face {
+  font-family: "Mauritanie";
+  src: url("/assets/fonts/Mauritanie.woff2") format("woff2"),
+       url("/assets/fonts/Mauritanie.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ouguiya";
+  src: url("/assets/fonts/Ouguiya-Regular.woff2") format("woff2"),
+       url("/assets/fonts/Ouguiya-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ouguiya";
+  src: url("/assets/fonts/Ouguiya-Bold.woff2") format("woff2"),
+       url("/assets/fonts/Ouguiya-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Louguiya";
+  src: url("/assets/fonts/Louguiya-Regular.woff2") format("woff2"),
+       url("/assets/fonts/Louguiya-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Louguiya";
+  src: url("/assets/fonts/Louguiya-Bold.woff2") format("woff2"),
+       url("/assets/fonts/Louguiya-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

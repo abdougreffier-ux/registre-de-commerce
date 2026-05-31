@@ -1,0 +1,24 @@
+---
+title: Glossaire juridique bilingue
+description: Définitions des termes juridiques utilisés par le Comité, validées par le secrétariat. Chaque entrée est accompagnée de son équivalent arabe.
+lead: Ce glossaire sert de référence terminologique pour les avis, les textes et l'interface du site.
+permalink: /fr/glossaire/
+breadcrumbs:
+  - { label: "Textes juridiques", href: "/fr/textes/" }
+  - { label: "Glossaire" }
+lastUpdated: 2026-02-01
+---
+
+<p>Entrées ordonnées alphabétiquement. Pour les libellés arabes correspondants, voir la <a href="/ar/glossaire/">version arabe</a>.</p>
+
+<dl class="glossary">
+  {% for entry in glossaire %}
+  <div id="{{ entry.id }}" class="glossary__item">
+    <dt class="glossary__term">
+      <strong lang="fr">{{ entry.fr.term }}</strong>
+      <span class="glossary__ar" lang="ar" dir="rtl">({{ entry.ar.term }})</span>
+    </dt>
+    <dd class="glossary__def">{{ entry.fr.definition }}</dd>
+  </div>
+  {% endfor %}
+</dl>

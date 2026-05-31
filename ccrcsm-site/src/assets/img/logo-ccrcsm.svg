@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Logo CCRCSM">
+  <circle cx="32" cy="32" r="30" fill="#0a5b3a" stroke="#074a2f" stroke-width="2"/>
+  <path d="M18 28h28v2H18zm0 6h28v2H18zm0 6h20v2H18z" fill="#ffffff"/>
+  <path d="M16 20 L32 10 L48 20 L48 22 L16 22 Z" fill="#b8860b"/>
+  <rect x="28" y="44" width="8" height="10" fill="#ffffff"/>
+</svg>

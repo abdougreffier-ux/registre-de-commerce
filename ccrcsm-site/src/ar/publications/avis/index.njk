@@ -1,0 +1,33 @@
+---
+title: آراء اللجنة
+description: مجموع الآراء الصادرة عن اللجنة في المسائل المحالة إليها. ويحمل كل رأي مرجعًا وتاريخًا ومعرِّفًا دائمًا.
+lead: ترتب الآراء تنازليًا حسب التاريخ. ويمكنكم كذلك الاشتراك في تدفق RSS.
+permalink: /ar/publications/avis/
+breadcrumbs:
+  - { label: "المنشورات", href: "/ar/publications/" }
+  - { label: "آراء اللجنة" }
+---
+
+<p class="page__meta">
+  <a href="/ar/feeds/avis.xml" rel="alternate" type="application/rss+xml">
+    {{ i18n[locale].actions.subscribe }} — تدفق RSS
+  </a>
+</p>
+
+{% set items = collections.avis_ar %}
+{% if items and items.length %}
+<ul class="card-grid">
+  {% for item in items %}
+  <li class="card">
+    {% if item.data.reference %}<p class="card__rubrique">{{ item.data.reference }}</p>{% endif %}
+    <h2 class="card__title"><a href="{{ item.url }}">{{ item.data.title }}</a></h2>
+    <p class="card__meta">
+      <time datetime="{{ item.data.date | dateISO }}">{{ item.data.date | dateAR }}</time>
+    </p>
+    <p class="card__description">{{ item.data.description }}</p>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>لم يُنشر أي رأي حتى الآن.</p>
+{% endif %}

@@ -1,0 +1,145 @@
+---
+title: الرئيسية
+description: الموقع المؤسسي للجنة تنسيق السجل التجاري والضمانات المنقولة، الجمهورية الإسلامية الموريتانية.
+layout: layouts/home.njk
+permalink: /ar/
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__inner">
+    <p class="hero__eyebrow">{{ site.republic[locale] }} — {{ site.ministry[locale] }}</p>
+    <h1 id="hero-title" class="hero__title">{{ i18n[locale].home.heroTitle }}</h1>
+    <p class="hero__lead">{{ i18n[locale].home.heroLead }}</p>
+    <p class="hero__actions">
+      <a class="btn btn--primary" href="/ar/publications/avis/">{{ i18n[locale].nav.avis }}</a>
+      <a class="btn btn--ghost" href="/ar/le-comite/">{{ i18n[locale].nav.committee }}</a>
+    </p>
+  </div>
+</section>
+
+<section class="section section--alt" aria-labelledby="president-heading">
+  <div class="container container--narrow">
+    <h2 id="president-heading" class="section__title">{{ i18n[locale].home.presidentMessageTitle }}</h2>
+    <blockquote class="prose">
+      <p>
+        «تضطلع لجنة تنسيق السجل التجاري والضمانات المنقولة المنشأة لدى وزارة العدل بالمهمة الأساس
+        المتمثلة في ضمان انسجام وسلامة المنظومة القانونية لتقييد الفاعلين الاقتصاديين وإشهار الضمانات.
+        يضع هذا الموقع الرسمي رهن إشارة العموم، وباللغتين الوطنيتين، الإطار المعياري المعمول به،
+        وآراء اللجنة، والخدمات الموجهة إلى المقاولات والعاملين في مجال القانون والمواطنين.»
+      </p>
+      <footer>
+        <cite>— رئيس لجنة تنسيق السجل التجاري والضمانات المنقولة</cite>
+      </footer>
+    </blockquote>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="quick-heading">
+  <div class="container">
+    <div class="section__header">
+      <h2 id="quick-heading" class="section__title">{{ i18n[locale].home.quickAccess }}</h2>
+    </div>
+    <ul class="quick-access">
+      <li class="quick-access__item">
+        <a href="/ar/textes/">
+          <svg class="quick-access__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h12a2 2 0 012 2v14H6a2 2 0 01-2-2V4z"/>
+            <path d="M8 8h8M8 12h8M8 16h5"/>
+          </svg>
+          <span>
+            <strong class="quick-access__title">النصوص القانونية</strong>
+            <span class="quick-access__desc">المدونة التجارية، المرسوم 033-2021، القانون 011-2022 والقرارات.</span>
+          </span>
+        </a>
+      </li>
+      <li class="quick-access__item">
+        <a href="/ar/publications/avis/">
+          <svg class="quick-access__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="16" rx="2"/>
+            <path d="M3 9h18M9 14h8M9 18h5"/>
+          </svg>
+          <span>
+            <strong class="quick-access__title">آراء اللجنة</strong>
+            <span class="quick-access__desc">المواقف الرسمية الصادرة عن اللجنة، مع المرجع والتاريخ.</span>
+          </span>
+        </a>
+      </li>
+      <li class="quick-access__item">
+        <a href="/ar/services/formulaires/">
+          <svg class="quick-access__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16"/>
+          </svg>
+          <span>
+            <strong class="quick-access__title">النماذج</strong>
+            <span class="quick-access__desc">النماذج الجاهزة، الأدلة العملية والوثائق للتحميل.</span>
+          </span>
+        </a>
+      </li>
+      <li class="quick-access__item">
+        <a href="/ar/contact/">
+          <svg class="quick-access__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 5h18v14H3z"/>
+            <path d="M3 5l9 8 9-8"/>
+          </svg>
+          <span>
+            <strong class="quick-access__title">الإحالة إلى اللجنة</strong>
+            <span class="quick-access__desc">نموذج آمن لتوجيه طلب إلى الأمانة.</span>
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--alt" aria-labelledby="avis-heading">
+  <div class="container">
+    <div class="section__header">
+      <h2 id="avis-heading" class="section__title">{{ i18n[locale].home.latestAvis }}</h2>
+      <p class="section__action"><a href="/ar/publications/avis/">{{ i18n[locale].actions.seeAll }}</a></p>
+    </div>
+    {% set recentAvis = collections.avis_ar | take(3) %}
+    {% if recentAvis and recentAvis.length %}
+    <ul class="card-grid">
+      {% for item in recentAvis %}
+      <li class="card">
+        <p class="card__rubrique">{{ i18n[locale].nav.avis }}</p>
+        <h3 class="card__title"><a href="{{ item.url }}">{{ item.data.title }}</a></h3>
+        <p class="card__meta">
+          {% if item.data.reference %}<strong>{{ item.data.reference }}</strong> — {% endif %}
+          <time datetime="{{ item.data.date | dateISO }}">{{ item.data.date | dateAR }}</time>
+        </p>
+        <p class="card__description">{{ item.data.description }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="prose">لم يُنشر أي رأي حتى الآن.</p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section" aria-labelledby="news-heading">
+  <div class="container">
+    <div class="section__header">
+      <h2 id="news-heading" class="section__title">{{ i18n[locale].home.latestNews }}</h2>
+      <p class="section__action"><a href="/ar/publications/actualites/">{{ i18n[locale].actions.seeAll }}</a></p>
+    </div>
+    {% set recentNews = collections.actualites_ar | take(3) %}
+    {% if recentNews and recentNews.length %}
+    <ul class="card-grid">
+      {% for item in recentNews %}
+      <li class="card">
+        <p class="card__rubrique">{{ i18n[locale].nav.news }}</p>
+        <h3 class="card__title"><a href="{{ item.url }}">{{ item.data.title }}</a></h3>
+        <p class="card__meta">
+          <time datetime="{{ item.data.date | dateISO }}">{{ item.data.date | dateAR }}</time>
+        </p>
+        <p class="card__description">{{ item.data.description }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="prose">لم تُنشر أي أخبار حتى الآن.</p>
+    {% endif %}
+  </div>
+</section>

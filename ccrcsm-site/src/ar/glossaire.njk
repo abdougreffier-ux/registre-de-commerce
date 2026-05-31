@@ -1,0 +1,24 @@
+---
+title: المعجم القانوني الثنائي اللغة
+description: تعريفات المصطلحات القانونية التي تستعملها اللجنة، مصادق عليها من الأمانة. ويرفق بكل مدخل نظيره الفرنسي.
+lead: يعد هذا المعجم مرجعًا مصطلحيًا للآراء والنصوص وواجهة الموقع.
+permalink: /ar/glossaire/
+breadcrumbs:
+  - { label: "النصوص القانونية", href: "/ar/textes/" }
+  - { label: "المعجم" }
+lastUpdated: 2026-02-01
+---
+
+<p>المداخل مرتبة هجائيًا. للبيان بالعناوين الفرنسية المقابلة، راجعوا <a href="/fr/glossaire/">النسخة الفرنسية</a>.</p>
+
+<dl class="glossary">
+  {% for entry in glossaire %}
+  <div id="{{ entry.id }}" class="glossary__item">
+    <dt class="glossary__term">
+      <strong lang="ar">{{ entry.ar.term }}</strong>
+      <span class="glossary__fr" lang="fr" dir="ltr">({{ entry.fr.term }})</span>
+    </dt>
+    <dd class="glossary__def">{{ entry.ar.definition }}</dd>
+  </div>
+  {% endfor %}
+</dl>

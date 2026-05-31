@@ -1,0 +1,64 @@
+---
+layout: layouts/base.njk
+---
+{% include "partials/breadcrumb.njk" %}
+
+<article class="article" itemscope itemtype="https://schema.org/Article">
+  <header class="article__header">
+    {% if rubrique %}
+    <p class="article__rubrique"><span class="visually-hidden">{{ i18n[locale].labels.rubrique }} :</span> {{ rubrique }}</p>
+    {% endif %}
+    <h1 class="article__title" itemprop="headline">{{ title }}</h1>
+
+    <dl class="article__meta">
+      {% if reference %}
+      <div class="article__meta-item">
+        <dt>{{ i18n[locale].labels.reference }}</dt>
+        <dd>{{ reference }}</dd>
+      </div>
+      {% endif %}
+      <div class="article__meta-item">
+        <dt>{{ i18n[locale].labels.publishedOn }}</dt>
+        <dd>
+          <time datetime="{{ date | dateISO }}" itemprop="datePublished">
+            {% if locale == "ar" %}{{ date | dateAR }}{% else %}{{ date | dateFR }}{% endif %}
+          </time>
+        </dd>
+      </div>
+      {% if lastUpdated %}
+      <div class="article__meta-item">
+        <dt>{{ i18n[locale].labels.lastUpdated }}</dt>
+        <dd>
+          <time datetime="{{ lastUpdated | dateISO }}" itemprop="dateModified">
+            {% if locale == "ar" %}{{ lastUpdated | dateAR }}{% else %}{{ lastUpdated | dateFR }}{% endif %}
+          </time>
+        </dd>
+      </div>
+      {% endif %}
+    </dl>
+
+    {% if lead %}
+    <p class="article__lead" itemprop="description">{{ lead }}</p>
+    {% endif %}
+  </header>
+
+  <div class="article__body prose" itemprop="articleBody">
+    {{ content | safe }}
+  </div>
+
+  {% if attachments and attachments.length %}
+  <section class="article__attachments" aria-labelledby="attachments-heading">
+    <h2 id="attachments-heading">{% if locale == "ar" %}المرفقات{% else %}Pièces jointes{% endif %}</h2>
+    <ul class="attachments-list">
+      {% for att in attachments %}
+      <li>
+        <a href="{{ att.href }}" rel="noopener" download>
+          <span class="attachments-list__name">{{ att.name }}</span>
+          {% if att.size %}<span class="attachments-list__size">({{ att.size }})</span>{% endif %}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+</article>

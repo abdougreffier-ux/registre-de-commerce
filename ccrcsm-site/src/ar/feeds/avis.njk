@@ -1,0 +1,30 @@
+---
+permalink: /ar/feeds/avis.xml
+eleventyExcludeFromCollections: true
+searchable: false
+layout: null
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ar">
+  <title>{{ site.shortName.ar }} — آراء اللجنة</title>
+  <subtitle>{{ site.name.ar }}</subtitle>
+  <link href="{{ "/ar/feeds/avis.xml" | absoluteUrl(site.url) }}" rel="self" />
+  <link href="{{ "/ar/publications/avis/" | absoluteUrl(site.url) }}" />
+  <id>{{ "/ar/publications/avis/" | absoluteUrl(site.url) }}</id>
+  {%- set latest = collections.avis_ar | sortByDateDesc -%}
+  {%- if latest and latest.length -%}
+  <updated>{{ latest[0].data.date | dateISO }}T00:00:00Z</updated>
+  {%- else -%}
+  <updated>2026-01-01T00:00:00Z</updated>
+  {%- endif %}
+  {% for item in latest %}
+  <entry>
+    <title>{{ item.data.title }}</title>
+    <link href="{{ item.url | absoluteUrl(site.url) }}" />
+    <id>{{ item.url | absoluteUrl(site.url) }}</id>
+    <updated>{{ item.data.date | dateISO }}T00:00:00Z</updated>
+    <summary>{{ item.data.description }}</summary>
+    {% if item.data.reference %}<category term="{{ item.data.reference }}" />{% endif %}
+  </entry>
+  {% endfor %}
+</feed>

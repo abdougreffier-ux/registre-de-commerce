@@ -1,0 +1,9 @@
+# Site officiel du Comité de Coordination du Registre du Commerce
+# et des Sûretés Mobilières (CCRCSM) — République Islamique de Mauritanie.
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /.well-known/
+
+Sitemap: https://www.ccrcsm.gov.mr/sitemap.xml

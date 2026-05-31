@@ -1,0 +1,61 @@
+[
+  {
+    "model": "referentiels.libelletypecertificat",
+    "fields": {
+      "cle": "inscription",
+      "libelle_fr": "Certificat d'inscription (art. 78, 86)",
+      "libelle_ar": "شهادة التسجيل (المادتان 78 و86)",
+      "langue_faisant_foi": "equ",
+      "description_fr": "Délivré à l'issue de la validation. Production probante GELÉE (art. 97, § 5.1 TDR).",
+      "description_ar": "تسلَّم عند نهاية المصادقة. الإصدار ذو الحجية مؤجَّل (المادة 97، § 5.1 الشروط المرجعية).",
+      "actif": true,
+      "ordre": 10
+    }
+  },
+  {
+    "model": "referentiels.libelletypecertificat",
+    "fields": {
+      "cle": "modification",
+      "libelle_fr": "Certificat de modification (art. 88-90)",
+      "libelle_ar": "شهادة التعديل (المواد 88-90)",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 20
+    }
+  },
+  {
+    "model": "referentiels.libelletypecertificat",
+    "fields": {
+      "cle": "renouvellement",
+      "libelle_fr": "Certificat de renouvellement (art. 91)",
+      "libelle_ar": "شهادة التجديد (المادة 91)",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 30
+    }
+  },
+  {
+    "model": "referentiels.libelletypecertificat",
+    "fields": {
+      "cle": "radiation",
+      "libelle_fr": "Certificat de radiation (art. 92)",
+      "libelle_ar": "شهادة الشطب (المادة 92)",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 40
+    }
+  },
+  {
+    "model": "referentiels.libelletypecertificat",
+    "fields": {
+      "cle": "recherche",
+      "libelle_fr": "Certificat de recherche (art. 97)",
+      "libelle_ar": "شهادة البحث (المادة 97)",
+      "langue_faisant_foi": "equ",
+      "description_fr": "Force probante prévue par l'art. 97 dernier alinéa. Production GELÉE tant que le scellement et l'horodatage officiels n'auront pas été arbitrés.",
+      "description_ar": "حجية ثبوتية منصوص عليها في الفقرة الأخيرة من المادة 97. الإصدار مؤجَّل ريثما يُحسم في الختم والتوقيت الرسميين.",
+      "actif": true,
+      "ordre": 50
+    }
+  }
+]

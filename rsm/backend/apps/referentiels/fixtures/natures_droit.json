@@ -1,0 +1,136 @@
+[
+  {
+    "model": "referentiels.libellenaturedroit",
+    "fields": {
+      "cle": "nant_outillage",
+      "libelle_fr": "Nantissement de l'outillage, du matériel ou du matériel professionnel",
+      "libelle_ar": "رهن العدة أو المعدات أو المعدات المهنية",
+      "langue_faisant_foi": "equ",
+      "description_fr": "Article 76 — liste limitative. Libellé à valider par le comité de terminologie juridique (§ 7.3 TDR).",
+      "description_ar": "المادة 76 — قائمة حصرية. التسمية قيد المصادقة من طرف لجنة المصطلحات القانونية (§ 7.3 من الشروط المرجعية).",
+      "actif": true,
+      "ordre": 10
+    }
+  },
+  {
+    "model": "referentiels.libellenaturedroit",
+    "fields": {
+      "cle": "nant_droits_associes",
+      "libelle_fr": "Nantissement des droits d'associés, parts sociales, valeurs mobilières et comptes de titres financiers",
+      "libelle_ar": "رهن حقوق الشركاء والحصص الاجتماعية والقيم المنقولة وحسابات الأوراق المالية",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 20
+    }
+  },
+  {
+    "model": "referentiels.libellenaturedroit",
+    "fields": {
+      "cle": "nant_fonds_commerce",
+      "libelle_fr": "Nantissement du fonds de commerce",
+      "libelle_ar": "رهن الأصل التجاري",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 30
+    }
+  },
+  {
+    "model": "referentiels.libellenaturedroit",
+    "fields": {
+      "cle": "priv_vendeur_fonds",
+      "libelle_fr": "Privilège du vendeur de fonds de commerce",
+      "libelle_ar": "امتياز بائع الأصل التجاري",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 40
+    }
+  },
+  {
+    "model": "referentiels.libellenaturedroit",
+    "fields": {
+      "cle": "nant_stocks",
+      "libelle_fr": "Nantissement des stocks",
+      "libelle_ar": "رهن المخزونات",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 50
+    }
+  },
+  {
+    "model": "referentiels.libellenaturedroit",
+    "fields": {
+      "cle": "priv_tresor",
+      "libelle_fr": "Privilège du Trésor",
+      "libelle_ar": "امتياز الخزينة العامة",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 60
+    }
+  },
+  {
+    "model": "referentiels.libellenaturedroit",
+    "fields": {
+      "cle": "priv_fiscal",
+      "libelle_fr": "Privilège des services fiscaux",
+      "libelle_ar": "امتياز المصالح الجبائية",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 70
+    }
+  },
+  {
+    "model": "referentiels.libellenaturedroit",
+    "fields": {
+      "cle": "priv_douanes",
+      "libelle_fr": "Privilège de l'administration des douanes",
+      "libelle_ar": "امتياز إدارة الجمارك",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 80
+    }
+  },
+  {
+    "model": "referentiels.libellenaturedroit",
+    "fields": {
+      "cle": "priv_prevoyance",
+      "libelle_fr": "Privilège des organismes de prévoyance sociale",
+      "libelle_ar": "امتياز هيئات الضمان الاجتماعي",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 90
+    }
+  },
+  {
+    "model": "referentiels.libellenaturedroit",
+    "fields": {
+      "cle": "nant_creance",
+      "libelle_fr": "Nantissement de créance",
+      "libelle_ar": "رهن الدين",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 100
+    }
+  },
+  {
+    "model": "referentiels.libellenaturedroit",
+    "fields": {
+      "cle": "nant_compte_bancaire",
+      "libelle_fr": "Nantissement de compte bancaire",
+      "libelle_ar": "رهن الحساب البنكي",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 110
+    }
+  },
+  {
+    "model": "referentiels.libellenaturedroit",
+    "fields": {
+      "cle": "nant_pi",
+      "libelle_fr": "Nantissement des droits de propriété intellectuelle",
+      "libelle_ar": "رهن حقوق الملكية الفكرية",
+      "langue_faisant_foi": "equ",
+      "actif": true,
+      "ordre": 120
+    }
+  }
+]

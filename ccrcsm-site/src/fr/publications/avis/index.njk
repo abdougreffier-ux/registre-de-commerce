@@ -1,0 +1,33 @@
+---
+title: Avis du Comité
+description: Ensemble des avis rendus par le CCRCSM sur les questions relevant de sa compétence. Chaque avis porte une référence, une date et un identifiant pérenne.
+lead: Les avis sont classés par date décroissante. Vous pouvez également vous abonner au flux RSS.
+permalink: /fr/publications/avis/
+breadcrumbs:
+  - { label: "Publications", href: "/fr/publications/" }
+  - { label: "Avis du Comité" }
+---
+
+<p class="page__meta">
+  <a href="/fr/feeds/avis.xml" rel="alternate" type="application/rss+xml">
+    {{ i18n[locale].actions.subscribe }} — Flux RSS
+  </a>
+</p>
+
+{% set items = collections.avis_fr %}
+{% if items and items.length %}
+<ul class="card-grid">
+  {% for item in items %}
+  <li class="card">
+    {% if item.data.reference %}<p class="card__rubrique">{{ item.data.reference }}</p>{% endif %}
+    <h2 class="card__title"><a href="{{ item.url }}">{{ item.data.title }}</a></h2>
+    <p class="card__meta">
+      <time datetime="{{ item.data.date | dateISO }}">{{ item.data.date | dateFR }}</time>
+    </p>
+    <p class="card__description">{{ item.data.description }}</p>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>Aucun avis publié pour le moment.</p>
+{% endif %}

@@ -1,0 +1,147 @@
+---
+title: Accueil
+description: Site institutionnel du Comité de Coordination du Registre du Commerce et des Sûretés Mobilières de la République Islamique de Mauritanie.
+layout: layouts/home.njk
+permalink: /fr/
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__inner">
+    <p class="hero__eyebrow">{{ site.republic[locale] }} — {{ site.ministry[locale] }}</p>
+    <h1 id="hero-title" class="hero__title">{{ i18n[locale].home.heroTitle }}</h1>
+    <p class="hero__lead">{{ i18n[locale].home.heroLead }}</p>
+    <p class="hero__actions">
+      <a class="btn btn--primary" href="/fr/publications/avis/">{{ i18n[locale].nav.avis }}</a>
+      <a class="btn btn--ghost" href="/fr/le-comite/">{{ i18n[locale].nav.committee }}</a>
+    </p>
+  </div>
+</section>
+
+<section class="section section--alt" aria-labelledby="president-heading">
+  <div class="container container--narrow">
+    <h2 id="president-heading" class="section__title">{{ i18n[locale].home.presidentMessageTitle }}</h2>
+    <blockquote class="prose">
+      <p>
+        « Le Comité de Coordination du Registre du Commerce et des Sûretés Mobilières, institué auprès du
+        Ministère de la Justice, a pour mission première d'assurer la cohérence et la sécurité juridique du
+        dispositif mauritanien d'immatriculation des acteurs économiques et de publicité des sûretés.
+        Ce site officiel met à disposition, dans les deux langues nationales, le cadre applicable,
+        les avis rendus par le Comité et les services destinés aux entreprises, aux praticiens du droit
+        et aux citoyens. »
+      </p>
+      <footer>
+        <cite>— Président du CCRCSM</cite>
+      </footer>
+    </blockquote>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="quick-heading">
+  <div class="container">
+    <div class="section__header">
+      <h2 id="quick-heading" class="section__title">{{ i18n[locale].home.quickAccess }}</h2>
+    </div>
+    <ul class="quick-access">
+      <li class="quick-access__item">
+        <a href="/fr/textes/">
+          <svg class="quick-access__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h12a2 2 0 012 2v14H6a2 2 0 01-2-2V4z"/>
+            <path d="M8 8h8M8 12h8M8 16h5"/>
+          </svg>
+          <span>
+            <strong class="quick-access__title">Textes juridiques</strong>
+            <span class="quick-access__desc">Code de commerce, décret 2021-033, loi 2022-011 et arrêtés.</span>
+          </span>
+        </a>
+      </li>
+      <li class="quick-access__item">
+        <a href="/fr/publications/avis/">
+          <svg class="quick-access__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="16" rx="2"/>
+            <path d="M3 9h18M9 14h8M9 18h5"/>
+          </svg>
+          <span>
+            <strong class="quick-access__title">Avis du Comité</strong>
+            <span class="quick-access__desc">Positions formelles rendues par le Comité, avec référence et date.</span>
+          </span>
+        </a>
+      </li>
+      <li class="quick-access__item">
+        <a href="/fr/services/formulaires/">
+          <svg class="quick-access__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16"/>
+          </svg>
+          <span>
+            <strong class="quick-access__title">Formulaires</strong>
+            <span class="quick-access__desc">Modèles, guides pratiques et documents à télécharger.</span>
+          </span>
+        </a>
+      </li>
+      <li class="quick-access__item">
+        <a href="/fr/contact/">
+          <svg class="quick-access__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 5h18v14H3z"/>
+            <path d="M3 5l9 8 9-8"/>
+          </svg>
+          <span>
+            <strong class="quick-access__title">Saisine du Comité</strong>
+            <span class="quick-access__desc">Formulaire sécurisé pour adresser une demande au secrétariat.</span>
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--alt" aria-labelledby="avis-heading">
+  <div class="container">
+    <div class="section__header">
+      <h2 id="avis-heading" class="section__title">{{ i18n[locale].home.latestAvis }}</h2>
+      <p class="section__action"><a href="/fr/publications/avis/">{{ i18n[locale].actions.seeAll }}</a></p>
+    </div>
+    {% set recentAvis = collections.avis_fr | take(3) %}
+    {% if recentAvis and recentAvis.length %}
+    <ul class="card-grid">
+      {% for item in recentAvis %}
+      <li class="card">
+        <p class="card__rubrique">{{ i18n[locale].nav.avis }}</p>
+        <h3 class="card__title"><a href="{{ item.url }}">{{ item.data.title }}</a></h3>
+        <p class="card__meta">
+          {% if item.data.reference %}<strong>{{ item.data.reference }}</strong> — {% endif %}
+          <time datetime="{{ item.data.date | dateISO }}">{{ item.data.date | dateFR }}</time>
+        </p>
+        <p class="card__description">{{ item.data.description }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="prose">Aucun avis publié pour l'instant.</p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section" aria-labelledby="news-heading">
+  <div class="container">
+    <div class="section__header">
+      <h2 id="news-heading" class="section__title">{{ i18n[locale].home.latestNews }}</h2>
+      <p class="section__action"><a href="/fr/publications/actualites/">{{ i18n[locale].actions.seeAll }}</a></p>
+    </div>
+    {% set recentNews = collections.actualites_fr | take(3) %}
+    {% if recentNews and recentNews.length %}
+    <ul class="card-grid">
+      {% for item in recentNews %}
+      <li class="card">
+        <p class="card__rubrique">{{ i18n[locale].nav.news }}</p>
+        <h3 class="card__title"><a href="{{ item.url }}">{{ item.data.title }}</a></h3>
+        <p class="card__meta">
+          <time datetime="{{ item.data.date | dateISO }}">{{ item.data.date | dateFR }}</time>
+        </p>
+        <p class="card__description">{{ item.data.description }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="prose">Aucune actualité publiée pour l'instant.</p>
+    {% endif %}
+  </div>
+</section>

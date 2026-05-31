@@ -1,0 +1,25 @@
+---
+layout: layouts/base.njk
+---
+{% include "partials/breadcrumb.njk" %}
+
+<article class="page">
+  <header class="page__header">
+    <h1 class="page__title">{{ title }}</h1>
+    {% if lead %}
+    <p class="page__lead">{{ lead }}</p>
+    {% endif %}
+    {% if lastUpdated %}
+    <p class="page__meta">
+      <span class="page__meta-label">{{ i18n[locale].labels.lastUpdated }} :</span>
+      <time datetime="{{ lastUpdated | dateISO }}">
+        {% if locale == "ar" %}{{ lastUpdated | dateAR }}{% else %}{{ lastUpdated | dateFR }}{% endif %}
+      </time>
+    </p>
+    {% endif %}
+  </header>
+
+  <div class="page__body prose">
+    {{ content | safe }}
+  </div>
+</article>

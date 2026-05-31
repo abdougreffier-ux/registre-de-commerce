@@ -1,0 +1,97 @@
+# ─── Environnements Python ───────────────────────────────────────────────
+**/venv/
+**/.venv/
+**/env/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+*.egg
+.Python
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# ─── Node.js / React / Eleventy ──────────────────────────────────────────
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.npm
+.eslintcache
+
+# Build outputs
+**/build/
+**/dist/
+ccrcsm-site/_site/
+rsm/frontend/build/
+web/frontend/build/
+
+# ─── Bases de données locales ────────────────────────────────────────────
+**/db.sqlite3
+**/db.sqlite3-journal
+*.db
+*.sqlite
+*.sqlite3
+
+# ─── Configuration locale / secrets ──────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.local
+*.secret
+
+# ─── Données et médias générés ───────────────────────────────────────────
+**/media/uploads/
+**/staticfiles/
+**/media/pieces_jointes/
+
+# ─── Fichiers temporaires Office ─────────────────────────────────────────
+~$*.docx
+~$*.xlsx
+~$*.pptx
+~$*.rtf
+*.tmp
+*~
+
+# ─── IDE / OS ────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+*.bak
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# ─── Claude Code / outils de session ─────────────────────────────────────
+.claude/
+.claude-cache/
+
+# ─── Fichiers d'extraction / pages déballées (artefacts d'analyse) ───────
+*_unpacked/
+unpacked_*/
+cat_biens_unzip/
+tdr_unpacked/
+tdr_full.txt
+tdr_extract.txt
+tdr_rsm_complet.txt
+extract_tdr.py
+
+# ─── Logs ────────────────────────────────────────────────────────────────
+*.log
+logs/
+**/logs/
+
+# ─── Captures et rapports ad hoc ─────────────────────────────────────────
+captures/
+screenshots/

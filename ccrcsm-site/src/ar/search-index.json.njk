@@ -1,0 +1,14 @@
+---
+permalink: /assets/js/search-index.ar.json
+eleventyExcludeFromCollections: true
+searchable: false
+layout: null
+---
+[{% for it in collections.searchIndexAr %}{
+"url": {{ it.url | jsonSafe | safe }},
+"title": {{ it.title | jsonSafe | safe }},
+"description": {{ it.description | jsonSafe | safe }},
+"rubrique": {{ it.rubrique | jsonSafe | safe }},
+"type": {{ it.type | jsonSafe | safe }},
+"date": {{ (it.date or "") | jsonSafe | safe }}
+}{% if not loop.last %},{% endif %}{% endfor %}]

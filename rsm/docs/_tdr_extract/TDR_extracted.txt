@@ -1,0 +1,470 @@
+RÉPUBLIQUE ISLAMIQUE DE MAURITANIE
+Honneur – Fraternité – Justice
+Ministère de la Justice — Tribunal de commerce de Nouakchott
+TERMES DE RÉFÉRENCE
+Système Informatique du Registre des Sûretés Mobilières (RSM)
+Conception, développement, déploiement et maintenance d’un registre informatisé bilingue (français / arabe) à valeur juridique
+Document destiné aux soumissionnaires — Appel d’offres
+Version 1.0 — Nouakchott, 2026
+
+# Avertissement préliminaire
+Les présents Termes de Référence (ci-après « TDR ») sont élaborés exclusivement à partir du chapitre IV — Registre des Sûretés Mobilières du décret 2021-033 relatif au Registre du commerce et des Sûretés Mobilières (articles 76 à 97). Aucune règle juridique non formulée par ce texte n’a été ajoutée ; chaque fois qu’une exigence technique ou fonctionnelle va au-delà des seules règles explicites du texte, elle est présentée comme une exigence de mise en œuvre, et les hypothèses retenues sont explicitement signalées au moyen d’encadrés « Hypothèse signalée ». Les zones d’ambiguïté du texte source sont, de la même manière, signalées au moyen d’encadrés « Risque / ambiguïté ».
+§  Base légale — Le texte fondateur renvoie à un arrêté (articles 8, 81, 84) pour la fixation des règles relatives à la procédure dématérialisée d’inscription, de modification et de radiation, ainsi qu’à la procédure de recherche. Cet arrêté d’application n’est pas joint aux présents TDR. Le prestataire sera tenu, dès la publication ou la communication de cet arrêté, d’aligner sans surcoût les paramétrages du système sur ses exigences.
+
+# Table des matières
+Avertissement préliminaire1
+Table des matières1
+1. Contexte et objectifs du projet1
+1.1 Contexte1
+1.2 Objectifs du projet1
+1.3 Principes directeurs1
+2. Cadre institutionnel et juridique1
+2.1 Acteurs institutionnels1
+2.2 Fondements juridiques du système1
+3. Portée du système1
+3.1 Périmètre inclus1
+3.2 Périmètre explicitement exclu1
+4. Description fonctionnelle détaillée1
+4.1 Acteurs et rôles applicatifs1
+4.2 Processus métier1
+4.2.1 Inscription initiale1
+4.2.2 Modification1
+4.2.3 Renouvellement1
+4.2.4 Radiation1
+4.2.5 Recherche et consultation publique1
+4.3 Gestion des statuts d’inscription1
+Matrice des transitions autorisées1
+Transitions explicitement interdites1
+4.4 Règles de validation1
+4.4.1 Contrôles de forme au dépôt1
+4.4.2 Contrôles techniques sur le canal électronique1
+4.4.3 Description des biens grevés1
+5. Exigences non fonctionnelles1
+5.1 Sécurité et intégrité1
+5.2 Traçabilité et auditabilité1
+5.3 Disponibilité et continuité1
+5.4 Performance et volumétrie1
+5.5 Conformité juridique et institutionnelle1
+6. Architecture fonctionnelle (niveau conceptuel)1
+6.1 Vue d’ensemble1
+6.2 Modules fonctionnels1
+6.3 Invariants d’architecture1
+7. Exigence de bilinguisme (français / arabe)1
+7.1 Parité fonctionnelle totale1
+7.2 Unicité de la logique métier1
+7.3 Neutralité juridique des langues1
+7.4 Gestion des données multilingues1
+7.5 Documents officiels bilingues1
+7.6 Traçabilité indépendante de la langue1
+7.7 Tests et acceptation bilingues1
+8. Livrables attendus1
+9. Contraintes et risques identifiés1
+9.1 Contraintes1
+9.2 Risques juridiques identifiés1
+9.3 Zones d’ambiguïté signalées dans le texte source1
+10. Critères d’acceptation et de conformité1
+10.1 Critères juridiques1
+10.2 Critères fonctionnels1
+10.3 Critères de traçabilité1
+10.4 Critères de sécurité1
+10.5 Critères de performance et de disponibilité1
+10.6 Critères de bilinguisme1
+10.7 Critères de conformité documentaire1
+10.8 Régime de la réception1
+Annexe A — Traçabilité article par article (76 à 97)1
+Annexe B — Glossaire1
+
+# 1. Contexte et objectifs du projet
+## 1.1 Contexte
+Le Registre des Sûretés Mobilières (ci-après « le RSM » ou « le Registre ») a pour finalité, conformément à l’article 76 du décret 2021-033 relatif au Registre du commerce et des Sûretés Mobilières, d’assurer la publicité des sûretés mobilières et des droits dont l’inscription au Registre est requise légalement, ainsi que leur pleine opposabilité aux tiers. Il est constitué pour recevoir, conserver et rendre accessibles au public les informations relatives aux sûretés mobilières, et notamment : nantissement de l’outillage, du matériel ou du matériel professionnel ; nantissement des droits d’associés, parts sociales, valeurs mobilières et comptes de titres financiers ; nantissement du fonds de commerce et inscription du privilège du vendeur de fonds de commerce ; nantissement des stocks ; inscription des privilèges du Trésor, des services fiscaux, de l’administration des douanes et des organismes de prévoyance sociale ; nantissement de créance et de compte bancaire ; nantissement des droits de propriété intellectuelle.
+L’article 77 dispose que le RSM est entièrement informatisé : les inscriptions sont portées et stockées dans une base de données informatique constituant le Registre. Cette base se décompose en un fichier accessible au public, s’agissant des inscriptions en cours de validité, et en un fichier général contenant l’ensemble des informations actuelles et conservées. La tenue du RSM relève du Greffe, qui a l’obligation légale d’en assurer la conservation (article 79), et peut être confiée à un organisme public ou privé dans les conditions fixées par cahier des charges approuvé par arrêté du ministre de la Justice, sous le contrôle du Président du Tribunal de commerce de Nouakchott (article 83).
+## 1.2 Objectifs du projet
+Le projet a pour objet la conception, le développement, le déploiement et la maintenance du système informatique du RSM. Ce système doit :
+Donner corps à l’exigence légale d’informatisation intégrale du Registre (article 77) ;
+Garantir la pleine valeur juridique des inscriptions, modifications, renouvellements, radiations et recherches, notamment à travers un horodatage opposable, des certificats conformes et un journal d’audit inaltérable ;
+Assurer l’ordre chronologique d’arrivée des demandes (article 78, alinéa 2) et la prise d’effet à la date et à l’heure de saisie (articles 78, 87, 90) ;
+Permettre deux canaux de saisie équivalents — bordereau papier et voie électronique (articles 78 et 84) — convergeant dans une seule et même base de données ;
+Offrir un moteur de recherche public conforme aux exigences de l’article 96 (au moins deux critères parmi une liste limitative) et délivrer des certificats de recherche à valeur probante (article 97) ;
+Être intégralement bilingue français / arabe, sans divergence fonctionnelle, juridique ou opérationnelle entre les deux versions linguistiques.
+## 1.3 Principes directeurs
+Le système est conçu comme un outil de mise en œuvre du droit, et non comme une simple application informatique. À ce titre, cinq principes s’imposent en toutes circonstances :
+Validité juridique : chaque fonctionnalité trouve son fondement dans une disposition précise du texte fondateur.
+Opposabilité : les effets juridiques d’une inscription sont déterminés par la date et l’heure auxquelles elle est rendue accessible au public.
+Chronologie : l’ordre des inscriptions reflète strictement l’ordre d’arrivée des demandes.
+Intégrité : une donnée enregistrée ne peut être silencieusement altérée ; toute modification est tracée, datée et attribuée.
+Preuve : les certificats et extraits produits par le système sont admissibles comme éléments de preuve devant l’instance judiciaire.
+# 2. Cadre institutionnel et juridique
+## 2.1 Acteurs institutionnels
+
+[TABLE START]
+| Acteur | Rôle juridique (issu du texte source) |
+| Greffe chargé du RSM | Tient le Registre, en assure la conservation (art. 79), procède aux inscriptions (art. 86), délivre les certificats (art. 78 in fine, 86, 97), peut rejeter une inscription ou une recherche dans les cas limitativement prévus (art. 80), est  seul habilité  à produire les statistiques (art. 82). |
+| Greffier | Ne vérifie ni l’identité de la personne procédant à l’inscription, ni les énonciations de la demande ; procède à l’inscription dès que les conditions de l’article 85 sont satisfaites et délivre une copie au demandeur (art. 86). |
+| Président du Tribunal de commerce de Nouakchott | Élabore le cahier des charges en cas de tenue confiée à un organisme tiers (art. 83) ; assure, personnellement ou par juge commis, le contrôle de la tenue du Registre (art. 83 in fine). |
+| Ministre de la Justice | Approuve par arrêté le cahier des charges prévu à l’article 83 ; prend les arrêtés d’application prévus aux articles 8, 81 et 84 (non joints aux présents TDR). |
+| Organisme public ou privé (le cas échéant) | Peut, en lieu et place du greffe, se voir confier la tenue du Registre selon les conditions fixées par le cahier des charges approuvé (art. 83). |
+| Créancier, constituant, mandataire | Présentent la demande d’inscription, de modification, de renouvellement ou de radiation (art. 85, 88, 91, 92). |
+| Tout intéressé | Peut présenter une demande de consultation, de retrait de copie ou de certificat négatif ou affirmatif (art. 94). |
+[TABLE END]
+
+## 2.2 Fondements juridiques du système
+Le système doit, en toutes ses fonctions, respecter les règles suivantes, directement extraites du chapitre IV du décret :
+
+[TABLE START]
+| Article | Règle |
+| Art. 76 | Finalité du RSM : publicité des sûretés et opposabilité aux tiers. |
+| Art. 77 | Registre entièrement informatisé ; base de données décomposée en fichier public (inscriptions en cours) et fichier général (informations actuelles et conservées). |
+| Art. 78 | Saisie par bordereau papier remis au Registre ou par voie électronique ; enregistrement des demandes dans l’ordre de leur date d’arrivée ; prise d’effet à la date et à l’heure de saisie ; attribution d’un certificat d’inscription ; numéro de série formé d’un numéro d’ordre suivi de l’année, du mois, du jour, de l’heure, de la minute et des secondes. |
+| Art. 79 | Obligation de conservation de toutes les informations régulièrement enregistrées. |
+| Art. 80 | Motifs limitatifs de rejet (canal non autorisé, informations incompréhensibles ou illisibles) ; message de rejet motivé envoyé sans délai. |
+| Art. 81 | Renvoi à un arrêté pour la procédure dématérialisée. |
+| Art. 82 | Monopole du greffe sur la production de statistiques relatives aux sûretés mobilières. |
+| Art. 83 | Possibilité de confier la tenue du RSM à un organisme public ou privé, sous contrôle. |
+| Art. 84 à 87 | Modalités de l’inscription initiale, contenu du formulaire, prise d’effet. |
+| Art. 88 à 90 | Modifications : contenu du formulaire, conditions de validité, prise d’effet. |
+| Art. 91 | Renouvellement par bordereau de modification, prorogeant d’une durée égale à la durée initiale. |
+| Art. 92 | Radiation : contenu du bordereau, conservation au fichier public jusqu’à expiration avec mention « radiée », transfert au fichier général après expiration. |
+| Art. 93 | Indexation par nom du constituant ; pour les biens porteurs de numéros de série, indexation additionnelle par numéro de série ; modifications et radiations associées au numéro de l’inscription initiale. |
+| Art. 94 à 97 | Recherches : ouverture à tout intéressé ; au moins deux critères parmi quatre (nom/dénomination du constituant, numéro d’immatriculation RC, numéro de série, numéro d’inscription initiale ou modification) ; résultat exhaustif des homonymes ; certificat de recherche admissible comme preuve concluante. |
+[TABLE END]
+
+# 3. Portée du système
+## 3.1 Périmètre inclus
+Un Registre électronique unique, centralisé, constitué d’une base de données comprenant deux fichiers logiques : le fichier accessible au public (inscriptions en cours de validité) et le fichier général (informations actuelles et conservées), conformément à l’article 77.
+Un module de saisie du Greffe permettant l’enregistrement des bordereaux reçus sous format papier, avec conservation de la date et de l’heure d’arrivée.
+Un portail de saisie électronique permettant aux personnes autorisées de soumettre directement une demande d’inscription, de modification, de renouvellement ou de radiation.
+Un portail public de recherche accessible à tout intéressé, restreint aux inscriptions en cours dans le fichier public.
+La génération de certificats : certificat d’inscription, certificat de modification, certificat de renouvellement, certificat de radiation, certificat de recherche (affirmatif ou négatif).
+Un module de gestion des rejets, conforme aux motifs limitatifs de l’article 80.
+Un module de statistiques réservé au greffe (article 82).
+Un module d’administration (utilisateurs, rôles, paramétrage, référentiels).
+Un journal d’audit inaltérable couvrant l’ensemble des actions.
+L’intégralité des fonctions précitées en français et en arabe, dans les conditions fixées à la section 7 des présents TDR.
+## 3.2 Périmètre explicitement exclu
+L’appréciation du fond de droit : le greffier n’est pas tenu de vérifier l’identité de la personne procédant à l’inscription ni les énonciations contenues dans la demande (article 86). Le système ne doit donc pas comporter de contrôle automatisé qui reviendrait à opérer une telle vérification, au-delà des contrôles de forme expressément prévus.
+La dématérialisation des actes juridiques sous-jacents (titre constitutif de la sûreté, décision judiciaire) : le système reçoit et conserve les pièces justificatives jointes par le requérant, sans se substituer à l’acte lui-même.
+La perception des émoluments : l’article 85 prévoit que le requérant règle d’avance les émoluments du greffe, sans préciser de modalités électroniques. L’intégration d’un moyen de paiement électronique fait partie du périmètre ; la définition de la politique tarifaire relève du Greffe.
+La production de statistiques par des tiers : l’article 82 réservant ce pouvoir au seul greffe, toute diffusion statistique publique passe par un module contrôlé par le greffe.
+ⓘ  Hypothèse signalée — Canal de saisie électronique. Le texte source (art. 78, 81, 84) prévoit la voie électronique mais renvoie à un arrêté d’application non joint pour en fixer les conditions. Les présents TDR retiennent, à titre d’hypothèse de conception, (i) la soumission de bordereaux électroniques à travers un portail authentifié, (ii) l’envoi d’un accusé de dépôt horodaté, et (iii) la prise d’effet juridique strictement alignée sur l’horodatage de saisie dans la base conformément à l’article 78 alinéa 3. Ces paramètres seront alignés sans surcoût sur l’arrêté d’application dès sa publication.
+# 4. Description fonctionnelle détaillée
+## 4.1 Acteurs et rôles applicatifs
+Le système définit des rôles applicatifs, strictement séparés, reflétant les responsabilités juridiques du texte source. Le principe de séparation des fonctions (création / validation / supervision) s’impose.
+
+[TABLE START]
+| Rôle | Responsabilités |
+| Agent de saisie (Greffe) | Enregistre les bordereaux papier reçus au guichet ; contrôle de forme (lisibilité, canal) conformément à l’article 80 ; transmet pour validation. |
+| Autorité de validation (Greffier) | Prononce l’inscription ou le rejet motivé conformément à l’article 80 ; déclenche l’attribution du numéro d’ordre et l’horodatage à la seconde (article 78). |
+| Administrateur fonctionnel | Gère les utilisateurs, les rôles, les référentiels (types de sûretés, libellés bilingues des formulaires, modèles de certificats) ; n’a jamais accès à la modification directe des inscriptions enregistrées. |
+| Administrateur technique | Assure les opérations d’exploitation (sauvegardes, supervision, correctifs) ; n’a jamais accès aux contenus métier en lecture utile (principe du moindre privilège). |
+| Auditeur / Contrôleur | Dispose d’un accès en lecture seule au journal d’audit et aux données ; correspond au rôle défini par le Président du Tribunal de commerce de Nouakchott ou le juge commis (article 83 in fine). |
+| Producteur de statistiques (Greffe) | Extrait et diffuse les statistiques conformément au monopole institué à l’article 82. |
+| Déclarant externe authentifié | Soumet par voie électronique ses demandes d’inscription, de modification, de renouvellement ou de radiation. |
+| Usager public (non authentifié) | Effectue des recherches dans le fichier public (articles 94 à 97) ; retire copies et certificats. |
+[TABLE END]
+
+⚠  Point critique — Séparation stricte. Aucun utilisateur ne peut cumuler les rôles d’agent de saisie et d’autorité de validation sur la même demande. Aucun administrateur, fonctionnel ou technique, n’a le pouvoir de créer, modifier ou supprimer une inscription dans le fichier du Registre. Les opérations d’exploitation s’effectuent sans accès utile aux contenus métier.
+## 4.2 Processus métier
+### 4.2.1 Inscription initiale
+Réception de la demande, par bordereau papier (article 85) ou par voie électronique (article 84).
+Contrôle de forme limité aux motifs de l’article 80 : canal autorisé, lisibilité et compréhensibilité des informations.
+Enregistrement de la demande dans la base dans l’ordre de sa date d’arrivée (article 78 alinéa 2) : cet ordre est déterminé par l’horodatage serveur de la réception, qu’il s’agisse d’un dépôt physique ou électronique.
+Si recevable : saisie des informations listées à l’article 85 (nature du droit, somme garantie, identification du ou des créanciers, du ou des constituants et débiteurs, description des biens grevés, durée et date d’expiration, identité du requérant, et, pour les personnes physiques, date et lieu de naissance) ; saisie, lorsque connue, de l’adresse électronique pour notifications.
+Attribution automatique d’un numéro de série, formé d’un numéro d’ordre suivi de l’année, du mois, du jour, de l’heure, de la minute et des secondes (article 78 alinéa 4). Ce numéro devient le numéro de l’inscription initiale.
+Prise d’effet à la date et à l’heure auxquelles les informations sont saisies dans le fichier du Registre de façon à être accessibles aux personnes effectuant une recherche (articles 78, 87).
+Délivrance immédiate d’un certificat d’inscription, sur support papier ou électronique selon le canal d’entrée.
+Si irrecevable : prononcé d’un rejet motivé envoyé sans délai au demandeur (article 80) ; la demande est archivée avec son motif de rejet dans le journal d’audit.
+§  Base légale — Règle cardinale — article 86. Le greffier n’est pas tenu de vérifier l’identité de la personne procédant à l’inscription ni les énonciations contenues dans la demande. Le système ne doit donc pas introduire de contrôle de cohérence matérielle qui équivaudrait à une telle vérification. Cette règle fonde le régime déclaratif du RSM.
+### 4.2.2 Modification
+Soumission d’un formulaire de modification par la personne ayant procédé à l’inscription (article 88).
+Le formulaire comporte obligatoirement : le champ concerné, le numéro de l’inscription initiale, l’objet de la modification, les informations ajoutées, modifiées ou supprimées, et les signatures du créancier et du constituant attestant de leur accord.
+Contrôle de l’effet utile : toute modification visant à supprimer l’ensemble des constituants, des créanciers garantis ou des biens grevés sans en désigner de nouveaux est sans effet (article 88 dernier alinéa). Le système refuse de telles modifications et motive le refus.
+Prise d’effet à la date et à l’heure de saisie dans la base (article 90).
+Sauf prorogation expresse de la période d’effet, la modification n’a aucun effet sur la durée de l’inscription initiale (article 90 alinéa 2).
+Indexation : la modification est systématiquement associée au numéro de l’inscription initiale (article 93).
+⚑  Risque / ambiguïté — La signature électronique qualifiée n’est pas mentionnée par le texte source, alors que l’article 88 exige « les signatures du créancier et du constituant ». Pour le canal électronique, les présents TDR exigent un mécanisme garantissant l’authentification et le consentement des deux parties (voir § 5.1). Toute évolution de la réglementation mauritanienne sur la signature électronique devra être répercutée sans surcoût.
+### 4.2.3 Renouvellement
+Possible à tout moment avant l’expiration de la période d’effet en cours (article 91).
+Techniquement assuré par l’inscription d’un bordereau de modification indiquant la nouvelle période d’effet.
+Effet : prorogation pour une durée égale à la durée initiale, décomptée à partir de la date à laquelle la période en cours aurait expiré.
+Le système refuse tout renouvellement postérieur à la date d’expiration de la période d’effet en cours et motive ce refus.
+### 4.2.4 Radiation
+Soumission d’un formulaire de radiation par la personne ayant procédé à l’inscription, ou par toute autre personne qui y a un intérêt légitime reconnu par jugement (article 92).
+Le formulaire comporte : le numéro de l’inscription initiale visée, les nom, prénom, adresse du domicile et, le cas échéant, numéro d’immatriculation au registre du commerce du constituant mentionné dans l’inscription initiale.
+Pièces jointes possibles : acte authentique ou sous seing privé portant consentement à la radiation, ou copie du jugement.
+Après enregistrement de la radiation, les informations pertinentes sont conservées dans le fichier accessible au public jusqu’à la date d’expiration de l’inscription, avec une mention « radiée ».
+Après la date d’expiration, l’inscription radiée est retirée du fichier accessible au public et transférée au fichier général, où elle est conservée conformément à l’article 79.
+### 4.2.5 Recherche et consultation publique
+Ouverture à tout intéressé (article 94), sans authentification préalable obligatoire.
+Canaux prévus : dépôt d’un bordereau de recherche ou recherche électronique en ligne (article 95).
+La recherche s’effectue obligatoirement sur la base d’au moins deux des quatre critères limitativement énumérés par l’article 96 : nom et prénom ou dénomination sociale du constituant ; numéro d’immatriculation au registre du commerce du constituant ; numéro de série du bien ; numéro de l’inscription initiale ou de la modification.
+Lorsque le nom du constituant est utilisé comme critère, le résultat fait apparaître l’ensemble des constituants homonymes, suivis de leur adresse et de leur date de naissance (article 97 alinéa 2).
+Le résultat indique, selon le cas, soit qu’aucune information ne correspond au critère spécifié, soit les informations correspondantes existant à la date et à l’heure de la recherche.
+À l’issue de toute recherche, le système délivre un certificat de recherche, sur support papier ou électronique au choix du requérant, reflétant le résultat de la recherche (article 97 alinéa 3).
+Les recherches portent exclusivement sur le fichier public, à l’exclusion du fichier général.
+⚠  Point critique — Le certificat de recherche est admissible comme élément de preuve devant une instance judiciaire et, en l’absence de preuve contraire, constitue une preuve concluante quant aux points qu’il atteste (article 97 dernier alinéa). La cohérence stricte entre les données du fichier public au moment exact de la recherche et le contenu du certificat doit être garantie techniquement (voir § 6).
+## 4.3 Gestion des statuts d’inscription
+Le système formalise les statuts suivants, dont les transitions autorisées sont définies strictement :
+
+[TABLE START]
+| Statut | Description |
+| Reçue | La demande est enregistrée avec son horodatage d’arrivée, sans prise d’effet juridique à ce stade. |
+| En contrôle de forme | Vérification des motifs limitatifs de rejet de l’article 80. |
+| Rejetée | Rejet motivé notifié sans délai au demandeur. La demande est conservée dans le journal ; elle n’apparaît pas au fichier public. |
+| Inscrite (en cours de validité) | La demande a été saisie dans la base du Registre, un numéro d’ordre horodaté lui a été attribué ; elle est accessible au public ; un certificat d’inscription a été délivré. |
+| Modifiée | Une ou plusieurs modifications ont été associées au numéro d’inscription initiale ; l’inscription demeure en cours de validité. |
+| Renouvelée | La période d’effet a été prorogée d’une durée égale à la durée initiale, avant expiration. |
+| Radiée (en cours de validité) | Une radiation a été enregistrée ; l’inscription est mentionnée « radiée » dans le fichier public et y demeure jusqu’à sa date d’expiration. |
+| Expirée | La date d’expiration est atteinte ; l’inscription sort du fichier public pour rejoindre le fichier général. |
+| Archivée (fichier général) | L’inscription est conservée à perpétuité dans le fichier général au titre de l’obligation de conservation de l’article 79 ; elle n’est plus opposable aux tiers par la seule publicité du Registre. |
+[TABLE END]
+
+### Matrice des transitions autorisées
+
+[TABLE START]
+| Depuis | Vers | Condition |
+| Reçue | En contrôle de forme | Automatique dès la prise en charge. |
+| En contrôle de forme | Rejetée | Non-respect des motifs limitatifs de l’article 80. |
+| En contrôle de forme | Inscrite | Respect des conditions de l’article 85 ; validation du greffier. |
+| Inscrite | Modifiée | Formulaire de modification conforme à l’article 88. |
+| Inscrite / Modifiée | Renouvelée | Avant expiration, formulaire de modification renouvelant (article 91). |
+| Inscrite / Modifiée / Renouvelée | Radiée | Formulaire de radiation conforme à l’article 92. |
+| Toute inscription en cours | Expirée | Atteinte de la date d’expiration, automatique. |
+| Expirée | Archivée | Transfert automatique au fichier général (article 92 alinéa 3). |
+[TABLE END]
+
+### Transitions explicitement interdites
+Aucune transition ne peut être déclenchée qui reviendrait à modifier rétroactivement la date et l’heure de saisie d’une inscription (articles 78, 87, 90).
+Aucune suppression logique ou physique d’une inscription inscrite, modifiée, radiée ou expirée n’est autorisée ; toutes les données sont conservées au titre de l’article 79.
+Aucun retour en arrière de « Radiée » vers « Inscrite » n’est possible ; le rétablissement éventuel suppose une nouvelle inscription, tracée comme telle.
+Aucune modification ne peut être prise en compte après la date d’expiration d’une inscription.
+Aucun renouvellement n’est possible après l’expiration de la période d’effet en cours (article 91 par interprétation stricte : « à tout moment avant son expiration »).
+Aucune modification n’a d’effet si elle vise à supprimer l’ensemble des constituants, des créanciers garantis ou des biens grevés sans en désigner de nouveaux (article 88 dernier alinéa).
+## 4.4 Règles de validation
+### 4.4.1 Contrôles de forme au dépôt
+Canal d’arrivée autorisé : guichet papier ou portail électronique officiel (article 78).
+Lisibilité et caractère compréhensible des informations portées au bordereau (article 80).
+Présence des champs obligatoires listés à l’article 85 pour l’inscription initiale, à l’article 88 pour la modification, à l’article 92 pour la radiation.
+Règle d’effet utile des modifications (article 88 dernier alinéa).
+Règle de délai pour le renouvellement (article 91).
+### 4.4.2 Contrôles techniques sur le canal électronique
+Authentification du déposant électronique préalable à toute soumission.
+Signature électronique ou équivalent attestant de l’accord des parties pour les modifications (article 88).
+Conservation de l’empreinte numérique du bordereau soumis et des pièces jointes, de manière à garantir leur intégrité.
+Refus automatique des fichiers chiffrés non lisibles par le système, des formats non reconnus ou dépassant les limites paramétrées, avec message de rejet motivé conformément à l’article 80.
+### 4.4.3 Description des biens grevés
+Conformément à l’article 85 alinéa 3, l’omission du numéro de série, du fabricant, du modèle ou de l’année d’un bien individualisé ne prive pas l’inscription d’effet dès lors que les biens sont décrits par ailleurs de manière suffisamment précise. Le système ne doit donc pas imposer la saisie de ces champs à titre bloquant ; il doit en revanche permettre la saisie structurée lorsqu’elle est disponible, afin de servir l’indexation de l’article 93.
+# 5. Exigences non fonctionnelles
+## 5.1 Sécurité et intégrité
+Authentification forte des utilisateurs internes (agents, greffiers, administrateurs, auditeurs) reposant au minimum sur un second facteur.
+Gestion fine des habilitations, par rôle applicatif, conformément à la matrice de la section 4.1.
+Séparation stricte des fonctions de saisie, de validation et d’administration.
+Chiffrement des communications (TLS) sur l’ensemble des flux, qu’ils soient internes ou externes.
+Chiffrement au repos des données sensibles et des pièces jointes.
+Protection contre les vulnérabilités courantes (injections, XSS, CSRF, détournement de session, contournement d’autorisation).
+Scellement cryptographique des inscriptions : calcul d’une empreinte (hachage) lors de l’enregistrement, conservation de cette empreinte et possibilité de vérification ultérieure.
+Horloge serveur fiable et surveillée, synchronisée sur une source de temps de confiance : compte tenu de l’exigence d’horodatage à la seconde portée par l’article 78, toute dérive non détectée porte atteinte à la valeur juridique des inscriptions.
+Gestion rigoureuse des comptes techniques et d’administration (rotation, journalisation, revue périodique).
+⚠  Point critique — Horodatage fiable. L’article 78 impose un numéro de série horodaté à la seconde, et les articles 78, 87 et 90 font de l’horodatage de saisie le fait générateur de la prise d’effet juridique des inscriptions. Le système doit s’appuyer sur une source de temps centrale, tracée, supervisée et protégée contre toute manipulation, y compris par un administrateur technique.
+## 5.2 Traçabilité et auditabilité
+Journal d’audit inaltérable couvrant toutes les actions : tentative de connexion, connexion, déconnexion, création de compte, modification de rôle, dépôt de demande, contrôle de forme, validation, rejet, délivrance de certificat, lancement de recherche, export statistique, opération d’administration.
+Chaque entrée comporte au minimum : identifiant interne, horodatage (jour, heure, minute, seconde), identité de l’acteur, type d’action, objet concerné (numéro d’inscription, numéro de demande, identifiant d’utilisateur), résultat de l’action.
+Le journal est protégé en écriture : aucune suppression ni modification rétroactive n’est possible ; seules les ajouts chronologiques sont autorisés, et une rupture de la chaîne d’intégrité doit être détectable.
+Les entrées du journal sont indépendantes de la langue d’interface utilisée.
+Un rôle d’auditeur dispose d’un accès en lecture seule au journal et aux données, sans pouvoir opérer de modification ni de suppression.
+## 5.3 Disponibilité et continuité
+Disponibilité cible 99,5 % par an en dehors des interruptions programmées, compte tenu du rôle juridique du Registre.
+Plan de continuité documenté ; procédure de bascule en cas de défaillance majeure.
+Sauvegardes chiffrées, automatisées, stockées hors du site principal.
+Objectifs indicatifs : RPO ≤ 1 heure, RTO ≤ 4 heures, au regard de la valeur juridique des horodatages.
+Tests de restauration au moins semestriels, documentés.
+Procédure spécifique en cas d’indisponibilité : les demandes reçues pendant la période d’indisponibilité sont horodatées à leur date d’arrivée effective et non à la date de rétablissement du service.
+⚑  Risque / ambiguïté — Indisponibilité et ordre d’arrivée. Le texte source impose l’enregistrement des demandes « dans l’ordre de leur date d’arrivée » (art. 78 alinéa 2) et fait dépendre l’opposabilité de l’horodatage de saisie. En cas d’indisponibilité du système, une politique claire doit être documentée — accusé de dépôt papier daté au guichet, file d’attente électronique avec empreinte horodatée — afin d’éviter tout contentieux sur le rang d’une inscription.
+## 5.4 Performance et volumétrie
+Temps de réponse d’une recherche publique simple : inférieur à 2 secondes pour un résultat standard.
+Temps d’enregistrement d’une inscription après validation : inférieur à 1 seconde côté serveur, hors génération du certificat.
+Capacité à traiter plusieurs dizaines de dépôts simultanés sans dégradation perceptible.
+Dimensionnement prévisionnel documenté, tenant compte de la croissance pluriannuelle du fichier public et du fichier général.
+## 5.5 Conformité juridique et institutionnelle
+Respect strict des articles 76 à 97 du décret, tant dans les fonctionnalités que dans les libellés, les messages, les certificats et les résultats de recherche.
+Respect des exigences du cahier des charges prévu à l’article 83, lorsqu’il est applicable.
+Documentation de conformité : pour chaque règle de l’article 76 à l’article 97, le prestataire remet une fiche de traçabilité indiquant la fonctionnalité, les règles de gestion, les écrans et les tests qui la matérialisent.
+Protection des données à caractère personnel : le système collecte des données (identité, date et lieu de naissance, adresse, adresse électronique) dont la collecte est expressément prévue aux articles 85 et suivants ; ces données sont traitées dans les limites des finalités du Registre et conservées conformément à l’article 79.
+# 6. Architecture fonctionnelle (niveau conceptuel)
+## 6.1 Vue d’ensemble
+Le système est conçu autour d’un noyau unique — la base de données du Registre — sur lequel s’appuient plusieurs canaux d’accès et plusieurs modules fonctionnels. Il n’existe qu’un seul modèle de données et un seul moteur de règles, indépendamment de la langue d’interface.
+## 6.2 Modules fonctionnels
+
+[TABLE START]
+| Module | Fonction |
+| Noyau du Registre (base de données) | Stocke les inscriptions, modifications, radiations, pièces jointes et horodatages. Se décompose logiquement en fichier public et fichier général (art. 77). |
+| Moteur d’horodatage et de numérotation | Attribue à chaque inscription son numéro d’ordre horodaté à la seconde (art. 78) ; garantit l’unicité et la chronologie. |
+| Moteur de workflow | Gère les statuts et les transitions de la section 4.3 ; applique les règles de validation de la section 4.4. |
+| Portail de saisie électronique (externe) | Permet aux déclarants authentifiés de soumettre leurs bordereaux d’inscription, de modification, de renouvellement et de radiation. |
+| Module de saisie guichet (interne) | Permet aux agents du greffe d’enregistrer les bordereaux papier reçus, avec horodatage d’arrivée. |
+| Portail public de recherche | Expose le fichier public et applique la règle des deux critères minimum (art. 96). |
+| Module de génération des certificats | Produit les certificats d’inscription, de modification, de renouvellement, de radiation et de recherche, en français, en arabe ou en version bilingue. |
+| Module d’indexation | Indexe par nom du constituant et, le cas échéant, par numéro de série (art. 93). |
+| Module de rejet | Gère les rejets motivés au sens de l’article 80 et les notifications associées. |
+| Module de statistiques (greffe) | Produit les extractions statistiques, en application du monopole de l’article 82. |
+| Module d’administration | Gestion des utilisateurs, rôles, référentiels, paramétrages. |
+| Journal d’audit | Écriture seule en ajout, consultation par le rôle auditeur. |
+| Moteur bilingue F/A | Gestion unifiée des libellés, des formulaires, des messages, des certificats et du RTL arabe. |
+[TABLE END]
+
+## 6.3 Invariants d’architecture
+Unicité de la base : aucune donnée métier n’est stockée en dehors de la base centrale du Registre. Les caches et index secondaires sont reconstructibles à partir de la base.
+Unicité du moteur de règles : les règles de validation et de transition sont exprimées en un seul endroit du système, indépendamment de la couche de présentation.
+Indépendance linguistique du stockage : les données saisies qui ont une valeur juridique (identités, numéros, dates, montants) sont stockées sous une forme neutre vis-à-vis de la langue ; seuls les champs descriptifs reconnus comme multilingues sont stockés dans chacune des deux langues, avec une politique claire de langue faisant foi lorsqu’elle s’impose.
+Séparation stricte, en architecture, entre le fichier public et le fichier général, bien que tous deux relèvent de la même base.
+Scellement : chaque inscription, modification, radiation et certificat émis est scellé (empreinte cryptographique) ; les scellés sont conservés et vérifiables à tout moment.
+Réversibilité : l’ensemble du code source, des schémas, des données et des procédures d’exploitation est cessible au maître d’ouvrage à tout moment, compte tenu de l’article 83 qui autorise le changement d’organisme tenant le Registre.
+# 7. Exigence de bilinguisme (français / arabe)
+Le système est strictement bilingue français / arabe. Cette exigence n’est pas accessoire : elle conditionne la réception du système. Toute divergence, même mineure, entre les versions française et arabe — qu’il s’agisse d’un libellé, d’une règle, d’un statut, d’un message ou d’un document — est considérée comme une non-conformité majeure.
+## 7.1 Parité fonctionnelle totale
+L’intégralité des écrans, formulaires, workflows, statuts, messages, notifications, règles métier et contrôles est rigoureusement identique dans les deux langues.
+Aucune fonctionnalité ne peut exister dans une langue et non dans l’autre.
+Les mises à jour, correctifs et évolutions sont livrés simultanément dans les deux langues.
+## 7.2 Unicité de la logique métier
+Les deux versions linguistiques reposent sur un seul et même modèle de données, une seule logique de traitement et un seul moteur de règles.
+Il est interdit de dupliquer les règles métier par langue ; les libellés et les messages sont externalisés dans un référentiel de traductions géré par l’administrateur fonctionnel.
+## 7.3 Neutralité juridique des langues
+Les versions française et arabe produisent les mêmes effets juridiques, sans interprétation divergente possible.
+La terminologie juridique est validée par le secrétariat ou le comité désigné par le maître d’ouvrage, sur la base d’un glossaire bilingue annexé au contrat.
+Lorsqu’un terme juridique ne dispose pas d’équivalent établi dans l’une des deux langues, un équivalent est validé par le maître d’ouvrage avant mise en production.
+## 7.4 Gestion des données multilingues
+Les champs sont qualifiés selon l’une des trois catégories suivantes : multilingues (descriptions libres, motifs, intitulés personnalisés), neutres linguistiquement (numéros, dates, montants, identités propres), ou dépendants de la langue d’affichage (libellés de référence résolus via le référentiel de traductions).
+Une donnée neutre ne peut en aucun cas être restituée différemment selon la langue ; seule sa mise en forme typographique et directionnelle peut varier.
+Une donnée multilingue peut exister en français seul ou en arabe seul, auquel cas la langue faisant foi et la mention explicite de l’absence de traduction sont indiquées.
+## 7.5 Documents officiels bilingues
+Tous les certificats — d’inscription, de modification, de renouvellement, de radiation, de recherche — peuvent être produits en français, en arabe ou en version bilingue.
+Le contenu juridique est strictement équivalent entre les versions linguistiques. L’équivalence est documentée dans un plan de tests dédié.
+La version bilingue fait apparaître côte à côte, sur le même document, les deux textes, avec une mise en page soignée pour l’arabe en écriture de droite à gauche.
+## 7.6 Traçabilité indépendante de la langue
+Le journal d’audit, l’historique des actes et les traces de validation sont indépendants de la langue d’interface utilisée par l’utilisateur.
+Un même acte conserve une traçabilité unique, quelle que soit la langue d’accès.
+## 7.7 Tests et acceptation bilingues
+Tous les tests fonctionnels, les tests juridiques et les tests de non-régression sont exécutés dans les deux langues.
+Toute anomalie identifiée dans une langue et non dans l’autre est traitée en priorité comme un défaut bloquant.
+Les rapports de recette mentionnent explicitement, pour chaque scénario, son résultat en français et en arabe.
+⚠  Point critique — Non-conformité majeure. Toute divergence, même mineure, constatée lors de la recette entre les versions française et arabe d’un libellé, d’une règle, d’un statut, d’un message, d’un écran ou d’un document officiel, emportera la non-prononciation de la réception, jusqu’à correction complète.
+# 8. Livrables attendus
+
+[TABLE START]
+| Livrable | Contenu |
+| L1 — Note de cadrage | Compréhension du besoin juridique et métier, architecture retenue, choix technologiques justifiés, planning. |
+| L2 — Spécifications fonctionnelles détaillées | Formulaires bilingues, règles de validation, matrice des statuts et des transitions, matrice des habilitations, cartographie des messages système. |
+| L3 — Spécifications techniques | Modèle de données, schémas d’architecture, API internes, politique de scellement et d’horodatage, dispositifs de sécurité. |
+| L4 — Système intégré | Système complet, testé, déployé en environnement de production, bilingue français / arabe. |
+| L5 — Code source | Ensemble du code source versionné, accompagné des scripts de déploiement et de la documentation de compilation. |
+| L6 — Jeux de données de test | Jeux représentatifs permettant de rejouer l’intégralité des scénarios de recette. |
+| L7 — Dossier de recette bilingue | Plan de tests, cahier de tests, procès-verbaux de recette, résultats en français et en arabe. |
+| L8 — Documentation technique et d’exploitation | Architecture, installation, déploiement, sauvegardes, supervision, procédures d’incident, plan de continuité. |
+| L9 — Manuels utilisateurs | Manuels bilingues pour agents de saisie, greffiers, administrateurs, auditeurs et déclarants externes. |
+| L10 — Formation | Sessions de formation par rôle, supports remis aux participants, évaluations. |
+| L11 — Documents juridiques de conformité | Fiche de traçabilité article par article (76 à 97) ; registre des hypothèses formulées ; registre des risques juridiques. |
+| L12 — Procès-verbaux de réception | Réception provisoire et réception définitive selon les critères de la section 10. |
+[TABLE END]
+
+# 9. Contraintes et risques identifiés
+## 9.1 Contraintes
+Strict respect des articles 76 à 97 du décret, qui priment sur toute considération d’ergonomie ou de simplification technique.
+Horodatage opposable à la seconde : la fiabilité de la source de temps est une contrainte critique.
+Bilinguisme sans divergence : contrainte structurante sur l’ensemble de l’ingénierie.
+Conservation pérenne : aucune information régulièrement enregistrée ne peut être supprimée (article 79).
+Monopole statistique du greffe (article 82) : contrainte sur la conception du module de statistiques et sur l’exposition des données.
+Cessibilité / réversibilité du système : l’article 83 autorisant le transfert de la tenue, le système doit être entièrement transférable sans dépendance captive à un fournisseur.
+## 9.2 Risques juridiques identifiés
+
+[TABLE START]
+| Risque | Observation |
+| Arrêté d’application non fourni (art. 8, 81, 84) | Les règles de la procédure dématérialisée ne sont pas connues en détail. Le système pourra nécessiter un paramétrage complémentaire dès publication de l’arrêté. |
+| Signatures électroniques (art. 88) | Le texte mentionne les signatures du créancier et du constituant sans préciser le régime applicable au canal électronique. Le prestataire doit proposer un mécanisme conforme aux pratiques en vigueur, à confirmer par le maître d’ouvrage. |
+| Durée de l’inscription (art. 85) | Le texte prévoit une durée sans en fixer de bornes. Le système retient la durée déclarée ; toute limitation éventuelle devra être paramétrable. |
+| Preuve concluante du certificat de recherche (art. 97) | Toute incohérence entre le fichier public au moment de la recherche et le certificat délivré emporte des conséquences probatoires sérieuses. |
+| Homonymie des constituants (art. 97 alinéa 2) | La qualité de l’indexation sur le nom conditionne la valeur de la recherche ; un défaut d’indexation peut rendre inopposable une sûreté. |
+| Indisponibilité du système | Peut affecter le rang chronologique d’une inscription et créer du contentieux. |
+| Dérive d’horloge non détectée | Atteinte directe à la validité des horodatages et donc à l’opposabilité. |
+| Divergence bilingue | Qualifiée de non-conformité majeure par les présents TDR. |
+[TABLE END]
+
+## 9.3 Zones d’ambiguïté signalées dans le texte source
+Article 78, alinéa 2 : l’ordre d’arrivée est-il déterminé par la réception physique au guichet, par la soumission électronique, ou par la saisie effective dans la base ? Les présents TDR retiennent l’horodatage de réception au point d’entrée choisi, distinct, le cas échéant, de l’horodatage de saisie effective dans la base.
+Article 85 : la durée pour laquelle l’inscription est requise n’est pas plafonnée par le texte.
+Article 88 : le mode de recueil des signatures des parties n’est pas explicité pour la voie électronique.
+Article 91 : la notion de « durée initiale » qui sert de base au renouvellement doit être entendue comme la durée fixée lors de l’inscription initiale, et non comme la durée résultant d’un renouvellement antérieur ; à défaut de précision contraire du texte.
+Article 94 : le retrait de copie et la demande de certificat négatif ou affirmatif n’y sont pas précisés quant à leur distinction opérationnelle avec le certificat de recherche de l’article 97 ; les TDR retiennent une mise en œuvre unifiée.
+Articles 80 et 86 : l’articulation entre le rejet pour informations « incompréhensibles et illisibles » (motif de forme) et l’absence de vérification des énonciations (régime déclaratif) doit être rigoureusement respectée, afin de ne pas transformer un contrôle de forme en contrôle au fond.
+# 10. Critères d’acceptation et de conformité
+## 10.1 Critères juridiques
+Chaque disposition des articles 76 à 97 est couverte par au moins une exigence des présents TDR, et, en retour, chaque exigence a un fondement dans le texte, ou est identifiée comme hypothèse de mise en œuvre.
+Le numéro d’ordre est unique, horodaté à la seconde, et jamais réutilisé.
+Aucune inscription, modification ou radiation ne peut être enregistrée sans qu’un certificat correspondant puisse être délivré.
+Le fichier public contient exclusivement les inscriptions en cours de validité, y compris les inscriptions radiées non encore expirées, avec mention correspondante.
+Le fichier général contient l’ensemble des informations actuelles et conservées.
+## 10.2 Critères fonctionnels
+Les huit processus métier (inscription, modification, renouvellement, radiation, rejet, recherche, délivrance de certificat, statistiques) sont opérationnels de bout en bout.
+Les matrices de statuts, de transitions et d’habilitations sont intégralement mises en œuvre.
+Les règles de validation spécifiques au texte (articles 80, 85, 88 dernier alinéa, 91, 96) sont automatisées et ne peuvent être contournées.
+## 10.3 Critères de traçabilité
+Chaque action est tracée avec acteur, horodatage, objet et résultat.
+Le journal est inaltérable et vérifiable ; une tentative d’altération est détectable.
+L’auditeur accède à l’intégralité de l’historique sans pouvoir le modifier.
+## 10.4 Critères de sécurité
+Test d’intrusion externe et interne réalisé avant mise en production, sans vulnérabilité critique ou haute ouverte.
+Vérification de l’intégrité des scellés sur un échantillon représentatif d’inscriptions.
+Vérification de la fiabilité de la source de temps et absence de dérive détectée au-delà des seuils autorisés.
+## 10.5 Critères de performance et de disponibilité
+Temps de réponse conformes aux cibles de la section 5.4, constatés sur des jeux de données représentatifs.
+Disponibilité mesurée conforme à la cible de la section 5.3 sur une période de six (6) mois après mise en production.
+Sauvegardes et restauration vérifiées lors d’un exercice de reprise documenté.
+## 10.6 Critères de bilinguisme
+Aucune divergence fonctionnelle, juridique ou éditoriale détectée entre la version française et la version arabe, sur l’ensemble des scénarios de recette.
+Tous les certificats générés en français, en arabe et en version bilingue présentent un contenu juridique strictement équivalent.
+Le rendu RTL de la version arabe est conforme sur tous les gabarits, y compris les tableaux, les formulaires et les certificats.
+## 10.7 Critères de conformité documentaire
+Fiche de traçabilité article par article (articles 76 à 97) remise et validée.
+Registre des hypothèses et registre des risques juridiques remis, commentés et validés par le maître d’ouvrage.
+Manuels utilisateurs et documentation technique remis dans les deux langues.
+## 10.8 Régime de la réception
+Réception provisoire prononcée à la mise en production, sous réserve de levée des réserves formulées.
+Période d’observation d’au moins trois (3) mois, durant laquelle toute anomalie de niveau majeur ou bloquant suspend la prononciation de la réception définitive.
+Réception définitive prononcée après levée intégrale des réserves et validation de tous les critères d’acceptation et de conformité.
+# Annexe A — Traçabilité article par article (76 à 97)
+Le prestataire est tenu de compléter et de tenir à jour, tout au long du projet, le tableau ci-dessous. Chaque ligne doit, à l’issue de la recette, être documentée et opposable.
+
+[TABLE START]
+| Article | Disposition | Section des TDR / fonctionnalité couvrant la disposition |
+| 76 | Finalité du RSM — publicité et opposabilité | § 1.1, 1.2 |
+| 77 | Base de données ; fichier public et fichier général | § 3.1, 6.1, 6.3 |
+| 78 | Canaux de saisie ; ordre d’arrivée ; prise d’effet ; certificat d’inscription ; numéro d’ordre horodaté | § 4.2.1, 5.1, 6.2 |
+| 79 | Obligation de conservation | § 4.3 (statut Archivée), 5.1, 5.3 |
+| 80 | Motifs de rejet et notification motivée | § 4.2.1, 4.3, 4.4.1 |
+| 81 | Renvoi à l’arrêté pour la procédure dématérialisée | Avertissement préliminaire ; § 3.2 (hypothèse) |
+| 82 | Monopole statistique du greffe | § 4.1, 6.2 (module statistiques) |
+| 83 | Possibilité de confier la tenue ; contrôle du Président du Tribunal de commerce de Nouakchott | § 2.1, 6.3 (réversibilité) |
+| 84 à 87 | Inscription initiale (formulaires, contenu, prise d’effet, absence de vérification des énonciations) | § 4.2.1, 4.4.1, 4.4.3 |
+| 88 à 90 | Modifications (contenu, effet utile, prise d’effet) | § 4.2.2, 4.4 |
+| 91 | Renouvellement avant expiration | § 4.2.3 |
+| 92 | Radiation et transfert au fichier général après expiration | § 4.2.4, 4.3 |
+| 93 | Indexation par nom du constituant et par numéro de série | § 6.2 (module d’indexation) |
+| 94 à 97 | Recherches, deux critères minimum, homonymie, certificat de recherche probant | § 4.2.5, 6.2, 10.1 |
+[TABLE END]
+
+# Annexe B — Glossaire
+
+[TABLE START]
+| Terme | Définition retenue |
+| RSM | Registre des Sûretés Mobilières, au sens des articles 76 et suivants du décret. |
+| Fichier public | Partie de la base de données contenant les inscriptions en cours de validité (article 77). |
+| Fichier général | Partie de la base de données contenant l’ensemble des informations actuelles et conservées (article 77). |
+| Inscription initiale | Première inscription concernant une sûreté, à laquelle se rattachent les modifications et radiations ultérieures (articles 78 alinéa 4, 93). |
+| Numéro d’ordre | Identifiant unique attribué à une inscription, composé d’un numéro d’ordre suivi de l’année, du mois, du jour, de l’heure, de la minute et des secondes (article 78). |
+| Bordereau | Formulaire prévu à l’article 4 du décret, présenté sous format papier ou électronique. |
+| Certificat d’inscription | Acte délivré par le Registre attestant la prise d’effet de l’inscription (article 78 alinéa 3). |
+| Certificat de recherche | Acte délivré à l’issue d’une recherche, admissible comme preuve (article 97). |
+| Constituant | Personne physique ou morale qui consent la sûreté ; son nom sert de critère d’indexation (article 93). |
+| Greffe | Service chargé de la tenue du Registre (articles 79, 80, 82, 86). |
+[TABLE END]
+
+Fait à Nouakchott, le ………………………………
+Pour le Tribunal de commerce de Nouakchott — Greffe du RSM

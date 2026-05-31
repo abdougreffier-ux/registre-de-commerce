@@ -1,0 +1,31 @@
+---
+title: Actualités
+description: "Actualités institutionnelles du CCRCSM : sessions, événements, nominations, coopérations."
+lead: Retrouvez ici les informations sur la vie du Comité, triées de la plus récente à la plus ancienne.
+permalink: /fr/publications/actualites/
+breadcrumbs:
+  - { label: "Publications", href: "/fr/publications/" }
+  - { label: "Actualités" }
+---
+
+<p class="page__meta">
+  <a href="/fr/feeds/actualites.xml" rel="alternate" type="application/rss+xml">
+    {{ i18n[locale].actions.subscribe }} — Flux RSS
+  </a>
+</p>
+
+{% set items = collections.actualites_fr %}
+{% if items and items.length %}
+<ul class="card-grid">
+  {% for item in items %}
+  <li class="card">
+    <p class="card__rubrique">{{ i18n[locale].nav.news }}</p>
+    <h2 class="card__title"><a href="{{ item.url }}">{{ item.data.title }}</a></h2>
+    <p class="card__meta"><time datetime="{{ item.data.date | dateISO }}">{{ item.data.date | dateFR }}</time></p>
+    <p class="card__description">{{ item.data.description }}</p>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>Aucune actualité publiée pour le moment.</p>
+{% endif %}

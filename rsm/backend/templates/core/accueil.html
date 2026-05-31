@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Accueil — RSM" %}{% endblock %}
+
+{% block contenu %}
+<section class="accueil">
+  <h1>{% trans "Registre des Sûretés Mobilières" %}</h1>
+  <p>
+    {% blocktrans %}
+    Ce registre est tenu en application des articles 76 à 97 du décret 2021-033 relatif
+    au Registre du commerce et des Sûretés Mobilières. Il assure la publicité des sûretés
+    mobilières et des droits dont l'inscription est requise légalement, ainsi que leur
+    pleine opposabilité aux tiers.
+    {% endblocktrans %}
+  </p>
+
+  <ul class="actions">
+    <li><a href="{% url 'core:sante' %}">{% trans "État du service" %}</a></li>
+    <li><a href="/api/v1/recherche/">{% trans "Recherche publique (API)" %}</a></li>
+    <li><a href="/api/v1/referentiels/natures-droit/">{% trans "Référentiels" %}</a></li>
+  </ul>
+
+  <aside class="zone-gelee" role="note">
+    <h2>{% trans "Zones en attente d'arbitrage institutionnel" %}</h2>
+    <ul>
+      <li>{% trans "Source de temps officielle (art. 78)" %}</li>
+      <li>{% trans "Scellement cryptographique (§ 6.3 TDR)" %}</li>
+      <li>{% trans "Signature électronique (art. 88)" %}</li>
+      <li>{% trans "Certificats probants (art. 97)" %}</li>
+      <li>{% trans "Paiement électronique (art. 85)" %}</li>
+      <li>{% trans "Interconnexions externes (RCCM, identité, PKI)" %}</li>
+    </ul>
+  </aside>
+</section>
+{% endblock %}

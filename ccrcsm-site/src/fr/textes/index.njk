@@ -1,0 +1,41 @@
+---
+title: Textes juridiques
+description: Code de commerce, décret 2021-033, loi 2022-011 et arrêtés applicables au registre du commerce et aux sûretés mobilières.
+lead: Le Comité met à disposition les textes fondateurs qui encadrent son action, ainsi que les textes d'application utiles aux praticiens.
+permalink: /fr/textes/
+breadcrumbs:
+  - { label: "Textes juridiques" }
+lastUpdated: 2026-03-10
+---
+
+<p>
+  Pour chaque texte, la version intégrale est accessible ; l'original fait foi (Journal Officiel).
+  Un <a href="/fr/glossaire/">glossaire juridique bilingue</a> est également disponible.
+</p>
+
+<table class="legal-table">
+  <caption class="visually-hidden">Liste des textes juridiques de référence</caption>
+  <thead>
+    <tr>
+      <th scope="col">Référence</th>
+      <th scope="col">Objet</th>
+      <th scope="col">Date</th>
+      <th scope="col">Langue faisant foi</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% set textes = collections.textes_fr %}
+    {% for t in textes %}
+    <tr>
+      <th scope="row"><a href="{{ t.url }}">{{ t.data.reference or t.data.title }}</a></th>
+      <td>{{ t.data.description }}</td>
+      <td><time datetime="{{ t.data.date | dateISO }}">{{ t.data.date | dateFR }}</time></td>
+      <td>{{ t.data.authoritativeLanguage or "FR / AR" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<p class="page__meta">
+  <a href="/fr/feeds/avis.xml" rel="alternate" type="application/rss+xml">Flux RSS — Avis du Comité</a>
+</p>

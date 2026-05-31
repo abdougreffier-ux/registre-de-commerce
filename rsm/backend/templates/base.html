@@ -1,0 +1,28 @@
+{% load i18n %}
+<!doctype html>
+{% get_current_language as LANGUE %}
+<html lang="{{ LANGUE }}" dir="{% if LANGUE == 'ar' %}rtl{% else %}ltr{% endif %}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% trans "Registre des Sûretés Mobilières" %}{% endblock %}</title>
+  <link rel="stylesheet" href="{% block stylesheet %}/static/rsm/base.css{% endblock %}">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/fr/" hreflang="fr">Français</a> |
+      <a href="/ar/" hreflang="ar">العربية</a>
+    </nav>
+  </header>
+  <main>{% block contenu %}{% endblock %}</main>
+  <footer>
+    <p>
+      {% trans "République Islamique de Mauritanie — Tribunal de commerce de Nouakchott" %}
+    </p>
+    <p class="zone-gelee">
+      {% trans "Aperçu technique — horodatage opposable, scellement, signature électronique et certificats probants sont désactivés en attente d'arbitrage." %}
+    </p>
+  </footer>
+</body>
+</html>
