@@ -166,37 +166,37 @@ export default function FormulaireReserveProprete() {
             message={t('formulaire.reserve_propriete.contexte')}
           />
           <Row gutter={16}>
-            <Col xs={24} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="date_contrat" label={t('formulaire.reserve_propriete.date_contrat')} rules={[{ required: true }]}>
                 <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
               </Form.Item>
             </Col>
-            <Col xs={24} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="reference_contrat" label={t('formulaire.reserve_propriete.reference_contrat')} rules={[{ required: true }]}>
                 <Input />
               </Form.Item>
             </Col>
-            <Col xs={24} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="date_limite_paiement" label={t('formulaire.reserve_propriete.date_limite_paiement')}>
                 <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
               </Form.Item>
             </Col>
-            <Col xs={12} md={6}>
+            <Col xs={24} md={12}>
               <Form.Item name="clause_reserve_propriete" valuePropName="checked">
                 <Checkbox>{t('formulaire.reserve_propriete.clause_existe')}</Checkbox>
               </Form.Item>
             </Col>
-            <Col xs={12} md={6}>
+            <Col xs={24} md={12}>
               <Form.Item name="bien_remis_acquereur" valuePropName="checked">
                 <Checkbox>{t('formulaire.reserve_propriete.bien_remis')}</Checkbox>
               </Form.Item>
             </Col>
-            <Col xs={12} md={6}>
+            <Col xs={24} md={12}>
               <Form.Item name="acquereur_en_possession" valuePropName="checked">
                 <Checkbox>{t('formulaire.reserve_propriete.acquereur_en_possession')}</Checkbox>
               </Form.Item>
             </Col>
-            <Col xs={12} md={6}>
+            <Col xs={24} md={12}>
               <Form.Item name="propriete_conservee_par_vendeur" valuePropName="checked">
                 <Checkbox>{t('formulaire.reserve_propriete.propriete_conservee')}</Checkbox>
               </Form.Item>
@@ -227,42 +227,42 @@ export default function FormulaireReserveProprete() {
         {/* Conditions financières */}
         <Card title={<Space><DollarOutlined />{t('formulaire.inscription.section.conditions_financieres')}</Space>} style={{ marginBottom: 16 }}>
           <Row gutter={16}>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="prix_total" label={t('formulaire.reserve_propriete.prix_total')} rules={[{ required: true }]}>
                 <InputNumber style={{ width: '100%' }} min={0} step={1000} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="montant_paye" label={t('formulaire.reserve_propriete.montant_paye')}>
                 <InputNumber style={{ width: '100%' }} min={0} step={1000} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="solde_restant" label={t('formulaire.reserve_propriete.solde_restant')}>
                 <InputNumber style={{ width: '100%' }} min={0} step={1000} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="montant_creance" label={t('formulaire.commun.montant_creance')} rules={[{ required: true }]}>
                 <InputNumber style={{ width: '100%' }} min={0} step={1000} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="monnaie" label={t('formulaire.inscription.monnaie')}>
                 <Select options={[{ value: 'MRU', label: 'MRU' }, { value: 'EUR', label: 'EUR' }, { value: 'USD', label: 'USD' }]} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="duree_en_jours" label={t('formulaire.inscription.duree')} rules={[{ required: true }]}>
                 <InputNumber style={{ width: '100%' }} min={1} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="date_naissance_creance" label={t('formulaire.commun.date_naissance_creance')}>
                 <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="date_echeance" label={t('formulaire.commun.date_echeance')}>
                 <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
               </Form.Item>

@@ -45,17 +45,17 @@ export function BienUnique({ t, ar, categories, prefixe = 'bien' }) {
           <Input.TextArea rows={2} dir={ar ? 'rtl' : 'ltr'} />
         </Form.Item>
       </Col>
-      <Col xs={8} md={6}>
+      <Col xs={24} md={12}>
         <Form.Item name={[prefixe, 'marque']} label={t('formulaire.inscription.bien.marque')}>
           <Input />
         </Form.Item>
       </Col>
-      <Col xs={8} md={6}>
+      <Col xs={24} md={12}>
         <Form.Item name={[prefixe, 'modele']} label={t('formulaire.inscription.bien.modele')}>
           <Input />
         </Form.Item>
       </Col>
-      <Col xs={8} md={6}>
+      <Col xs={24} md={12}>
         <Form.Item name={[prefixe, 'annee']} label={t('formulaire.inscription.bien.annee')}>
           <InputNumber style={{ width: '100%' }} min={1900} max={new Date().getFullYear() + 1} />
         </Form.Item>

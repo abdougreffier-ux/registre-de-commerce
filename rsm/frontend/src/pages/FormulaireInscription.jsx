@@ -223,7 +223,7 @@ export default function FormulaireInscription() {
           biens: [{}],
         }}
       >
-        {/* ============ Section 1 — Identification ============ */}
+        {/* ============ Section 1 — Identification de la demande ============ */}
         <Card
           title={(
             <Space>
@@ -231,9 +231,8 @@ export default function FormulaireInscription() {
               {t('formulaire.commun.section.identification')}
             </Space>
           )}
-          style={{ marginBottom: 16 }}
         >
-          <Row gutter={16}>
+          <Row gutter={20}>
             <Col xs={24} md={12}>
               <Form.Item
                 name="nature_droit"
@@ -263,106 +262,7 @@ export default function FormulaireInscription() {
           </Row>
         </Card>
 
-        {/* ============ Section 2 — Conditions financières ============ */}
-        <Card
-          title={(
-            <Space>
-              <DollarOutlined />
-              {t('formulaire.inscription.section.conditions_financieres')}
-            </Space>
-          )}
-          style={{ marginBottom: 16 }}
-        >
-          <Row gutter={16}>
-            <Col xs={12} md={8}>
-              <Form.Item name="somme_garantie" label={t('formulaire.inscription.somme_garantie')}>
-                <InputNumber
-                  style={{ width: '100%' }}
-                  min={0}
-                  step={1000}
-                  formatter={(v) => `${v}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
-                  parser={(v) => `${v}`.replace(/\s/g, '')}
-                />
-              </Form.Item>
-            </Col>
-            <Col xs={12} md={8}>
-              <Form.Item name="monnaie" label={t('formulaire.inscription.monnaie')}>
-                <Select
-                  options={[
-                    { value: 'MRU', label: 'MRU' },
-                    { value: 'EUR', label: 'EUR' },
-                    { value: 'USD', label: 'USD' },
-                  ]}
-                />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={8}>
-              <Form.Item
-                name="duree_en_jours"
-                label={t('formulaire.inscription.duree')}
-                rules={[{ required: true, message: t('formulaire.commun.requis') }]}
-              >
-                <InputNumber style={{ width: '100%' }} min={1} />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          {/* Montant en lettres : LANGUE ACTIVE UNIQUEMENT. Le backend calcule
-              et stocke aussi l'autre langue pour les certificats bilingues. */}
-          <Row gutter={16}>
-            <Col xs={24}>
-              <Form.Item label={t('formulaire.inscription.montant_lettres')}>
-                <Input
-                  value={lettresActive}
-                  readOnly
-                  dir={ar ? 'rtl' : 'ltr'}
-                  lang={ar ? 'ar' : 'fr'}
-                  placeholder={t('formulaire.inscription.montant_lettres_placeholder')}
-                  style={{ background: 'var(--gris-50)' }}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-        </Card>
-
-        {/* ============ Section 3 — Titre constitutif ============ */}
-        <Card
-          title={(
-            <Space>
-              <FileTextOutlined />
-              {t('formulaire.inscription.section.titre_constitutif')}
-            </Space>
-          )}
-          style={{ marginBottom: 16 }}
-        >
-          <Row gutter={16}>
-            <Col xs={24} md={12}>
-              <Form.Item
-                name="nature_convention"
-                label={t('formulaire.inscription.nature_convention')}
-              >
-                <Select
-                  allowClear
-                  placeholder={t('formulaire.inscription.nature_convention_placeholder')}
-                  options={[
-                    { value: 'notariee', label: t('formulaire.inscription.nature_convention.notariee') },
-                    { value: 'sous_seing_prive', label: t('formulaire.inscription.nature_convention.sous_seing_prive') },
-                  ]}
-                />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={12}>
-              <Form.Item
-                name="date_convention"
-                label={t('formulaire.inscription.date_convention')}
-              >
-                <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
-              </Form.Item>
-            </Col>
-          </Row>
-        </Card>
-
-        {/* ============ Section 4 — Parties ============ */}
+        {/* ============ Section 2 — Parties ============ */}
         <Card
           title={(
             <Space>
@@ -370,7 +270,6 @@ export default function FormulaireInscription() {
               {t('formulaire.inscription.section.parties')}
             </Space>
           )}
-          style={{ marginBottom: 16 }}
         >
           <ListePartiesField
             t={t} ar={ar}
@@ -431,7 +330,7 @@ export default function FormulaireInscription() {
           )}
         </Card>
 
-        {/* ============ Section 5 — Biens grevés ============ */}
+        {/* ============ Section 3 — Biens grevés ============ */}
         <Card
           title={(
             <Space>
@@ -439,12 +338,107 @@ export default function FormulaireInscription() {
               {t('formulaire.inscription.section.biens')}
             </Space>
           )}
-          style={{ marginBottom: 16 }}
         >
-          <Paragraph type="secondary">
+          <Paragraph type="secondary" style={{ marginBottom: 12 }}>
             {t('formulaire.inscription.biens.description')}
           </Paragraph>
           <ListeBiensField t={t} ar={ar} categories={categories} />
+        </Card>
+
+        {/* ============ Section 4 — Titre constitutif ============ */}
+        <Card
+          title={(
+            <Space>
+              <FileTextOutlined />
+              {t('formulaire.inscription.section.titre_constitutif')}
+            </Space>
+          )}
+        >
+          <Row gutter={20}>
+            <Col xs={24} md={12}>
+              <Form.Item
+                name="nature_convention"
+                label={t('formulaire.inscription.nature_convention')}
+              >
+                <Select
+                  allowClear
+                  placeholder={t('formulaire.inscription.nature_convention_placeholder')}
+                  options={[
+                    { value: 'notariee', label: t('formulaire.inscription.nature_convention.notariee') },
+                    { value: 'sous_seing_prive', label: t('formulaire.inscription.nature_convention.sous_seing_prive') },
+                  ]}
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
+              <Form.Item
+                name="date_convention"
+                label={t('formulaire.inscription.date_convention')}
+              >
+                <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Card>
+
+        {/* ============ Section 5 — Conditions financières ============ */}
+        <Card
+          title={(
+            <Space>
+              <DollarOutlined />
+              {t('formulaire.inscription.section.conditions_financieres')}
+            </Space>
+          )}
+        >
+          <Row gutter={20}>
+            <Col xs={24} md={12}>
+              <Form.Item name="somme_garantie" label={t('formulaire.inscription.somme_garantie')}>
+                <InputNumber
+                  style={{ width: '100%' }}
+                  min={0}
+                  step={1000}
+                  formatter={(v) => `${v}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+                  parser={(v) => `${v}`.replace(/\s/g, '')}
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
+              <Form.Item name="monnaie" label={t('formulaire.inscription.monnaie')}>
+                <Select
+                  options={[
+                    { value: 'MRU', label: 'MRU' },
+                    { value: 'EUR', label: 'EUR' },
+                    { value: 'USD', label: 'USD' },
+                  ]}
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
+              <Form.Item
+                name="duree_en_jours"
+                label={t('formulaire.inscription.duree')}
+                rules={[{ required: true, message: t('formulaire.commun.requis') }]}
+              >
+                <InputNumber style={{ width: '100%' }} min={1} />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
+              {/* Espace réservé pour aligner avec « Durée en jours ». */}
+            </Col>
+            <Col xs={24}>
+              {/* Montant en lettres : pleine largeur, langue active uniquement. */}
+              <Form.Item label={t('formulaire.inscription.montant_lettres')}>
+                <Input
+                  value={lettresActive}
+                  readOnly
+                  dir={ar ? 'rtl' : 'ltr'}
+                  lang={ar ? 'ar' : 'fr'}
+                  placeholder={t('formulaire.inscription.montant_lettres_placeholder')}
+                  style={{ background: 'var(--gris-50)' }}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
         </Card>
 
         {/* ============ Section 6 — Pièces jointes ============ */}
@@ -455,7 +449,6 @@ export default function FormulaireInscription() {
               {t('formulaire.inscription.section.pieces_jointes')}
             </Space>
           )}
-          style={{ marginBottom: 16 }}
         >
           <Paragraph type="secondary" style={{ marginBottom: 12 }}>
             {t('formulaire.inscription.pj.aide')}
@@ -608,27 +601,27 @@ function ChampsConditionnelsPartie({ t, listName, name }) {
           <>
             {!estPm && (
               <Row gutter={12}>
-                <Col xs={12} md={8}>
+                <Col xs={24} md={12}>
                   <Form.Item name={[name, 'nom']} label={t('formulaire.inscription.partie.nom')}>
                     <Input />
                   </Form.Item>
                 </Col>
-                <Col xs={12} md={8}>
+                <Col xs={24} md={12}>
                   <Form.Item name={[name, 'prenom']} label={t('formulaire.inscription.partie.prenom')}>
                     <Input />
                   </Form.Item>
                 </Col>
-                <Col xs={12} md={8}>
+                <Col xs={24} md={12}>
                   <Form.Item name={[name, 'nni']} label={t('formulaire.inscription.partie.nni')}>
                     <Input />
                   </Form.Item>
                 </Col>
-                <Col xs={12} md={8}>
+                <Col xs={24} md={12}>
                   <Form.Item name={[name, 'date_naissance']} label={t('formulaire.inscription.partie.date_naissance')}>
                     <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
                   </Form.Item>
                 </Col>
-                <Col xs={12} md={16}>
+                <Col xs={24}>
                   <Form.Item name={[name, 'lieu_naissance']} label={t('formulaire.inscription.partie.lieu_naissance')}>
                     <Input />
                   </Form.Item>
@@ -642,12 +635,12 @@ function ChampsConditionnelsPartie({ t, listName, name }) {
                     <Input />
                   </Form.Item>
                 </Col>
-                <Col xs={12} md={6}>
+                <Col xs={24} md={12}>
                   <Form.Item name={[name, 'numero_rc']} label={t('formulaire.inscription.partie.numero_rc')}>
                     <Input />
                   </Form.Item>
                 </Col>
-                <Col xs={12} md={6}>
+                <Col xs={24} md={12}>
                   <Form.Item name={[name, 'representant_legal']} label={t('formulaire.inscription.partie.representant_legal')}>
                     <Input />
                   </Form.Item>
@@ -660,18 +653,22 @@ function ChampsConditionnelsPartie({ t, listName, name }) {
               </Row>
             )}
             <Row gutter={12}>
-              <Col xs={24} md={12}>
+              <Col xs={24}>
                 <Form.Item name={[name, 'adresse']} label={t('formulaire.inscription.partie.adresse')}>
                   <Input.TextArea rows={2} />
                 </Form.Item>
               </Col>
-              <Col xs={12} md={6}>
+              <Col xs={24} md={12}>
                 <Form.Item name={[name, 'telephone']} label={t('formulaire.inscription.partie.telephone')}>
                   <Input />
                 </Form.Item>
               </Col>
-              <Col xs={12} md={6}>
-                <Form.Item name={[name, 'adresse_electronique']} label={t('formulaire.inscription.partie.email')}>
+              <Col xs={24} md={12}>
+                <Form.Item
+                  name={[name, 'adresse_electronique']}
+                  label={t('formulaire.inscription.partie.email')}
+                  rules={reglesEmail(t)}
+                >
                   <Input type="email" />
                 </Form.Item>
               </Col>
@@ -917,17 +914,17 @@ function BienFieldset({ t, ar, categories, name, index, onRetirer }) {
             <Input.TextArea rows={2} dir={ar ? 'rtl' : 'ltr'} />
           </Form.Item>
         </Col>
-        <Col xs={8} md={6}>
+        <Col xs={24} md={12}>
           <Form.Item name={[name, 'marque']} label={t('formulaire.inscription.bien.marque')}>
             <Input />
           </Form.Item>
         </Col>
-        <Col xs={8} md={6}>
+        <Col xs={24} md={12}>
           <Form.Item name={[name, 'modele']} label={t('formulaire.inscription.bien.modele')}>
             <Input />
           </Form.Item>
         </Col>
-        <Col xs={8} md={6}>
+        <Col xs={24} md={12}>
           <Form.Item name={[name, 'annee']} label={t('formulaire.inscription.bien.annee')}>
             <InputNumber style={{ width: '100%' }} min={1900} max={new Date().getFullYear() + 1} />
           </Form.Item>

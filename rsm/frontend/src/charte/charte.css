@@ -682,14 +682,58 @@ html[dir="rtl"] .rim-bloc-greffier {
   font-weight: 600;
   font-size: 14px;
   color: var(--gris-900);
-  min-height: 48px;
-  padding: 0 18px;
+  min-height: 52px;
+  padding: 0 22px;
+  letter-spacing: 0.2px;
 }
-.ant-card > .ant-card-head .ant-card-head-title { padding: 14px 0; }
-.ant-card > .ant-card-body { padding: 18px; }
+.ant-card > .ant-card-head .ant-card-head-title { padding: 14px 0; font-size: 14.5px; }
+.ant-card > .ant-card-body { padding: 22px 22px 8px; }
 .ant-card.--accent-rouge { border-top: 3px solid var(--rim-rouge); }
 .ant-card.--accent-vert { border-top: 3px solid var(--rim-vert); }
 .ant-card.--accent-jaune { border-top: 3px solid var(--rim-jaune); }
+
+/* Cartes inner (sous-section, ex: fieldset partie ou bien) — discrètes */
+.ant-card > .ant-card-head .anticon { color: var(--rim-vert-fonce); }
+.ant-card-type-inner { border-radius: var(--radius-sm); }
+.ant-card-type-inner > .ant-card-head {
+  background: var(--gris-50);
+  min-height: 40px;
+  padding: 0 14px;
+  font-size: 13px;
+}
+.ant-card-type-inner > .ant-card-head .ant-card-head-title {
+  padding: 8px 0;
+  font-size: 13px;
+  color: var(--gris-700);
+}
+
+/* Formulaires : densité maîtrisée — espace vertical homogène entre Form.Item */
+.ant-form-vertical .ant-form-item {
+  margin-bottom: 18px;
+}
+.ant-form-vertical .ant-form-item-label {
+  padding-bottom: 4px;
+}
+.ant-form-vertical .ant-form-item-label > label {
+  height: auto;
+  line-height: 1.4;
+}
+/* Aide / tooltip plus lisible */
+.ant-form-item-extra,
+.ant-form-item-explain-connected {
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 4px;
+  color: var(--gris-500);
+}
+/* Sections successives dans un même Form : espacement régulier */
+.ant-form .ant-card + .ant-card {
+  margin-top: 20px;
+}
+/* Cards imbriquées (inner cards) plus serrées */
+.ant-card-type-inner + .ant-card-type-inner {
+  margin-top: 12px;
+}
 
 /* Tableaux : en-tête neutre, lignes aérées, hover doux */
 .ant-table {

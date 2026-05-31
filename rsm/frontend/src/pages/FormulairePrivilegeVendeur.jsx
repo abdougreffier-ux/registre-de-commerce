@@ -166,7 +166,7 @@ export default function FormulairePrivilegeVendeur() {
           style={{ marginBottom: 16 }}
         >
           <Row gutter={16}>
-            <Col xs={24} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="date_contrat_vente"
                 label={t('formulaire.privilege_vendeur.date_contrat_vente')}
@@ -175,7 +175,7 @@ export default function FormulairePrivilegeVendeur() {
                 <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
               </Form.Item>
             </Col>
-            <Col xs={24} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="reference_contrat_vente"
                 label={t('formulaire.privilege_vendeur.reference_contrat_vente')}
@@ -184,7 +184,7 @@ export default function FormulairePrivilegeVendeur() {
                 <Input />
               </Form.Item>
             </Col>
-            <Col xs={24} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="date_livraison"
                 label={t('formulaire.privilege_vendeur.date_livraison')}
@@ -192,12 +192,12 @@ export default function FormulairePrivilegeVendeur() {
                 <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
               </Form.Item>
             </Col>
-            <Col xs={12} md={6}>
+            <Col xs={24} md={12}>
               <Form.Item name="bien_livre" valuePropName="checked">
                 <Checkbox>{t('formulaire.privilege_vendeur.bien_livre')}</Checkbox>
               </Form.Item>
             </Col>
-            <Col xs={12} md={6}>
+            <Col xs={24} md={12}>
               <Form.Item name="acheteur_en_possession" valuePropName="checked">
                 <Checkbox>{t('formulaire.privilege_vendeur.acheteur_en_possession')}</Checkbox>
               </Form.Item>
@@ -220,7 +220,7 @@ export default function FormulairePrivilegeVendeur() {
           style={{ marginBottom: 16 }}
         >
           <Row gutter={16}>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="prix_total_vente"
                 label={t('formulaire.privilege_vendeur.prix_total_vente')}
@@ -231,14 +231,14 @@ export default function FormulairePrivilegeVendeur() {
                   parser={(v) => `${v}`.replace(/\s/g, '')} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="montant_paye" label={t('formulaire.privilege_vendeur.montant_paye')}>
                 <InputNumber style={{ width: '100%' }} min={0} step={1000}
                   formatter={(v) => `${v}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
                   parser={(v) => `${v}`.replace(/\s/g, '')} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="montant_restant_du"
                 label={t('formulaire.privilege_vendeur.montant_restant_du')}
@@ -248,7 +248,7 @@ export default function FormulairePrivilegeVendeur() {
                   parser={(v) => `${v}`.replace(/\s/g, '')} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="montant_creance"
                 label={t('formulaire.commun.montant_creance')}
@@ -259,14 +259,14 @@ export default function FormulairePrivilegeVendeur() {
                   parser={(v) => `${v}`.replace(/\s/g, '')} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="monnaie" label={t('formulaire.inscription.monnaie')}>
                 <Select options={[
                   { value: 'MRU', label: 'MRU' }, { value: 'EUR', label: 'EUR' }, { value: 'USD', label: 'USD' },
                 ]} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="duree_en_jours"
                 label={t('formulaire.inscription.duree')}
@@ -275,12 +275,12 @@ export default function FormulairePrivilegeVendeur() {
                 <InputNumber style={{ width: '100%' }} min={1} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="date_naissance_creance" label={t('formulaire.commun.date_naissance_creance')}>
                 <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="date_echeance" label={t('formulaire.commun.date_echeance')}>
                 <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
               </Form.Item>

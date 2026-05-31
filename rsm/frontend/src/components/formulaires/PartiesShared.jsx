@@ -129,22 +129,22 @@ export function ChampsConditionnelsPartie({ t, listName, name }) {
           <>
             {!estPm && (
               <Row gutter={12}>
-                <Col xs={12} md={8}>
+                <Col xs={24} md={12}>
                   <Form.Item name={[name, 'nom']} label={t('formulaire.inscription.partie.nom')}>
                     <Input />
                   </Form.Item>
                 </Col>
-                <Col xs={12} md={8}>
+                <Col xs={24} md={12}>
                   <Form.Item name={[name, 'prenom']} label={t('formulaire.inscription.partie.prenom')}>
                     <Input />
                   </Form.Item>
                 </Col>
-                <Col xs={12} md={8}>
+                <Col xs={24} md={12}>
                   <Form.Item name={[name, 'nni']} label={t('formulaire.inscription.partie.nni')}>
                     <Input />
                   </Form.Item>
                 </Col>
-                <Col xs={12} md={8}>
+                <Col xs={24} md={12}>
                   <Form.Item name={[name, 'date_naissance']} label={t('formulaire.inscription.partie.date_naissance')}>
                     <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
                   </Form.Item>
@@ -163,12 +163,12 @@ export function ChampsConditionnelsPartie({ t, listName, name }) {
                     <Input />
                   </Form.Item>
                 </Col>
-                <Col xs={12} md={6}>
+                <Col xs={24} md={12}>
                   <Form.Item name={[name, 'numero_rc']} label={t('formulaire.inscription.partie.numero_rc')}>
                     <Input />
                   </Form.Item>
                 </Col>
-                <Col xs={12} md={6}>
+                <Col xs={24} md={12}>
                   <Form.Item name={[name, 'representant_legal']} label={t('formulaire.inscription.partie.representant_legal')}>
                     <Input />
                   </Form.Item>
@@ -181,17 +181,17 @@ export function ChampsConditionnelsPartie({ t, listName, name }) {
               </Row>
             )}
             <Row gutter={12}>
-              <Col xs={24} md={12}>
+              <Col xs={24}>
                 <Form.Item name={[name, 'adresse']} label={t('formulaire.inscription.partie.adresse')}>
                   <Input.TextArea rows={2} />
                 </Form.Item>
               </Col>
-              <Col xs={12} md={6}>
+              <Col xs={24} md={12}>
                 <Form.Item name={[name, 'telephone']} label={t('formulaire.inscription.partie.telephone')}>
                   <Input />
                 </Form.Item>
               </Col>
-              <Col xs={12} md={6}>
+              <Col xs={24} md={12}>
                 <Form.Item
                   name={[name, 'adresse_electronique']}
                   label={t('formulaire.inscription.partie.email')}

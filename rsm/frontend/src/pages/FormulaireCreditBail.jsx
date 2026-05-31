@@ -160,52 +160,52 @@ export default function FormulaireCreditBail() {
         {/* Contrat */}
         <Card title={<Space><BankOutlined />{t('formulaire.credit_bail.section.contrat')}</Space>} style={{ marginBottom: 16 }}>
           <Row gutter={16}>
-            <Col xs={24} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="date_contrat" label={t('formulaire.credit_bail.date_contrat')} rules={[{ required: true }]}>
                 <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
               </Form.Item>
             </Col>
-            <Col xs={24} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="reference_contrat" label={t('formulaire.credit_bail.reference_contrat')} rules={[{ required: true }]}>
                 <Input />
               </Form.Item>
             </Col>
-            <Col xs={24} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="duree_contrat" label={t('formulaire.credit_bail.duree_contrat')}>
                 <Input placeholder={t('formulaire.credit_bail.duree_contrat_placeholder')} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={6}>
+            <Col xs={24} md={12}>
               <Form.Item name="date_debut" label={t('formulaire.credit_bail.date_debut')}>
                 <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
               </Form.Item>
             </Col>
-            <Col xs={12} md={6}>
+            <Col xs={24} md={12}>
               <Form.Item name="date_fin" label={t('formulaire.credit_bail.date_fin')}>
                 <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
               </Form.Item>
             </Col>
-            <Col xs={12} md={6}>
+            <Col xs={24} md={12}>
               <Form.Item name="option_achat" valuePropName="checked">
                 <Checkbox>{t('formulaire.credit_bail.option_achat')}</Checkbox>
               </Form.Item>
             </Col>
-            <Col xs={12} md={6}>
+            <Col xs={24} md={12}>
               <Form.Item name="prix_levee_option" label={t('formulaire.credit_bail.prix_levee_option')}>
                 <InputNumber style={{ width: '100%' }} min={0} step={1000} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={6}>
+            <Col xs={24} md={12}>
               <Form.Item name="bien_remis_preneur" valuePropName="checked">
                 <Checkbox>{t('formulaire.credit_bail.bien_remis_preneur')}</Checkbox>
               </Form.Item>
             </Col>
-            <Col xs={12} md={6}>
+            <Col xs={24} md={12}>
               <Form.Item name="date_remise_bien" label={t('formulaire.credit_bail.date_remise_bien')}>
                 <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
               </Form.Item>
             </Col>
-            <Col xs={12} md={6}>
+            <Col xs={24} md={12}>
               <Form.Item name="echeancier_joint" valuePropName="checked">
                 <Checkbox>{t('formulaire.credit_bail.echeancier_joint')}</Checkbox>
               </Form.Item>
@@ -221,17 +221,17 @@ export default function FormulaireCreditBail() {
         {/* Conditions financières */}
         <Card title={<Space><DollarOutlined />{t('formulaire.inscription.section.conditions_financieres')}</Space>} style={{ marginBottom: 16 }}>
           <Row gutter={16}>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="valeur_bien_finance" label={t('formulaire.credit_bail.valeur_bien_finance')} rules={[{ required: true }]}>
                 <InputNumber style={{ width: '100%' }} min={0} step={1000} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="montant_total_loyers" label={t('formulaire.credit_bail.montant_total_loyers')} rules={[{ required: true }]}>
                 <InputNumber style={{ width: '100%' }} min={0} step={1000} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="periodicite_loyers" label={t('formulaire.credit_bail.periodicite_loyers')}>
                 <Select allowClear placeholder={t('formulaire.credit_bail.periodicite_placeholder')} options={[
                   { value: 'mensuelle', label: t('formulaire.credit_bail.periodicite.mensuelle') },
@@ -241,32 +241,32 @@ export default function FormulaireCreditBail() {
                 ]} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="montant_loyer" label={t('formulaire.credit_bail.montant_loyer')}>
                 <InputNumber style={{ width: '100%' }} min={0} step={1000} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="depot_garantie" label={t('formulaire.credit_bail.depot_garantie')}>
                 <InputNumber style={{ width: '100%' }} min={0} step={1000} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="monnaie" label={t('formulaire.inscription.monnaie')}>
                 <Select options={[{ value: 'MRU', label: 'MRU' }, { value: 'EUR', label: 'EUR' }, { value: 'USD', label: 'USD' }]} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="duree_en_jours" label={t('formulaire.inscription.duree')} rules={[{ required: true }]}>
                 <InputNumber style={{ width: '100%' }} min={1} />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="date_naissance_creance" label={t('formulaire.commun.date_naissance_creance')}>
                 <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
               </Form.Item>
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={24} md={12}>
               <Form.Item name="date_echeance" label={t('formulaire.commun.date_echeance')}>
                 <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
               </Form.Item>
