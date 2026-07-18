@@ -18,6 +18,7 @@ import {
   reglesEmail, reglesNom, reglesNNI, reglesPasseport, reglesTelephone,
   normaliserNom,
 } from '../../lib/validation';
+import TelephoneField from './TelephoneField';
 
 const { Text, Paragraph } = Typography;
 
@@ -245,7 +246,7 @@ export function ChampsConditionnelsPartie({ t, listName, name }) {
                   rules={reglesTelephone(t)}
                   extra={t('formulaire.inscription.partie.telephone_aide')}
                 >
-                  <Input placeholder="+222 2XXXXXXX" />
+                  <TelephoneField />
                 </Form.Item>
               </Col>
               <Col xs={24} md={12}>

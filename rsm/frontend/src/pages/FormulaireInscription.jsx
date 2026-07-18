@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import client, { formatMessageErreur } from '../api/client';
 import ProcedureDepot from '../components/ProcedureDepot';
 import HorodatageDemandeField from '../components/formulaires/HorodatageDemandeField';
+import TelephoneField from '../components/formulaires/TelephoneField';
 import { montantEnLettres } from '../lib/montantEnLettres';
 import {
   reglesEmail, reglesNom, reglesNNI, reglesPasseport, reglesTelephone,
@@ -721,7 +722,7 @@ function ChampsConditionnelsPartie({ t, listName, name }) {
                   rules={reglesTelephone(t)}
                   extra={t('formulaire.inscription.partie.telephone_aide')}
                 >
-                  <Input placeholder="+222 2XXXXXXX" />
+                  <TelephoneField />
                 </Form.Item>
               </Col>
               <Col xs={24} md={12}>
