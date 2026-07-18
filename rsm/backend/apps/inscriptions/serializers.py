@@ -10,8 +10,38 @@ from __future__ import annotations
 from rest_framework import serializers
 
 from apps.core.serializers import StrictInputSerializer, StrictModelSerializer
-from apps.inscriptions.models import Inscription, ObservationRetour
+from apps.inscriptions.models import Inscription, ObservationRetour, PieceJointe
 from apps.referentiels.models import LibelleNatureDroit
+
+
+class PieceJointeSerializer(StrictModelSerializer):
+    """
+    Lecture d'une pièce jointe pour affichage à l'UI (greffier / déclarant).
+
+    N'expose PAS le champ ``fichier`` binaire ; l'accès au contenu passe
+    par l'endpoint dédié ``/pieces-jointes/<id>/apercu/`` qui applique le
+    contrôle d'accès + les en-têtes Content-Disposition inline.
+    """
+
+    cree_par_nom = serializers.SerializerMethodField()
+
+    def get_cree_par_nom(self, obj):
+        if obj.cree_par_id:
+            return (
+                getattr(obj.cree_par, "nom_affichage", "")
+                or obj.cree_par.username
+            )
+        return ""
+
+    class Meta:
+        model = PieceJointe
+        fields = [
+            "id",
+            "nom_original", "type_mime", "taille_octets",
+            "sceau_empreinte",
+            "cree_le", "cree_par_nom",
+        ]
+        read_only_fields = fields
 
 
 class InscriptionSerializer(StrictModelSerializer):
@@ -32,11 +62,17 @@ class InscriptionSerializer(StrictModelSerializer):
         source="get_type_surete_display", read_only=True,
     )
     observations_retour = serializers.SerializerMethodField()
+    pieces_jointes = serializers.SerializerMethodField()
 
     def get_observations_retour(self, obj):
         """Liste chronologique des observations de retour pour cette demande."""
         qs = obj.observations_retour.all().order_by("cree_le")
         return ObservationRetourSerializer(qs, many=True).data
+
+    def get_pieces_jointes(self, obj):
+        """Liste chronologique des pièces jointes rattachées à la demande."""
+        qs = obj.pieces_jointes.all().order_by("cree_le")
+        return PieceJointeSerializer(qs, many=True).data
 
     def get_nature_droit_libelle(self, obj):
         """Résolution via le référentiel paramétrable (langue FR par défaut)."""
@@ -70,6 +106,7 @@ class InscriptionSerializer(StrictModelSerializer):
             "commentaire_rejet_fr", "commentaire_rejet_ar",
             "instant_rejet",
             "observations_retour",
+            "pieces_jointes",
             "cree_le", "modifie_le",
         ]
         read_only_fields = [

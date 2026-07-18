@@ -21,4 +21,7 @@ urlpatterns = [
     path("<uuid:reference_demande>/pieces-jointes/",
          views.PieceJointeUploadView.as_view(),
          name="inscription-piece-jointe"),
+    path("<uuid:reference_demande>/pieces-jointes/<int:pj_id>/apercu/",
+         views.PieceJointeApercuView.as_view(),
+         name="inscription-piece-jointe-apercu"),
 ]

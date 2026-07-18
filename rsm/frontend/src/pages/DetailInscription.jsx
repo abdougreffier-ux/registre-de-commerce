@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  Alert, Button, Card, Descriptions, Form, Input, List, Modal, Select,
-  Space, Spin, Typography,
+  Alert, Button, Card, Descriptions, Empty, Form, Input, List, Modal, Select,
+  Space, Spin, Table, Typography,
 } from 'antd';
-import { UndoOutlined, ArrowRightOutlined } from '@ant-design/icons';
+import {
+  UndoOutlined, ArrowRightOutlined, PaperClipOutlined, FilePdfOutlined,
+  EyeOutlined, DownloadOutlined,
+} from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -32,6 +35,7 @@ export default function DetailInscription() {
   const [inscription, setInscription] = useState(null);
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState(null);
+  const [pjApercu, setPjApercu] = useState(null); // {id, nom_original} en cours de visualisation
 
   const recharger = useCallback(async () => {
     setErreur(null);
@@ -316,6 +320,136 @@ export default function DetailInscription() {
           />
         </Card>
       )}
+
+      {/* Pièces jointes — visibles PAR TOUS les rôles habilités
+          AVANT les actions du greffier (directive MO 2026-07-18 :
+          consultation obligatoire avant validation/retour/rejet). */}
+      <Card
+        title={(
+          <Space>
+            <PaperClipOutlined />
+            {t('detail.pieces_jointes.titre')}
+            {Array.isArray(inscription.pieces_jointes) && (
+              <Text type="secondary" style={{ fontWeight: 400, fontSize: 13 }}>
+                ({inscription.pieces_jointes.length})
+              </Text>
+            )}
+          </Space>
+        )}
+        style={{ marginBottom: 16 }}
+      >
+        {(!inscription.pieces_jointes || inscription.pieces_jointes.length === 0) ? (
+          <Empty description={t('detail.pieces_jointes.vide')} />
+        ) : (
+          <>
+            <Paragraph type="secondary" style={{ marginTop: 0, marginBottom: 12 }}>
+              {t('detail.pieces_jointes.aide')}
+            </Paragraph>
+            <Table
+              dataSource={inscription.pieces_jointes}
+              rowKey="id"
+              pagination={false}
+              size="small"
+              columns={[
+                {
+                  title: t('detail.pieces_jointes.col.nom'),
+                  dataIndex: 'nom_original',
+                  render: (v) => (
+                    <Space>
+                      <FilePdfOutlined style={{ color: 'var(--rim-rouge)' }} />
+                      <Text>{v}</Text>
+                    </Space>
+                  ),
+                },
+                {
+                  title: t('detail.pieces_jointes.col.type'),
+                  dataIndex: 'type_mime',
+                  width: 140,
+                  render: (v) => v || 'application/pdf',
+                },
+                {
+                  title: t('detail.pieces_jointes.col.taille'),
+                  dataIndex: 'taille_octets',
+                  width: 120,
+                  render: (v) => v ? `${(v / 1024 / 1024).toFixed(2)} Mo` : '—',
+                },
+                {
+                  title: t('detail.pieces_jointes.col.depose_le'),
+                  dataIndex: 'cree_le',
+                  width: 200,
+                },
+                {
+                  title: '',
+                  key: 'actions',
+                  width: 220,
+                  render: (_, pj) => (
+                    <Space>
+                      <Button
+                        type="primary"
+                        icon={<EyeOutlined />}
+                        size="small"
+                        onClick={() => setPjApercu(pj)}
+                      >
+                        {t('detail.pieces_jointes.bouton_visualiser')}
+                      </Button>
+                      <Button
+                        icon={<DownloadOutlined />}
+                        size="small"
+                        onClick={() => window.open(
+                          `/api/v1/inscriptions/${reference}/pieces-jointes/${pj.id}/apercu/`,
+                          '_blank',
+                        )}
+                      >
+                        {t('detail.pieces_jointes.bouton_ouvrir_onglet')}
+                      </Button>
+                    </Space>
+                  ),
+                },
+              ]}
+            />
+          </>
+        )}
+      </Card>
+
+      {/* Modal visualiseur PDF inline (iframe sur l'endpoint apercu) */}
+      <Modal
+        open={!!pjApercu}
+        onCancel={() => setPjApercu(null)}
+        title={pjApercu ? (
+          <Space>
+            <FilePdfOutlined style={{ color: 'var(--rim-rouge)' }} />
+            {pjApercu.nom_original}
+          </Space>
+        ) : ''}
+        width="90%"
+        style={{ top: 20 }}
+        footer={[
+          pjApercu && (
+            <Button
+              key="ouvrir"
+              icon={<DownloadOutlined />}
+              onClick={() => window.open(
+                `/api/v1/inscriptions/${reference}/pieces-jointes/${pjApercu.id}/apercu/`,
+                '_blank',
+              )}
+            >
+              {t('detail.pieces_jointes.bouton_ouvrir_onglet')}
+            </Button>
+          ),
+          <Button key="fermer" onClick={() => setPjApercu(null)}>
+            {t('soumission.fermer')}
+          </Button>,
+        ]}
+        destroyOnClose
+      >
+        {pjApercu && (
+          <iframe
+            title={pjApercu.nom_original}
+            src={`/api/v1/inscriptions/${reference}/pieces-jointes/${pjApercu.id}/apercu/`}
+            style={{ width: '100%', height: '75vh', border: 'none' }}
+          />
+        )}
+      </Modal>
 
       {/* Actions greffier : Valider / Retourner / Rejeter */}
       {peutValider && enControleForme && (

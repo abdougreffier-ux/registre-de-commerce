@@ -310,3 +310,94 @@ class PieceJointeUploadView(APIView):
             },
             status=status.HTTP_201_CREATED,
         )
+
+
+# --------------------------------------------------------------------------- #
+#  Pièces jointes — aperçu PDF inline (consultation avant décision)           #
+# --------------------------------------------------------------------------- #
+class PieceJointeApercuView(APIView):
+    """
+    Aperçu PDF inline d'une pièce jointe (directive MO 2026-07-18).
+
+    Le greffier doit pouvoir consulter les documents justificatifs
+    AVANT toute décision de validation, retour ou rejet. Cette vue sert
+    le contenu binaire avec ``Content-Disposition: inline`` afin que le
+    navigateur affiche le PDF directement dans un iframe ou un onglet,
+    sans forcer le téléchargement.
+
+    Contrôle d'accès (défense en profondeur) :
+      - déclarant propriétaire de la demande, OU
+      - rôle interne (agent_saisie, autorite_validation, auditeur,
+        admin_fonctionnel, admin_technique).
+
+    Chaque consultation est tracée au journal d'audit
+    (``piece_jointe.consulter``).
+    """
+
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, reference_demande, pj_id):
+        from django.http import FileResponse, Http404
+
+        try:
+            inscription = Inscription.objects.get(reference_demande=reference_demande)
+        except Inscription.DoesNotExist:
+            return Response(
+                {"detail": "Demande introuvable."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        try:
+            pj = PieceJointe.objects.get(pk=pj_id, inscription=inscription)
+        except PieceJointe.DoesNotExist:
+            return Response(
+                {"detail": "Pièce jointe introuvable pour cette demande."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        from apps.utilisateurs.models import RoleApplicatif
+        roles = set(request.user.roles_actifs())
+        est_interne = bool(roles & {
+            RoleApplicatif.AGENT_SAISIE,
+            RoleApplicatif.AUTORITE_VALIDATION,
+            RoleApplicatif.AUDITEUR,
+            RoleApplicatif.ADMIN_FONCTIONNEL,
+            RoleApplicatif.ADMIN_TECHNIQUE,
+        })
+        est_proprietaire = (
+            inscription.cree_par_id and inscription.cree_par_id == request.user.pk
+        )
+        if not (est_interne or est_proprietaire):
+            raise PermissionDenied(
+                "Vous ne pouvez pas consulter les pièces de cette demande."
+            )
+
+        try:
+            fh = pj.fichier.open("rb")
+        except (FileNotFoundError, ValueError):
+            raise Http404("Fichier physique introuvable.")
+
+        # Trace audit — chaque consultation compte (traçabilité art. 79).
+        tracer(
+            categorie=CategorieAudit.DEMANDE,
+            action_cle="piece_jointe.consulter",
+            resultat=ResultatAudit.SUCCES,
+            objet_type="piece_jointe",
+            objet_reference=str(pj.pk),
+            details={
+                "inscription_ref": str(inscription.reference_demande),
+                "nom_original": pj.nom_original,
+                "role_acteur": "interne" if est_interne else "proprietaire",
+            },
+            contexte=contexte_courant(),
+        )
+
+        response = FileResponse(
+            fh,
+            content_type=pj.type_mime or "application/pdf",
+        )
+        # Content-Disposition INLINE : le navigateur affiche dans son
+        # visualiseur intégré au lieu de télécharger.
+        response["Content-Disposition"] = (
+            f'inline; filename="{pj.nom_original}"'
+        )
+        return response
